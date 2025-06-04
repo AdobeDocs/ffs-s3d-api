@@ -11,7 +11,7 @@
  */
 
 const Defaults = {
-  pathPrefix: "/s3dapi/",
+  pathPrefix: "/firefly-services/docs/s3dapi/",
   gatsbyTplIdDev: "67f54433dcac5930e7026eb8",
   gatsbyTplIdProd: "67f544a30f73feac905f415c",
 };
