@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Adobe. All rights reserved.
+ * Copyright 2025 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -10,102 +10,104 @@
  * governing permissions and limitations under the License.
  */
 
+const Defaults = {
+  pathPrefix: "/s3dapi/",
+  gatsbyTplIdDev: "67f54433dcac5930e7026eb8",
+  gatsbyTplIdProd: "67f544a30f73feac905f415c",
+};
+
 module.exports = {
-  pathPrefix: process.env.PATH_PREFIX || '/dev-site-documentation-template/',
+  pathPrefix: process.env.PATH_PREFIX || Defaults.pathPrefix,
   siteMetadata: {
-    versions: [
-      {
-        title: 'v2.0',
-        selected: true
-      },
-      {
-        title: 'v1.4',
-        path: 'https://github.com/AdobeDocs/dev-site'
-      }
-    ],
+    template_id: process.env.GATSBY_TEMPLATE_ID || Defaults.gatsbyTplIdDev,
     pages: [
       {
-        title: 'Cat Analytics',
-        path: '/'
+        title: "Firefly Services",
+        path: "https://developer.adobe.com/firefly-services/docs/guides/?aio_internal",
       },
       {
-        title: 'Guides',
-        path: '/guides/'
+        title: "About Substance 3D API",
+        path: "/",
       },
       {
-        title: 'API Reference',
-        menu: [
-          {
-            title: 'Cat Reference v2.0',
-            description: 'Cat Reporting API',
-            path: '/api/index.md'
-          },
-          {
-            title: 'Cat Reference v1.4',
-            description: 'Cat API Spec',
-            path: '/api/1.4.md'
-          }
-        ]
+        title: "Getting Started",
+        path: "/getting_started/",
       },
       {
-        title: 'Support',
-        path: '/support/'
-      }
+        title: "Guides",
+        path: "/guides/",
+      },
+      {
+        title: "API Reference",
+        path: "/api/",
+      },
     ],
     subPages: [
       {
-        title: 'Get Started',
-        path: '/guides/',
-        pages: [
-          {
-            title: 'Dummy an OAuth Client',
-            path: '/guides/dummy_oauth_client/'
-          },
-          {
-            title: 'Dummy OAuth using POSTMAN',
-            path: '/guides/dummy_using_postman/'
-          }
-        ]
-      },
-      {
-        title: 'Cat Metrics API',
-        path: '/guides/dummy_metrics_api/'
-      },
-      {
-        title: 'Migrating',
-        path: '/guides/migrating/'
-      },
-      {
-        title: 'Overview',
-        path: '/support/',
+        title: "Getting Started",
+        path: "/getting_started/",
         header: true,
         pages: [
           {
-            title: 'Help',
-            path: '/support/'
+            title: "Authentication",
+            path: "/getting_started/",
           },
           {
-            title: 'FAQ',
-            path: '/support/FAQ/'
+            title: "Uploading Assets",
+            path: "/getting_started/assets_upload/",
           },
           {
-            title: 'How to contribute',
-            path: '/support/contribute/'
-          }
-        ]
+            title: "Asynchronous Jobs",
+            path: "/getting_started/asynchronous_jobs/",
+          },
+        ],
       },
       {
-        title: 'Community',
-        path: '/support/community/',
+        title: "Updates",
+        path: "/getting_started/updates/",
         header: true,
         pages: [
           {
-            title: 'Information',
-            path: '/support/community/'
-          }
-        ]
-      }
-    ]
+            title: "Changelog",
+            path: "/changelog/",
+          },
+        ],
+      },
+      {
+        title: "Guides",
+        path: "/guides/",
+        header: true,
+        pages: [
+          {
+            title: "Render 3D Object",
+            path: "/guides/render_3d_model/",
+          },
+          {
+            title: "Generate 3D Object Composite",
+            path: "/guides/compose_2d_3d_scene/",
+          },
+          {
+            title: "Create a Space for Assets",
+            path: "/guides/create_a_space/",
+          },
+        ],
+      },
+      {
+        title: "Help",
+        path: "/guides/best_practices/",
+        header: true,
+        pages: [
+          {
+            title: "Best Practices",
+            path: "/guides/best_practices/",
+          },
+          {
+            title: "Troubleshooting",
+            path: "/guides/troubleshooting/",
+          },
+        ],
+      },
+    ],
   },
-  plugins: [`@adobe/gatsby-theme-aio`]
+  plugins: [`@adobe/gatsby-theme-aio`],
 };

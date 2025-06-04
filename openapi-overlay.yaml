@@ -1,0 +1,79 @@
+overlay: 1.0.0
+info:
+  title: Overlay for the Adobe Substance 3D API
+  version: 1.0.0
+extends: https://s3d.adobe.io/openapi.yaml
+actions:
+  # -------------------------
+  # 'Remove' actions (Targeted Overlay)
+  # -------------------------
+
+  # Remove internal paths (`x-internal` tag)
+  # TODO: use Redocly config to hide internal endpoints (see https://redocly.com/docs/cli/guides/hide-apis)?
+  - target: $.paths.*[?(@['x-internal']==true)]^
+    remove: true
+
+  # Remove contact
+  - target: $.info.contact
+    remove: true
+
+  # Remove 'API Key' security scheme
+  - target: $.security[?(@.apiKey)]
+    remove: true
+  - target: $.components.securitySchemes.apiKey
+    remove: true
+
+  # -------------------------
+  # 'Update' actions (Structured Overlay, applied on Root of document)
+  # -------------------------
+  - target: $
+    update:
+      # INFO
+      info:
+        title: Adobe Substance 3D API - Firefly Services
+        version: 1.0.0
+        description: REST API for Adobe Substance 3D - Firefly Services
+
+      # PATHS
+      paths:
+        /v1beta/3dmodels/convert:
+          post:
+            summary: Convert 3D file
+            description: Convert a 3D file into another 3D format with the Substance 3D API.
+
+        /v1beta/3dmodels/render:
+          post:
+            summary: Render 3D object
+            description: Render a 3D Object with the Substance 3D API.
+
+        /v1beta/3dscenes/compose:
+          post:
+            summary: Generate 3D object composite
+            description: Generate a 3D Object Composite with the Substance 3D API.
+
+        /v1beta/3dscenes/create:
+          post:
+            description: Assemble a 3D Scene with the Substance 3D API.
+
+        /v1beta/3dscenes/get-description:
+          post:
+            description: Get a 3D Scene's description with the Substance 3D API.
+
+        /v1beta/3dscenes/render:
+          post:
+            summary: Render 3D Scene
+            description: Render a 3D Scene with the Substance 3D API.
+
+        /v1beta/spaces:
+          post:
+            summary: Create space
+            description: Create a 'Space' from 3D files with the Substance 3D API.
+
+      # COMPONENTS EXAMPLE
+      # components:
+      #   schemas:
+      #     AzimuthAltitude:
+      #       type: object
+      #       properties:
+      #         radius:
+      #           description: Distance to the 'lookAt' point

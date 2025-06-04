@@ -1,0 +1,2240 @@
+openapi: 3.1.0
+info:
+  description: REST API for Adobe Substance 3D - Firefly Services
+  title: Adobe Substance 3D API - Firefly Services
+  version: 1.0.0
+servers:
+  - url: 'https://s3d.adobe.io'
+paths:
+  /v1beta/3dmodels/convert:
+    post:
+      operationId: convertModel
+      summary: Convert 3D file
+      description: Convert a 3D file into another 3D format with the Substance 3D API.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelConvertRequest'
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            Retry-After:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelConvertResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_json:
+                  value:
+                    error_code: invalid_json
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              examples:
+                invalid_content_type:
+                  value:
+                    error_code: invalid_content_type
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+      tags:
+        - 3D Models
+  /v1beta/3dmodels/render:
+    post:
+      operationId: renderModel
+      summary: Render 3D object
+      description: Render a 3D Object with the Substance 3D API.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenderModelRequest'
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            Retry-After:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RenderModelResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_json:
+                  value:
+                    error_code: invalid_json
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              examples:
+                invalid_content_type:
+                  value:
+                    error_code: invalid_content_type
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+      tags:
+        - 3D Models
+  /v1beta/3dscenes/compose:
+    post:
+      operationId: composeScene
+      summary: Generate 3D object composite
+      description: Generate a 3D Object Composite with the Substance 3D API.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComposeSceneRequest'
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            Retry-After:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComposeSceneResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_json:
+                  value:
+                    error_code: invalid_json
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              examples:
+                invalid_content_type:
+                  value:
+                    error_code: invalid_content_type
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+      tags:
+        - 3D Scenes
+  /v1beta/3dscenes/create:
+    post:
+      operationId: createScene
+      summary: Create a 3D scene
+      description: Assemble a 3D Scene with the Substance 3D API.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSceneRequest'
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            Retry-After:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSceneResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_json:
+                  value:
+                    error_code: invalid_json
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              examples:
+                invalid_content_type:
+                  value:
+                    error_code: invalid_content_type
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+      tags:
+        - 3D Scenes
+  /v1beta/3dscenes/get-description:
+    post:
+      operationId: getSceneDesc
+      summary: Get 3D scene description
+      description: Get a 3D Scene's description with the Substance 3D API.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SceneDescRequest'
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            Retry-After:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SceneDescResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_json:
+                  value:
+                    error_code: invalid_json
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              examples:
+                invalid_content_type:
+                  value:
+                    error_code: invalid_content_type
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+      tags:
+        - 3D Scenes
+  /v1beta/3dscenes/render:
+    post:
+      operationId: renderScene
+      summary: Render 3D Scene
+      description: Render a 3D Scene with the Substance 3D API.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenderSceneRequest'
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            Retry-After:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RenderSceneResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_json:
+                  value:
+                    error_code: invalid_json
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              examples:
+                invalid_content_type:
+                  value:
+                    error_code: invalid_content_type
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+      tags:
+        - 3D Scenes
+  /v1beta/spaces:
+    post:
+      operationId: createSpace
+      summary: Create space
+      description: Create a 'Space' from 3D files with the Substance 3D API.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                filename:
+                  description: filename of the file being uploaded
+                  type: string
+                  format: binary
+                  contentMediaType: application/octet-stream
+                name:
+                  description: general purpose name for multipart form value
+                  type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Space'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '413':
+          description: Request Entity Too Large
+          content:
+            application/json:
+              examples:
+                entity_too_large:
+                  value:
+                    error_code: entity_too_large
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/FFAPIError'
+      tags:
+        - Spaces
+components:
+  schemas:
+    AssetPath:
+      type: object
+      properties:
+        path:
+          type: string
+        repositoryId:
+          type: string
+      additionalProperties: false
+      required:
+        - repositoryId
+        - path
+    AutoFramingOptions:
+      type: object
+      properties:
+        zoomFactor:
+          description: '1 means tight framing, <1 zoom-out & >1 is zoom-in'
+          type: number
+          format: double
+          default: 0.8
+          maximum: 100
+          minimum: 0.001
+      additionalProperties: false
+    AzimuthAltitude:
+      type: object
+      properties:
+        altitude:
+          description: 'altitude, in degrees, from -90 to 90 degrees'
+          type: number
+          format: double
+          maximum: 90
+          minimum: -90
+        azimuth:
+          description: 'rotation around the vertical axis, in degrees'
+          type: number
+          format: double
+        lookAt:
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
+          maxItems: 3
+          minItems: 3
+        radius:
+          description: distance to the lookAt point
+          type: number
+          format: double
+          minimum: 0
+      additionalProperties: false
+      required:
+        - azimuth
+        - altitude
+        - lookAt
+        - radius
+    BackgroundOptions:
+      type: object
+      properties:
+        backgroundColor:
+          description: 'RGBA background color, has an effect only if showEnvironment is false. Each component has to be in the [0,1] range'
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
+          default:
+            - 0
+            - 0
+            - 0
+            - 0
+          examples:
+            - - 0
+              - 0
+              - 0
+              - 0
+          maxItems: 4
+          minItems: 4
+        backgroundImage:
+          description: 'path to a background image; if set, will be used as the background'
+          type: string
+        showEnvironment:
+          description: show the environment map as the background
+          type: boolean
+          default: false
+      additionalProperties: false
+    Component:
+      type: object
+      properties:
+        filename:
+          type: string
+        id:
+          type: string
+        revision:
+          type: string
+      additionalProperties: false
+      required:
+        - id
+        - revision
+        - filename
+    ComposeOutput:
+      type: object
+      properties:
+        image:
+          $ref: '#/components/schemas/ComposeOutputImage'
+        seed:
+          type: integer
+          format: int64
+      additionalProperties: false
+      required:
+        - seed
+        - image
+    ComposeOutputImage:
+      type: object
+      properties:
+        url:
+          type: string
+      additionalProperties: false
+      required:
+        - url
+    ComposeSceneJobResult:
+      type: object
+      properties:
+        outputSpace:
+          $ref: '#/components/schemas/Space'
+        outputs:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/ComposeOutput'
+        promptHasBlockedArtists:
+          type: boolean
+        promptHasDeniedWords:
+          type: boolean
+      additionalProperties: false
+      required:
+        - outputs
+        - promptHasDeniedWords
+        - promptHasBlockedArtists
+    ComposeSceneRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/ComposeSceneRequest.json'
+          readOnly: true
+        cameraName:
+          description: Name of an existing camera in the source 3D scene (the camera has to be defined in the scene)
+          type: string
+        contentClass:
+          description: 'Class of content to generate (''photo'' or ''art''). If omitted, defaults to ''photo''.'
+          type: string
+          enum:
+            - art
+            - photo
+        enableGroundPlane:
+          description: 'Allow to enable the auto generated groundplane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default. '
+          type: boolean
+          default: false
+        heroAsset:
+          description: Name of an existing 'hero asset' in the source 3D scene (the asset has to be defined in the scene)
+          type: string
+        modelVersion:
+          description: 'Model version to be used to generate the background image with Adobe Firefly. If omitted, defaults to ''image3_fast''.'
+          type: string
+          default: image3_fast
+          enum:
+            - image3_fast
+            - image4_standard
+            - image4_ultra
+        numVariations:
+          description: 'The number of variations to generate. numVariations will default to the number of seeds, or to 1 if seeds is not specified'
+          type: integer
+          format: int64
+          maximum: 4
+          minimum: 1
+        prompt:
+          description: Prompt to be used to generate the background image with Adobe Firefly
+          type: string
+        sceneFile:
+          description: 'Path of scene file in sources. If value is null, the first found scene file will be used.'
+          type: string
+        seeds:
+          description: 'Optional seed to be used to generate the background image with Adobe Firefly. Seed ensures consistent background image generation. If seed is not set, a random seed will be used. You will be able to retrieve the seed used for the generation in the output details of the job. If specified alongside with numVariations, the number of seeds must be the equal to numVariations.'
+          type: array
+          items:
+            format: int64
+            type: integer
+        size:
+          description: |-
+            The size of the requested generations. The supported dimensions for image generations are: 
+              | Dimensions | Description | 
+              | -----------| ----- |
+              | { "width": 2048, "height": 2048} | Square (1:1) |
+              | { "width": 2304, "height": 1792 } | Landscape (4:3) |
+              | { "width": 1792, "height": 2304 } | Portrait (3:4) | 
+              | { "width": 2688, "height": 1536 } | Widescreen (16:9) |  
+              | { "width": 1344, "height": 768 } |(7:4) |  
+              |{ "width": 1152, "height": 896 } |(9:7) |  
+              |{ "width": 896, "height": 1152 } |(7:9) |  
+              | { "width": 1024, "height": 1024} | Square (1:1) |
+          $ref: '#/components/schemas/OutputSize'
+        sources:
+          description: list of sources to aggregate and run the job against
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MountedSource'
+          maxItems: 16
+          minItems: 1
+        styleImage:
+          description: Optional 'style image' to be used to generate the background (the style image has to be present in sources)
+          type: string
+      additionalProperties: false
+      examples:
+        - cameraName: main_camera
+          heroAsset: bottle
+          prompt: french style kitchen with empty wooden table window on the left focal length 50mm
+          sources:
+            - url:
+                url: 'https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb'
+      required:
+        - sources
+        - prompt
+        - heroAsset
+        - cameraName
+    ComposeSceneResponse:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/ComposeSceneResponse.json'
+          readOnly: true
+        bugReportUrl:
+          description: url to report a bug about this job
+          type: string
+        error:
+          description: potential error that happened during the job processing
+          type: string
+        id:
+          description: unique identifier of the job
+          type: string
+        result:
+          description: result when the job is successfully finished
+          $ref: '#/components/schemas/ComposeSceneJobResult'
+        status:
+          description: 'status of the job: not_started|running|succeeded|failed'
+          type: string
+        url:
+          description: url to fetch/poll for job result in case the job is not finished yet
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - status
+        - bugReportUrl
+    CreateSceneJobResult:
+      type: object
+      properties:
+        outputSpace:
+          $ref: '#/components/schemas/Space'
+        sceneUrl:
+          description: URL to the created scene
+          type: string
+      additionalProperties: false
+      required:
+        - sceneUrl
+    CreateSceneRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/CreateSceneRequest.json'
+          readOnly: true
+        encoding:
+          description: encoding output format
+          type: string
+        fileBaseName:
+          description: output filename
+          type: string
+        scene:
+          $ref: '#/components/schemas/SceneDescription'
+        sources:
+          description: list of sources to aggregate and run the job against
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MountedSource'
+          maxItems: 16
+          minItems: 1
+      additionalProperties: false
+      examples:
+        - encoding: usdz
+          fileBaseName: scene
+          scene:
+            models:
+              imports:
+                - file: WaterBottle.glb
+                - file: WaterBottle.glb
+                  transform:
+                    trs:
+                      rotation:
+                        euler:
+                          - 30
+                          - 0
+                          - 0
+                      scale:
+                        - 1
+                        - 1
+                        - 1
+                      translation:
+                        - 0.15
+                        - 0
+                        - 0
+          sources:
+            - url:
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb'
+      required:
+        - scene
+        - sources
+        - encoding
+        - fileBaseName
+    CreateSceneResponse:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/CreateSceneResponse.json'
+          readOnly: true
+        bugReportUrl:
+          description: url to report a bug about this job
+          type: string
+        error:
+          description: potential error that happened during the job processing
+          type: string
+        id:
+          description: unique identifier of the job
+          type: string
+        result:
+          description: result when the job is successfully finished
+          $ref: '#/components/schemas/CreateSceneJobResult'
+        status:
+          description: 'status of the job: not_started|running|succeeded|failed'
+          type: string
+        url:
+          description: url to fetch/poll for job result in case the job is not finished yet
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - status
+        - bugReportUrl
+    FFAPIError:
+      description: The error within the error response.
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/FFAPIError.json'
+          readOnly: true
+        error_code:
+          description: Associated error code
+          type: string
+        error_details:
+          description: Optional list of individual error details
+          type: array
+          items:
+            type: object
+        message:
+          description: Error message
+          type: string
+      additionalProperties: false
+      required:
+        - error_code
+      title: ApiError
+    FFAPIErrorDetail:
+      type: object
+      properties:
+        error_code:
+          description: Error code
+          type: string
+        error_context:
+          description: Additional context for the error
+        loc:
+          description: 'Where the error occurred, e.g. ''body.items[3].tags'' or ''path.thing-id'''
+          type: string
+        msg:
+          description: Error message text
+          type: string
+      additionalProperties: false
+      required:
+        - loc
+        - msg
+        - error_code
+    FormatOptions:
+      type: object
+      properties:
+        usd:
+          description: USD format options.
+          $ref: '#/components/schemas/UsdOptions'
+      additionalProperties: false
+      required:
+        - usd
+    GroundPlaneOptions:
+      type: object
+      properties:
+        autoGroundScene:
+          description: automatically position the scene onto the ground plane (moves the scene along the vertical axis)
+          type: boolean
+          default: true
+        enable:
+          description: enable/disable the ground plane
+          type: boolean
+          default: true
+        reflections:
+          description: enable/disable reflections onto the ground plane
+          type: boolean
+          default: false
+        reflectionsOpacity:
+          description: controls the opacity of the reflections (useful for compositing purpose)
+          type: number
+          format: double
+          default: 1
+          maximum: 1
+          minimum: 0
+        reflectionsRoughness:
+          description: controls the roughness of the reflections (useful for compositing purpose)
+          type: number
+          format: double
+          default: 0
+          maximum: 1
+          minimum: 0
+        shadows:
+          description: controls whether the ground plane catches shadows or not
+          type: boolean
+          default: true
+        shadowsOpacity:
+          description: controls the opacity of catched shadows (only has effect if shadows are enabled)
+          type: number
+          format: double
+          default: 1
+          maximum: 1
+          minimum: 0
+      additionalProperties: false
+    MaterialOverride:
+      type: object
+      properties:
+        TranslucencyTexture:
+          type:
+            - string
+            - 'null'
+        absorptionColorFactor:
+          description: 'RGB floating point color such as white is [1.0,1.0,1.0]'
+          type: array
+          items:
+            format: double
+            type: number
+          default:
+            - 0
+            - 0
+            - 0
+          maxItems: 3
+          minItems: 3
+        absorptionColorTexture:
+          type: string
+        absorptionDistanceFactor:
+          type: number
+          format: double
+          minimum: 0
+        absorptionDistanceTexture:
+          type: string
+        baseColorFactor:
+          description: 'RGB floating point color such as white is [1.0,1.0,1.0]'
+          type: array
+          items:
+            format: double
+            type: number
+          default:
+            - 0
+            - 0
+            - 0
+          maxItems: 3
+          minItems: 3
+        baseColorTexture:
+          type: string
+        coatColorFactor:
+          description: 'RGB floating point color such as white is [1.0,1.0,1.0]'
+          type: array
+          items:
+            format: double
+            type: number
+          default:
+            - 0
+            - 0
+            - 0
+          maxItems: 3
+          minItems: 3
+        coatColorTexture:
+          type: string
+        coatOpacityFactor:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        coatOpacityTexture:
+          type: string
+        coatRoughnessFactor:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        coatRoughnessTexture:
+          type: string
+        materialName:
+          type: string
+        metallicFactor:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        metallicTexture:
+          type: string
+        normalFactor:
+          type: array
+          items:
+            format: double
+            type: number
+          maxItems: 3
+          minItems: 3
+        normalTexture:
+          type: string
+        opacityFactor:
+          type: number
+          format: double
+          minimum: 0
+        opacityTexture:
+          type: string
+        pbrMaterial:
+          $ref: '#/components/schemas/SbsMaterial'
+        roughnessFactor:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        roughnessTexture:
+          type: string
+        translucencyFactor:
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        volumeThicknessFactor:
+          type: number
+          format: double
+          minimum: 0
+        volumeThicknessTexture:
+          type: string
+      additionalProperties: false
+      required:
+        - materialName
+        - TranslucencyTexture
+    ModelConvertJobResult:
+      type: object
+      properties:
+        outputSpace:
+          $ref: '#/components/schemas/Space'
+      additionalProperties: false
+    ModelConvertRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/ModelConvertRequest.json'
+          readOnly: true
+        format:
+          description: output format
+          type: string
+          enum:
+            - glb
+            - gltf
+            - fbx
+            - usdz
+            - usda
+            - usdc
+            - obj
+          examples:
+            - glb
+        modelEntrypoint:
+          description: 'conversion will usually take the first file that is considered a valid 3D model - in case there are multiple options, this is used to disambiguate.'
+          type: string
+        sources:
+          description: list of sources to aggregate and run the job against
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MountedSource'
+          maxItems: 16
+          minItems: 1
+      additionalProperties: false
+      examples:
+        - format: glb
+          sources:
+            - url:
+                url: 'https://cdn.substance3d.com/v2/files/public/stepladder.usdz'
+      required:
+        - format
+        - sources
+    ModelConvertResponse:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/ModelConvertResponse.json'
+          readOnly: true
+        bugReportUrl:
+          description: url to report a bug about this job
+          type: string
+        error:
+          description: potential error that happened during the job processing
+          type: string
+        id:
+          description: unique identifier of the job
+          type: string
+        result:
+          description: result when the job is successfully finished
+          $ref: '#/components/schemas/ModelConvertJobResult'
+        status:
+          description: 'status of the job: not_started|running|succeeded|failed'
+          type: string
+        url:
+          description: url to fetch/poll for job result in case the job is not finished yet
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - status
+        - bugReportUrl
+    MountedSource:
+      type: object
+      properties:
+        frame.io:
+          description: fetch content from a frame.io folder. ⚠️ All sources are exclusive.
+          $ref: '#/components/schemas/SourceFrameIO'
+        mountPoint:
+          description: where to mount the content of the source in the virtual job working dir
+          type: string
+          default: /
+        space:
+          description: 'read content from an existing space (can be another job''s output, or uploaded manually with the space API). ⚠️ All sources are exclusive.'
+          $ref: '#/components/schemas/SourceSpace'
+        url:
+          description: fetch content from an URL. ⚠️ All sources are exclusive.
+          $ref: '#/components/schemas/SourceURL'
+      additionalProperties: true
+    OutputSize:
+      type: object
+      properties:
+        height:
+          type: integer
+          format: int64
+          default: 1536
+          maximum: 2688
+          minimum: 1
+        width:
+          type: integer
+          format: int64
+          default: 2688
+          maximum: 2688
+          minimum: 1
+      additionalProperties: false
+      required:
+        - width
+        - height
+    RawSpace:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/RawSpace.json'
+          readOnly: true
+        archiveUrl:
+          description: url to fetch the whole space as an archive (usually ZIP file)
+          type: string
+        files:
+          description: 'list of all files contained in space, ordered by name'
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/SpaceFile'
+        id:
+          description: unique identifier of this space
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        url:
+          description: url to the full description of this space
+          type: string
+      additionalProperties: false
+      required:
+        - metadata
+        - url
+        - id
+        - archiveUrl
+        - files
+    RenderModelRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/RenderModelRequest.json'
+          readOnly: true
+        autoFraming:
+          description: auto-framing related options
+          $ref: '#/components/schemas/AutoFramingOptions'
+        background:
+          description: background related options
+          $ref: '#/components/schemas/BackgroundOptions'
+        cameraName:
+          description: 'if set, will use this camera to perform the render (the camera has to be defined in the scene)'
+          type: string
+        groundPlane:
+          description: ground plane related options
+          $ref: '#/components/schemas/GroundPlaneOptions'
+        scene:
+          description: define rendering scene primitives
+          $ref: '#/components/schemas/SimpleSceneDescription'
+        size:
+          description: render size related options
+          $ref: '#/components/schemas/SizeOptions'
+        sources:
+          description: list of sources to aggregate and run the job against
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MountedSource'
+          maxItems: 16
+          minItems: 1
+      additionalProperties: false
+      examples:
+        - scene:
+            modelFile: WaterBottle.glb
+          sources:
+            - url:
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb'
+      required:
+        - scene
+        - sources
+    RenderModelResponse:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/RenderModelResponse.json'
+          readOnly: true
+        bugReportUrl:
+          description: url to report a bug about this job
+          type: string
+        error:
+          description: potential error that happened during the job processing
+          type: string
+        id:
+          description: unique identifier of the job
+          type: string
+        result:
+          description: result when the job is successfully finished
+          $ref: '#/components/schemas/RenderSceneJobResult'
+        status:
+          description: 'status of the job: not_started|running|succeeded|failed'
+          type: string
+        url:
+          description: url to fetch/poll for job result in case the job is not finished yet
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - status
+        - bugReportUrl
+    RenderSceneJobResult:
+      type: object
+      properties:
+        outputSpace:
+          $ref: '#/components/schemas/Space'
+        renderUrl:
+          description: URL to the rendered scene
+          type: string
+      additionalProperties: false
+      required:
+        - renderUrl
+    RenderSceneRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/RenderSceneRequest.json'
+          readOnly: true
+        autoFraming:
+          description: auto-framing related options
+          $ref: '#/components/schemas/AutoFramingOptions'
+        background:
+          description: background related options
+          $ref: '#/components/schemas/BackgroundOptions'
+        cameraName:
+          description: 'if set, will use this camera to perform the render (the camera has to be defined in the scene)'
+          type: string
+        groundPlane:
+          description: ground plane related options
+          $ref: '#/components/schemas/GroundPlaneOptions'
+        scene:
+          description: define rendering scene primitives
+          $ref: '#/components/schemas/SceneDescription'
+        size:
+          description: render size related options
+          $ref: '#/components/schemas/SizeOptions'
+        sources:
+          description: list of sources to aggregate and run the job against
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MountedSource'
+          maxItems: 16
+          minItems: 1
+      additionalProperties: false
+      examples:
+        - scene:
+            models:
+              imports:
+                - file: WaterBottle.glb
+          sources:
+            - url:
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb'
+      required:
+        - scene
+        - sources
+    RenderSceneResponse:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/RenderSceneResponse.json'
+          readOnly: true
+        bugReportUrl:
+          description: url to report a bug about this job
+          type: string
+        error:
+          description: potential error that happened during the job processing
+          type: string
+        id:
+          description: unique identifier of the job
+          type: string
+        result:
+          description: result when the job is successfully finished
+          $ref: '#/components/schemas/RenderSceneJobResult'
+        status:
+          description: 'status of the job: not_started|running|succeeded|failed'
+          type: string
+        url:
+          description: url to fetch/poll for job result in case the job is not finished yet
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - status
+        - bugReportUrl
+    Rotation:
+      type: object
+      properties:
+        euler:
+          description: euler angles in degrees
+          type: array
+          items:
+            format: double
+            type: number
+          examples:
+            - - 0
+              - 0
+              - 0
+          maxItems: 3
+          minItems: 3
+        quaternion:
+          description: 'in W,X,Y,Z order'
+          type: array
+          items:
+            format: double
+            type: number
+          examples:
+            - - 1
+              - 0
+              - 0
+              - 0
+          maxItems: 4
+          minItems: 4
+      additionalProperties: false
+    SbsMaterial:
+      type: object
+      properties:
+        preset:
+          description: select a preset to be used for the substance material rendering
+          type: string
+        resolution:
+          description: 'substance material render resolution, should be a power of two'
+          type: integer
+          format: int64
+          enum:
+            - 16
+            - 32
+            - 64
+            - 128
+            - 256
+            - 512
+            - 1024
+            - 2048
+            - 4096
+          maximum: 4096
+          minimum: 16
+        rotation:
+          description: texture space rotation
+          type: number
+          format: double
+        sbsar:
+          description: 'path to a substance material; if not set, the first substance 3D material found in sources will be used'
+          type: string
+        scale:
+          description: texture space scale
+          type: array
+          items:
+            format: double
+            type: number
+          maxItems: 2
+          minItems: 2
+        translation:
+          description: texture space translation
+          type: array
+          items:
+            format: double
+            type: number
+          maxItems: 2
+          minItems: 2
+      additionalProperties: false
+    SceneBaseFile:
+      type: object
+      properties:
+        file:
+          description: path of scene file in sources.
+          type: string
+        modelsRootNodeName:
+          description: 'define root node for models in scene graph. If not found, the node which are parent of all models in the scene will be used. If this node doesn''t exists, a new node will be created under global root'
+          type: string
+      additionalProperties: false
+      required:
+        - file
+    SceneCamera:
+      type: object
+      properties:
+        focal:
+          description: 'camera focal length, in mm'
+          type: number
+          format: double
+          default: 50
+          maximum: 1000
+          minimum: 10
+        sensorWidth:
+          description: 'camera sensor width, in mm'
+          type: number
+          format: double
+          default: 36
+          maximum: 100
+          minimum: 1
+        transform:
+          description: controls the position and angle of the camera
+          $ref: '#/components/schemas/Transform'
+      additionalProperties: false
+    SceneDescJobResult:
+      type: object
+      properties:
+        stats:
+          $ref: '#/components/schemas/SceneStatsInfo'
+      additionalProperties: false
+      required:
+        - stats
+    SceneDescRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/SceneDescRequest.json'
+          readOnly: true
+        sceneFile:
+          description: 'path of scene file in sources. If value is null, the first found scene file will be used.'
+          type: string
+        sources:
+          description: list of sources to aggregate and run the job against
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MountedSource'
+          maxItems: 16
+          minItems: 1
+      additionalProperties: false
+      examples:
+        - sources:
+            - url:
+                url: 'https://cdn.substance3d.com/v2/files/public/stepladder.usdz'
+      required:
+        - sources
+    SceneDescResponse:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/SceneDescResponse.json'
+          readOnly: true
+        bugReportUrl:
+          description: url to report a bug about this job
+          type: string
+        error:
+          description: potential error that happened during the job processing
+          type: string
+        id:
+          description: unique identifier of the job
+          type: string
+        result:
+          description: result when the job is successfully finished
+          $ref: '#/components/schemas/SceneDescJobResult'
+        status:
+          description: 'status of the job: not_started|running|succeeded|failed'
+          type: string
+        url:
+          description: url to fetch/poll for job result in case the job is not finished yet
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - status
+        - bugReportUrl
+    SceneDescription:
+      type: object
+      properties:
+        baseFile:
+          description: 'define a scene from a file. If value is null, an empty scene will be created.'
+          $ref: '#/components/schemas/SceneBaseFile'
+        camera:
+          description: define a new camera for the scene.
+          $ref: '#/components/schemas/SceneCamera'
+        environment:
+          description: define environment for the scene. Override previous existing environment
+          $ref: '#/components/schemas/SceneEnvironment'
+        metersPerUnit:
+          description: 'Length of a scene unit in meters, default to baseFile meters per unit if any or 0.01 (centimeters) otherwise.'
+          type: number
+          format: double
+          exclusiveMinimum: 0
+        models:
+          description: define additionals models for the scene.
+          $ref: '#/components/schemas/SceneModels'
+      additionalProperties: false
+    SceneEnvironment:
+      type: object
+      properties:
+        exposure:
+          description: 'exposure, in EV (0=neutral)'
+          type: number
+          format: double
+          default: 0
+        file:
+          description: 'path of environment file in sources. If value is null, the first found environment file will be used.'
+          type: string
+        preserveLights:
+          description: 'The scene may contains 3D lights like area lights or spot lights. By default all those lights are removed when a new environment is set, set this option to ''true'' to preserve the scene 3D lights.'
+          type: boolean
+          default: false
+        rotation:
+          description: controls the orientation of the environment map
+          $ref: '#/components/schemas/Rotation'
+      additionalProperties: false
+    SceneModel:
+      type: object
+      properties:
+        anchorName:
+          description: 'node name in scene graph which used as parent for the model. If anchor is not found, a node with the anchor name will be generated under models root node. And If value is null, a node will be generated under models root node.'
+          type: string
+        file:
+          description: 'path of model file in sources. If value is null, the first found model file will be used.'
+          type: string
+        formatOptions:
+          description: define options specific for model file format
+          $ref: '#/components/schemas/FormatOptions'
+        materialOverrides:
+          description: define material overrides
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MaterialOverride'
+        transform:
+          description: Transform applied on anchor node. Override the previous value if it exists.
+          $ref: '#/components/schemas/Transform'
+      additionalProperties: false
+    SceneModels:
+      type: object
+      properties:
+        imports:
+          description: List of model imports definition
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/SceneModel'
+        modelsRootNodeTransform:
+          description: Global transformation applied on models root node defined in scene. Override the previous value if it exists.
+          $ref: '#/components/schemas/Transform'
+      additionalProperties: false
+    SceneStatsBoundingBox:
+      type: object
+      properties:
+        max:
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
+        min:
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
+      additionalProperties: false
+      required:
+        - min
+        - max
+    SceneStatsInfo:
+      type: object
+      properties:
+        cameraNames:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        materialNames:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        metersPerSceneUnit:
+          type: number
+          format: double
+        nodesHierarchy:
+          $ref: '#/components/schemas/SceneStatsNode'
+        numFaces:
+          type: integer
+          format: int64
+        numMeshes:
+          type: integer
+          format: int64
+        numQuads:
+          type: integer
+          format: int64
+        numSubMeshes:
+          type: integer
+          format: int64
+        numTriangles:
+          type: integer
+          format: int64
+        numVertices:
+          type: integer
+          format: int64
+        sceneUpAxis:
+          type: string
+      additionalProperties: false
+      required:
+        - metersPerSceneUnit
+        - sceneUpAxis
+        - numVertices
+        - numTriangles
+        - numQuads
+        - numFaces
+        - numMeshes
+        - numSubMeshes
+        - cameraNames
+        - materialNames
+        - nodesHierarchy
+    SceneStatsNode:
+      type: object
+      properties:
+        assignedMaterialName:
+          type: string
+        children:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/SceneStatsNode'
+        name:
+          type: string
+        type:
+          type: string
+        variants:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/SceneStatsNodeVariant'
+        worldSpaceBoundingBox:
+          $ref: '#/components/schemas/SceneStatsBoundingBox'
+      additionalProperties: false
+      required:
+        - name
+        - type
+    SceneStatsNodeVariant:
+      type: object
+      properties:
+        currentValue:
+          type: string
+        name:
+          type: string
+        values:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+      additionalProperties: false
+      required:
+        - name
+        - values
+        - currentValue
+    SimpleSceneDescription:
+      type: object
+      properties:
+        camera:
+          description: define a new camera for the scene.
+          $ref: '#/components/schemas/SceneCamera'
+        environment:
+          description: define environment for the scene. Override previous existing environment
+          $ref: '#/components/schemas/SceneEnvironment'
+        formatOptions:
+          description: define options specific for model file format
+          $ref: '#/components/schemas/FormatOptions'
+        materialOverrides:
+          description: define material overrides
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/MaterialOverride'
+        metersPerUnit:
+          description: 'Length of a scene unit in meters, default to 0.01 (centimeters).'
+          type: number
+          format: double
+          exclusiveMinimum: 0
+        modelFile:
+          description: 'path of model file in sources. If value is null, the first found model file will be used.'
+          type: string
+        modelTransform:
+          description: Transform applied on model
+          $ref: '#/components/schemas/Transform'
+      additionalProperties: false
+    SizeOptions:
+      type: object
+      properties:
+        height:
+          description: render height
+          type: integer
+          format: int64
+          maximum: 2304
+          minimum: 16
+        width:
+          description: render width
+          type: integer
+          format: int64
+          maximum: 3840
+          minimum: 16
+      additionalProperties: false
+      required:
+        - width
+        - height
+    SourceACP:
+      type: object
+      properties:
+        assetPath:
+          $ref: '#/components/schemas/AssetPath'
+        assetUrn:
+          type: string
+        component:
+          $ref: '#/components/schemas/Component'
+      additionalProperties: false
+    SourceFrameIO:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        folderId:
+          type: string
+      additionalProperties: false
+      required:
+        - folderId
+        - accessToken
+    SourceSpace:
+      type: object
+      properties:
+        id:
+          description: space id
+          type: string
+      additionalProperties: false
+      required:
+        - id
+    SourceURL:
+      type: object
+      properties:
+        url:
+          type: string
+          examples:
+            - 'https://cdn.substance3d.com/v2/files/public/stepladder.usdz'
+      additionalProperties: false
+      required:
+        - url
+    Space:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/Space.json'
+          readOnly: true
+        archiveUrl:
+          description: url to fetch the whole space as an archive (usually ZIP file)
+          type: string
+        files:
+          description: 'list of all files contained in space, ordered by name'
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/SpaceFile'
+        id:
+          description: unique identifier of this space
+          type: string
+        url:
+          description: url to the full description of this space
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - archiveUrl
+        - files
+    SpaceFile:
+      type: object
+      properties:
+        name:
+          type: string
+        size:
+          type: integer
+          format: int64
+          minimum: 0
+        url:
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - name
+        - size
+    TRS:
+      type: object
+      properties:
+        rotation:
+          $ref: '#/components/schemas/Rotation'
+        scale:
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
+          maxItems: 3
+          minItems: 3
+        translation:
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
+          examples:
+            - - 0
+              - 0
+              - 0
+          maxItems: 3
+          minItems: 3
+      additionalProperties: false
+      required:
+        - translation
+        - rotation
+        - scale
+    Transform:
+      type: object
+      properties:
+        azimuthAltitude:
+          description: 'transform is defined by azimuth, altitude and radius terms (if set, do not set matrix nor trs)'
+          $ref: '#/components/schemas/AzimuthAltitude'
+        matrix:
+          description: 'transform is defined as a matrix (if set, do not set trs nor azimuthAltitude)'
+          type: array
+          items:
+            format: double
+            type: number
+          maxItems: 16
+          minItems: 16
+        trs:
+          description: 'transform is defined by translation, rotation and scale terms (if set, do not set matrix nor azimuthAltitude)'
+          $ref: '#/components/schemas/TRS'
+      additionalProperties: false
+    UsdOptions:
+      type: object
+      properties:
+        variants:
+          description: List of USD variants definition applied on usd primitives.
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/UsdVariant'
+      additionalProperties: false
+      required:
+        - variants
+    UsdVariant:
+      type: object
+      properties:
+        primName:
+          type: string
+        variant:
+          type: string
+        variantSet:
+          type: string
+      additionalProperties: false
+      required:
+        - primName
+        - variantSet
+        - variant
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      description: Adobe IMS bearer token
+      scheme: bearer
+      type: http
+security:
+  - bearerAuth: []
