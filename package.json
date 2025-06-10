@@ -13,24 +13,36 @@
   },
   "dependencies": {
     "@adobe/gatsby-theme-aio": "^4.15.1",
+    "commander": "^14.0.0",
     "gatsby": "4.22.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "openapi-format": "^1.25.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-remark": "^2.1.0",
+    "rehype-sanitize": "^6.0.0",
+    "remark-parse": "^11.0.0"
   },
   "resolutions": {
     "sharp": "0.33.0",
     "gatsby-sharp": "1.12.0"
   },
   "scripts": {
-    "start": "gatsby build && gatsby serve",
-    "start:prefix": "gatsby build --prefix-paths && gatsby serve --prefix-paths",
+    "start": "yarn build && yarn serve",
+    "start:prefix": "yarn build:prefix && yarn serve:prefix",
+    "dev:redocly": "yarn build-apiref-page --no-pathprefix && yarn dev",
     "dev": "gatsby develop",
-    "dev:https": "gatsby develop --https --host localhost.corp.adobe.com --port 9000",
-    "build": "gatsby build",
+    "dev:https": "yarn dev --https --host localhost.corp.adobe.com --port 9000",
+    "build": "yarn build-apiref-page && gatsby build",
+    "build:prefix": "yarn build --prefix-paths",
     "serve": "gatsby serve",
+    "serve:prefix": "gatsby serve --prefix-paths",
     "clean": "gatsby clean",
     "test:links": "remark src/pages --quiet --frail",
-    "lint": "docker run --rm -e RUN_LOCAL=true --env-file '.github/super-linter.env' -v \"$PWD\":/tmp/lint github/super-linter:slim-v4.10.1"
+    "lint": "docker run --rm -e RUN_LOCAL=true --env-file '.github/super-linter.env' -v \"$PWD\":/tmp/lint github/super-linter:slim-v4.10.1",
+    "update-openapi-desc": "openapi-format https://s3d.adobe.io/openapi.yaml --overlayFile openapi-overlay.yaml -o static/openapi/openapi.yaml",
+    "build-apiref-page": "node utils/openapi/md-page-gen.js --openapi-file openapi/openapi.yaml --output-dir src/pages/api"
   },
   "remarkConfig": {
     "plugins": [
