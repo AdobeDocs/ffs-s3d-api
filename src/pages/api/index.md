@@ -8,5 +8,10 @@ keywords:
   - Developer Documentation
   - API Documentation
 layout: none
-openAPISpec: openapi/openapi.yaml
 ---
+
+import GetCredentialsOauth2 from "../components/credentials/GetCredentialOAuth2.js";
+
+<GetCredentialsOauth2 />
+
+<RedoclyAPIBlock src="/s3dapi/openapi/openapi.yaml" width="600px" ctrlFHijack="false" disableSearch scrollYOffset={64} generateCodeSamples="languages: [{lang: 'curl'}]" />

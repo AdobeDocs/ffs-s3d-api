@@ -66,13 +66,13 @@ After a successful file upload, the response contains details for the newly crea
 ```json
 {
   "id": "s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
-  "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
-  "archiveUrl": "https://s3d.adobe.io/v1beta/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip?x-s3d-presigned-token=<auto_generated_token>",
+  "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
+  "archiveUrl": "https://s3d.adobe.io/v1/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip?x-s3d-presigned-token=<auto_generated_token>",
   "files": [
     {
       "name": "WaterBottle.glb",
       "size": 8961340,
-      "url": "https://s3d.adobe.io/v1beta/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/WaterBottle.glb?x-s3d-presigned-token=<auto_generated_token>"
+      "url": "https://s3d.adobe.io/v1/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/WaterBottle.glb?x-s3d-presigned-token=<auto_generated_token>"
     }
   ]
 }
@@ -174,4 +174,4 @@ These assets will be merged to create a Space with the following structure:
 <!-- Links -->
 [1]: ../../guides/create_a_space/index.md
 [2]: https://frame.io
-[3]: ../../guides/render_3d_model/index.md
+[3]: ../../guides/render_3d_object/index.md

@@ -31,7 +31,7 @@ The status can be one of the following:
 To poll a job's status, use the `/jobs` endpoint with the job ID that is returned in the initial API response:
 
 ```bash
-curl --url https://s3d.adobe.io/v1beta/jobs/<JOB_ID> \
+curl --url https://s3d.adobe.io/v1/jobs/<JOB_ID> \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN'
 ```
 
@@ -45,10 +45,10 @@ not_started
 
 ```json
 {
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "not_started",
-  "bugReportUrl": "https://s3d.adobe.io/v1beta/bug-report/1727790895129-0"
+  "bugReportUrl": "https://s3d.adobe.io/v1/bug-report/1727790895129-0"
 }
 ```
 
@@ -56,10 +56,10 @@ running
 
 ```json
 {
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "running",
-  "bugReportUrl": "https://s3d.adobe.io/v1beta/bug-report/1727790895129-0"
+  "bugReportUrl": "https://s3d.adobe.io/v1/bug-report/1727790895129-0"
 }
 ```
 
@@ -67,20 +67,20 @@ succeeded
 
 ```json
 {
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "succeeded",
-  "bugReportUrl": "https://s3d.adobe.io/v1beta/bug-report/1727790895129-0",
+  "bugReportUrl": "https://s3d.adobe.io/v1/bug-report/1727790895129-0",
   "result": {
     "output": {
-      "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
+      "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
       "id": "s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
-      "archiveUrl": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip",
+      "archiveUrl": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip",
       "files": [
         {
           "name": "render0000.png",
           "size": 235441,
-          "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png"
+          "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png"
         }
       ]
     }
@@ -92,11 +92,11 @@ failed
 
 ```json
 {
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "failed",
   "error": "an error occurred, please retry later",
-  "bugReportUrl": "https://s3d.adobe.io/v1beta/bug-report/1727790895129-0"
+  "bugReportUrl": "https://s3d.adobe.io/v1/bug-report/1727790895129-0"
 }
 ```
 
