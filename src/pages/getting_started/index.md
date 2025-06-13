@@ -72,7 +72,7 @@ Let's make a test call to a Substance 3D API with the access token.
 1. Make a test call to the [Render Model API][6]:
 
 ```bash
-curl --location 'https://s3d.adobe.io/v1beta/3dmodels/render' \
+curl --location 'https://s3d.adobe.io/v1/scenes/render-basic' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/json' \
 --header "Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN" \
@@ -112,6 +112,6 @@ The response is typical for an asynchronous job. You can [learn more about async
 [4]: https://developer.adobe.com/developer-console/docs/guides/services/services-add-api-oauth-s2s/
 [5]: https://developer.adobe.com/developer-console/docs/guides/services/services-add-api-oauth-s2s/#api-overview
 [6]: /api
-[7]: /guides/render_3d_model
+[7]: /guides/render_3d_object
 [8]: https://developer.adobe.com/developer-console/docs/guides/services/services-add-api-oauth-s2s#generate-token
-[9]: /guides/asynchronous_jobs
+[9]: /getting_started/asynchronous_jobs/

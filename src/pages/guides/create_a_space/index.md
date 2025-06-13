@@ -28,7 +28,7 @@ For each asset file, add a new `--form` argument in the [cURL][3] command and re
 - `{FILEPATH}`: A path to your local file.
 
 ```bash
-curl --url https://s3d.adobe.io/v1beta/spaces \
+curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
 --form '{DESTINATION_FOLDER}="@{FILEPATH}"'
 ```
@@ -49,7 +49,7 @@ Open a secure terminal and Use the cURL command to upload our prepared asset fil
 cURL command
 
 ```bash
-curl --url https://s3d.adobe.io/v1beta/spaces \
+curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
 --form '.="@my_assets/asset.gltf"' \
 --form '.="@my_assets/asset.bin"' \
@@ -105,7 +105,7 @@ Job definition (*payload.json*)
 cURL command
 
 ```bash
-curl -X POST https://s3d.adobe.io/v1beta/3dmodels/render \ 
+curl -X POST https://s3d.adobe.io/v1/scenes/render-basic \ 
 --header "Content-Type: application/json" \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
 -d @payload.json

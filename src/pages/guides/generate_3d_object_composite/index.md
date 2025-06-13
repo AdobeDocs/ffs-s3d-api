@@ -1,8 +1,9 @@
 ---
-title: 2D/3D Compositing API Tutorial
-description: This how-to guides you through the process of creating images from 3D models and AI-generated content with the 2D/3D Compositing API.
+title: Generate 3D Object Composite
+description: This how-to guides you through the process of creating images from 3D objects and AI-generated content with the Generate 3D Object Composite API.
 keywords:
   - compositing
+  - composites
   - 2D/3D
   - scene
   - AI generation
@@ -11,15 +12,15 @@ keywords:
 hideBreadcrumbNav: true
 ---
 
-# 2D/3D Compositing API Tutorial
+# Generate 3D Object Composite
 
-Combine 3D models with AI-generated content using the [2D/3D Compositing API][1].
+Combine 3D objects with AI-generated content using the [Generate 3D Object Composite API][1].
 
 ## Overview
 
-Learn how to create compelling images by combining 3D models with AI-generated content using the [2D/3D Compositing API][1]. This guide walks you through the process of uploading assets, configuring compositing parameters, and generating final images.
+Learn how to create compelling images by combining 3D models with AI-generated content using the [Generate 3D Object Composite API][1]. This guide walks you through the process of uploading assets, configuring compositing parameters, and generating final images.
 
-![2D/3D Compositing](./compositing.png)
+![Generate 3D Object Composite](./compositing.png)
 
 ## Prerequisites
 
@@ -36,7 +37,7 @@ Learn how to create compelling images by combining 3D models with AI-generated c
    Run the following command to create the new Space:
 
 ```sh
-curl --url https://s3d.adobe.io/v1beta/spaces \
+curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
 --form '.="@compositing_table_bottle.glb"'
 ```
@@ -120,7 +121,7 @@ It's time to execute the compositing API request, using the job definition from 
 Send a request to the [Compose API](../../api/index.md):
 
 ```sh
-curl -vX POST https://s3d.adobe.io/v1beta/3dscenes/compose \
+curl -vX POST https://s3d.adobe.io/v1/composites/compose \
 -d @payload.json \
 --header "Content-Type: application/json" \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN'
@@ -131,7 +132,7 @@ The response will be similar to this:
 ```json
 {
   "$schema": "https://s3d.adobe.io/schemas/ComposeSceneResponse.json",
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0", // The URL to poll the job's status and result
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0", // The URL to poll the job's status and result
   "id": "1727790895129-0", // A unique identifier for the job
   "status": "running"
 }
@@ -159,7 +160,7 @@ Response (succeeded)
 ```json
 {
   "$schema": "https://s3d.adobe.io/schemas/ComposeSceneResponse.json",
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "succeeded",
   "result": {
@@ -167,7 +168,7 @@ Response (succeeded)
       {
         "image": {
           "seed": 63000,
-          "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>"
+          "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>"
         },
         ...
       }
@@ -175,14 +176,14 @@ Response (succeeded)
     "promptHasDeniedWords": false,
     "promptHasBlockedArtists": false,
     "outputSpace": {
-      "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
+      "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
       "id": "s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
-      "archiveUrl": "https://s3d.adobe.io/v1beta/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip?x-s3d-presigned-token=<auto_generated_token>",
+      "archiveUrl": "https://s3d.adobe.io/v1/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip?x-s3d-presigned-token=<auto_generated_token>",
       "files": [
         {
           "name": "render0000.png",
           "size": 3894406,
-          "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>"
+          "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>"
         },
         ...
       ]
@@ -196,7 +197,7 @@ Response (failed)
 ```json
 {
   "$schema": "https://s3d.adobe.io/schemas/ComposeSceneResponse.json",
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "failed",
   "error": "error message"
@@ -206,7 +207,7 @@ Response (failed)
 To download the rendered images, you can use the pre-signed URLs included in the response (`result.outputs[].image.url`), or find the rendered images URL from the list of files in the response (`result.outputSpace.files[].url`).
 
 ```sh
-curl -O --url https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>
+curl -O --url https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>
 ```
 
 ## Deepen your understanding
@@ -214,10 +215,10 @@ curl -O --url https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-89805
 Now that you completed this tutorial, visit its [API Reference][5] to explore more advanced use cases of 2D/3D compositing.
 
 <!-- Links -->
-[1]: /guides/api/compose_scene/
+[1]: /api/#tag/Composites/operation/composeImage_v1
 [2]: /getting_started
 [3]: https://curl.se/download.html
 [4]: https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb
-[5]: /api
+[5]: /api/#tag/Composites/operation/composeImage_v1
 [6]: ../../getting_started/assets_upload/index.md#using-spaces
 [7]: ../../getting_started/asynchronous_jobs/

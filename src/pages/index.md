@@ -26,7 +26,7 @@ A quickstart guide to making your first successful Substance 3D API call.
 
 <DiscoverBlock slots="link, text"/>
 
-[Tutorials](/guides/render_3d_model)
+[Tutorials](/guides/render_3d_object)
 
 Explore our tutorials page for comprehensive guidance.
 

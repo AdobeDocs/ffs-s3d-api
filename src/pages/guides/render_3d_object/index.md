@@ -1,6 +1,6 @@
 ---
-title: Render a 3D Model Tutorial
-description: Learn how to render 3D models using the Substance 3D API, including camera controls and material customization, and integrate Firefly workflows into your applications.
+title: Render 3D Object
+description: Learn how to render 3D objects using the Substance 3D API, including camera controls and material customization, and integrate Firefly workflows into your applications.
 keywords:
   - render
   - 3D model
@@ -11,11 +11,11 @@ keywords:
 hideBreadcrumbNav: true
 ---
 
-# Render a 3D Model
+# Render 3D Object
 
 ## Overview
 
-This guide shows you how to use the Substance 3D API to render 3D models. You'll learn how to upload assets, configure rendering parameters, and customize the output with different camera angles and materials.
+This guide shows you how to use the Substance 3D API to render 3D objects. You'll learn how to upload assets, configure rendering parameters, and customize the output with different camera angles and materials.
 
 ![DamagedHelmet.glb - Default Settings](./default.png)
 
@@ -36,7 +36,7 @@ This guide shows you how to use the Substance 3D API to render 3D models. You'll
   Run this command to create the new Space:
 
 ```sh
-curl --url https://s3d.adobe.io/v1beta/spaces \
+curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
 --form '.="@DamagedHelmet.glb"' \
 --form '.="@cross_brushed_copper.sbsar"'
@@ -103,10 +103,10 @@ To use the `DamagedHelmet.glb` file, set its path in the `scene.modelFile` prope
 
 It's time to execute the rendering API request, using the job definition from your `payload.json` file.
 
-Send a request to the [**v1beta/3dmodels/render**][5] endpoint:
+Send a request to the [**v1/scenes/render-basic**][5] endpoint:
 
 ```sh
-curl -X POST https://s3d.adobe.io/v1beta/3dmodels/render \
+curl -X POST https://s3d.adobe.io/v1/scenes/render-basic \
 -d @payload.json \
 --header "Content-Type: application/json" \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN'
@@ -117,7 +117,7 @@ The response will be similar to this example, with a unique `id`:
 ```json
 {
   "$schema": "https://s3d.adobe.io/schemas/RenderModelResponse.json",
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0", // unique job ID
   "status": "running"
 }
@@ -131,7 +131,7 @@ Since [jobs are asynchronous][7], their result isn't available immediately.
 1. The job URL must be polled to see the status.
 
 ```sh
-curl --url https://s3d.adobe.io/v1beta/jobs/1727790895129-0 \
+curl --url https://s3d.adobe.io/v1/jobs/1727790895129-0 \
 --header 'Accept: application/json' \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN'
 ```
@@ -145,20 +145,20 @@ Response (*succeeded*)
 ```json
 {
   "$schema": "https://s3d.adobe.io/schemas/RenderModelResponse.json",
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "succeeded",
   "result": {
-    "renderUrl": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>", // pre-signed URL, used to download the rendered image
+    "renderUrl": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>", // pre-signed URL, used to download the rendered image
     "outputSpace": {  // output Space, containing the list of generated resource files
-      "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
+      "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
       "id": "s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
-      "archiveUrl": "https://s3d.adobe.io/v1beta/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip?x-s3d-presigned-token=<auto_generated_token>",
+      "archiveUrl": "https://s3d.adobe.io/v1/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip?x-s3d-presigned-token=<auto_generated_token>",
       "files": [
         {
           "name": "render0000.png",
           "size": 235441,
-          "url": "https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>"
+          "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>"
         },
         ...
       ]
@@ -172,7 +172,7 @@ Response (*failed*)
 ```json
 {
   "$schema": "https://s3d.adobe.io/schemas/RenderModelResponse.json",
-  "url": "https://s3d.adobe.io/v1beta/jobs/1727790895129-0",
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
   "id": "1727790895129-0",
   "status": "failed",
   "error": "error message"
@@ -182,7 +182,7 @@ Response (*failed*)
 2. To download the rendered image, use the pre-signed URL included in the response (`result.renderUrl`), or find the rendered image URL from the list of files in the response (`result.outputSpace.files[].url`).
 
 ```sh
-curl -O --url https://s3d.adobe.io/v1beta/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>
+curl -O --url https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>
 ```
 
 ![DamagedHelmet.glb - Default Settings](./default.png)
@@ -322,13 +322,13 @@ By slightly modifying the previous job definition, you can apply these presets o
 
 ## Deepen your understanding
 
-Now that you completed this tutorial, visit its [API Reference][5] to explore more advanced use cases of 3D model rendering.
+Now that you completed this tutorial, visit its [API Reference][5] to explore more advanced use cases of 3D object rendering.
 
 <!-- Links -->
 [1]: /getting_started
 [2]: https://curl.se/download.html
 [3]: https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/DamagedHelmet/glTF-Binary/DamagedHelmet.glb
 [4]: https://cdn.substance3d.com/v2/files/public/4c26e92f-0801-437d-a900-8d3e67611549
-[5]: ../../api/index.md
+[5]: /api/#tag/Scenes/operation/renderSceneBasic_v1
 [6]: ../../getting_started/assets_upload/index.md#using-spaces
 [7]: ../../getting_started/asynchronous_jobs/
