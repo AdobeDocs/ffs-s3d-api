@@ -80,11 +80,11 @@ module.exports = {
         pages: [
           {
             title: "Render 3D Object",
-            path: "/guides/render_3d_model/",
+            path: "/guides/render_3d_object/",
           },
           {
             title: "Generate 3D Object Composite",
-            path: "/guides/compose_2d_3d_scene/",
+            path: "/guides/generate_3d_object_composite/",
           },
           {
             title: "Create a Space for Assets",
