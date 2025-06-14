@@ -14,4 +14,4 @@ import GetCredentialsOauth2 from "../components/credentials/GetCredentialOAuth2.
 
 <GetCredentialsOauth2 />
 
-<RedoclyAPIBlock src="/s3dapi/openapi/openapi.yaml" width="600px" ctrlFHijack="false" disableSearch scrollYOffset={64} generateCodeSamples="languages: [{lang: 'curl'}]" />
+<RedoclyAPIBlock src="/firefly-services/docs/s3dapi/openapi/openapi.yaml" width="600px" ctrlFHijack="false" disableSearch scrollYOffset={64} generateCodeSamples="languages: [{lang: 'curl'}]" />
