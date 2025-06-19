@@ -49,7 +49,7 @@ This ID will be the assets' *source* in the job definition.
 
 ```json
 {
-  "id": "{GENERATED_SPACE_ID}",
+  "id": "<GENERATED_SPACE_ID>",
   "files": [...],
   ...
 }
@@ -68,7 +68,7 @@ Create a *payload.json* file and define the Space with its ID (your `{GENERATED_
   "sources": [
     {
       "space": {
-        "id": "{GENERATED_SPACE_ID}"
+        "id": "<GENERATED_SPACE_ID>"
       }
     }
   ]
@@ -89,7 +89,7 @@ To use the `DamagedHelmet.glb` file, set its path in the `scene.modelFile` prope
   "sources": [
     {
       "space": {
-        "id": "{GENERATED_SPACE_ID}"
+        "id": "<GENERATED_SPACE_ID>"
       }
     }
   ],
@@ -118,7 +118,8 @@ The response will be similar to this example, with a unique `id`:
 {
   "$schema": "https://s3d.adobe.io/schemas/RenderModelResponse.json",
   "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
-  "id": "1727790895129-0", // unique job ID
+  // unique job ID
+  "id": "1727790895129-0",
   "status": "running"
 }
 ```
@@ -149,8 +150,10 @@ Response (*succeeded*)
   "id": "1727790895129-0",
   "status": "succeeded",
   "result": {
-    "renderUrl": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>", // pre-signed URL, used to download the rendered image
-    "outputSpace": {  // output Space, containing the list of generated resource files
+    // pre-signed URL, used to download the rendered image
+    "renderUrl": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>",
+    // output Space, containing the list of generated resource files
+    "outputSpace": {
       "url": "https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
       "id": "s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc",
       "archiveUrl": "https://s3d.adobe.io/v1/presigned-spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/zip?x-s3d-presigned-token=<auto_generated_token>",
@@ -221,8 +224,8 @@ Modify the camera angle by setting the `scene.camera` field in the payload.
       "focal": 50,
       "transform": {
         "azimuthAltitude": {
-          "azimuth": 0, // custom camera azimuth
-
+          // custom camera azimuth
+          "azimuth": 0,
           // the following values are identical to the default ones
           "altitude": 30,
           "lookAt": [0, 0, 0],
@@ -265,9 +268,11 @@ Let's override the existing model's material with one from the sample assets: `c
     "modelFile": "DamagedHelmet.glb",
     "materialOverrides": [
       {
-        "materialName": "Material_MR", // the name of the existing material assigned to the 3D model
+        // the name of the existing material assigned to the 3D model
+        "materialName": "Material_MR",
         "pbrMaterial": {
-          "resolution": 2048, // increased texture resolution
+          // increased texture resolution
+          "resolution": 2048,
           "sbsar": "cross_brushed_copper.sbsar"
         }
       }
@@ -306,7 +311,8 @@ By slightly modifying the previous job definition, you can apply these presets o
       {
         "materialName": "Material_MR",
         "pbrMaterial": {
-          "preset": "Rust Picked Copper Cross Brushed", // select the material preset
+          // select the material preset
+          "preset": "Rust Picked Copper Cross Brushed",
           "resolution": 2048,
           "sbsar": "cross_brushed_copper.sbsar"
         }

@@ -42,7 +42,7 @@ The steps below offer a walkthrough for creating a Space and uploading a few pre
 
 ## Step 1 - Upload files
 
-Open a secure terminal and Use the cURL command to upload our prepared asset files.
+Open a secure terminal and use the cURL command to upload our prepared asset files.
 
 <CodeBlock slots="heading, code" repeat="2" languages="CURL, JSON" />
 
