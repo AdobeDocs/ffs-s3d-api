@@ -329,6 +329,6 @@ Now that you completed this tutorial, visit its [API Reference][5] to explore mo
 [2]: https://curl.se/download.html
 [3]: https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/DamagedHelmet/glTF-Binary/DamagedHelmet.glb
 [4]: https://cdn.substance3d.com/v2/files/public/4c26e92f-0801-437d-a900-8d3e67611549
-[5]: /api/#tag/Scenes/operation/renderSceneBasic_v1
+[5]: /api/#tag/Scenes/operation/v1/scenes/render-basic
 [6]: ../../getting_started/assets_upload/index.md#using-spaces
 [7]: ../../getting_started/asynchronous_jobs/
