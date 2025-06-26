@@ -38,8 +38,8 @@ This guide shows you how to use the Substance 3D API to render 3D objects. You'l
 ```sh
 curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
---form '.="@DamagedHelmet.glb"' \
---form '.="@cross_brushed_copper.sbsar"'
+--form '.=@DamagedHelmet.glb' \
+--form '.=@cross_brushed_copper.sbsar'
 ```
 
 The JSON response contains an `"id"`, which identifies the new Space.
