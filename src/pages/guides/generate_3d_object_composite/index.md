@@ -39,7 +39,7 @@ Learn how to create compelling images by combining 3D models with AI-generated c
 ```sh
 curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
---form '.="@compositing_table_bottle.glb"'
+--form '.=@compositing_table_bottle.glb'
 ```
 
 The result is a JSON response that contains the `id` of the new Space.

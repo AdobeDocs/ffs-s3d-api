@@ -30,7 +30,7 @@ For each asset file, add a new `--form` argument in the [cURL][3] command and re
 ```bash
 curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
---form '{DESTINATION_FOLDER}="@{FILEPATH}"'
+--form '{DESTINATION_FOLDER}=@{FILEPATH}'
 ```
 
 The steps below offer a walkthrough for creating a Space and uploading a few prepared digital assets to it.
@@ -42,7 +42,7 @@ The steps below offer a walkthrough for creating a Space and uploading a few pre
 
 ## Step 1 - Upload files
 
-Open a secure terminal and Use the cURL command to upload our prepared asset files.
+In a secure terminal, use the cURL command to upload your prepared asset files.
 
 <CodeBlock slots="heading, code" repeat="2" languages="CURL, JSON" />
 
@@ -51,22 +51,22 @@ cURL command
 ```bash
 curl --url https://s3d.adobe.io/v1/spaces \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
---form '.="@my_assets/asset.gltf"' \
---form '.="@my_assets/asset.bin"' \
---form 'textures="@my_assets/textures/texture_asset.png"'
+--form '.=@my_assets/asset.gltf' \
+--form '.=@my_assets/asset.bin' \
+--form 'textures=@my_assets/textures/texture_asset.png'
 ```
 
-Response
+Example response
 
 ```json
 {
-  "id": "5cbf0499-174b-4d9d-917f-bdcd6e117447",
+  "id": "EXAMPLE-174b-4d9d-917f-bdcd6e117447",
   "files": [...],
   ...
 }
 ```
 
-This command  creates a new **Space** with the following tree structure:
+This command creates a new **Space** with the following tree structure:
 
 ```text
 ├── textures
@@ -79,9 +79,9 @@ The response contains the **Space ID** to reference the assets' location in Subs
 
 ## Step 2 - Reference uploaded assets
 
-Your assets are now ready to use with the Substance 3D APIs. Let's try a Render job as an example.
+Your assets are now ready to use with the Substance 3D APIs. Let's see an example of that with a Render job.
 
-To use the uploaded assets with the [Render Model API][4], we'll use the **Space ID** obtained during [Step 1](#step-1---upload-files).
+To use the uploaded assets with the [Render Model API][4], use the **Space ID** obtained during [Step 1](#step-1---upload-files).
 
 <CodeBlock slots="heading, code" repeat="2" languages="JSON, CURL" />
 
@@ -105,8 +105,8 @@ Job definition (*payload.json*)
 cURL command
 
 ```bash
-curl -X POST https://s3d.adobe.io/v1/scenes/render-basic \ 
---header "Content-Type: application/json" \
+curl -X POST https://s3d.adobe.io/v1/scenes/render-basic \
+--header 'Content-Type: application/json' \
 --header 'Authorization: Bearer $S3D_FF_SERVICES_ACCESS_TOKEN' \
 -d @payload.json
 ```
