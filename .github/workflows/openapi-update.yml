@@ -1,0 +1,50 @@
+---
+name: Update OpenAPI Description
+on:
+  schedule:
+    - cron: 0 6 * * *
+
+env:
+  S3D_OPENAPI_URL: https://s3d.adobe.io/openapi.yaml
+  OPENAPI_OVERLAY_PATH: openapi-overlay.yaml
+  OPENAPI_OUTPUT_PATH: static/openapi/openapi.yaml
+
+jobs:
+  openapi_desc_update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node v22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.17
+
+      - name: Apply OpenAPI Overlay
+        id: apply_openapi_overlay
+        run: npx openapi-format@1.27 $S3D_OPENAPI_URL --overlayFile $OPENAPI_OVERLAY_PATH -o $OPENAPI_OUTPUT_PATH
+
+      - name: Create Pull Request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: |
+            ${{ env.OPENAPI_OUTPUT_PATH }}
+          commit-message: Update OpenAPI Description file
+          branch: s3d/openapi-auto-update
+          delete-branch: true
+          title: Update OpenAPI Description file
+          body: |
+            Updated OpenAPI Description file (Source: ${{ env.S3D_OPENAPI_URL }})
+          reviewers: |
+            jmatichard
+            AEAbreu-hub
+          # committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          # author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
+          # draft: false
+          # labels: |
+          # assignees: jmatichard
+          # signoff: false
+          # team-reviewers: |
+          # milestone: 1
