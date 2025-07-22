@@ -1035,11 +1035,18 @@ components:
           type: boolean
         promptHasDeniedWords:
           type: boolean
+        warnings:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/types.Warning'
       additionalProperties: false
       required:
         - outputs
         - promptHasDeniedWords
         - promptHasBlockedArtists
+        - warnings
     restv1beta.ComposeSceneRequest:
       type: object
       properties:
@@ -1489,9 +1496,16 @@ components:
         renderUrl:
           description: URL to the rendered scene.
           type: string
+        warnings:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/types.Warning'
       additionalProperties: false
       required:
         - renderUrl
+        - warnings
     restv1beta.RenderSceneRequest:
       type: object
       properties:
@@ -2357,6 +2371,17 @@ components:
         - primName
         - variantSet
         - variant
+    types.Warning:
+      type: object
+      properties:
+        context:
+          type: string
+        message:
+          type: string
+      additionalProperties: false
+      required:
+        - context
+        - message
   securitySchemes:
     bearerAuth:
       bearerFormat: JWT
