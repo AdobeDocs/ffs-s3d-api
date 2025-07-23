@@ -147,14 +147,18 @@ In that case, we can define the different sources' `mountPoint` to indicate that
 {
   "sources": [
     {
-      "mountPoint": "/", // destination folder
-      "url": { // location of the 3D model file
+      // destination folder
+      "mountPoint": "/",
+      // location of the 3D model file
+      "url": {
         "url": "https://<a-cdn-url>/3dmodel.glb"
       },
     },
     {
-      "mountPoint": "/textures", // destination folder
-      "frame.io": { // location of the texture files (e.g., texture.png)
+      // destination folder
+      "mountPoint": "/textures",
+      // location of the texture files (e.g., texture.png)
+      "frame.io": {
         "folderId": "408ee4ee-9204-4fc2-987b-2077e4ae30e0",
         "accessToken": "<frameio-access-token>"
       }
