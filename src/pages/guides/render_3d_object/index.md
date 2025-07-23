@@ -217,9 +217,10 @@ Modify the camera angle by setting the `scene.camera` field in the payload.
   ],
   "scene": {
     "modelFile": "DamagedHelmet.glb",
-    "autoFraming": {
-      "zoomFactor": 0.7 // zoom out
-    },
+      "autoFraming": {
+    // zoom out
+    "zoomFactor": 0.7
+  },
     "camera": {
       "focal": 50,
       "transform": {
