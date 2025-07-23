@@ -132,8 +132,10 @@ The response will be similar to this:
 ```json
 {
   "$schema": "https://s3d.adobe.io/schemas/ComposeSceneResponse.json",
-  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0", // The URL to poll the job's status and result
-  "id": "1727790895129-0", // A unique identifier for the job
+  // The URL to poll the job's status and result
+  "url": "https://s3d.adobe.io/v1/jobs/1727790895129-0",
+  // A unique identifier for the job
+  "id": "1727790895129-0",
   "status": "running"
 }
 ```
