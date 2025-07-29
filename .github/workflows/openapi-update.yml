@@ -3,6 +3,7 @@ name: Update OpenAPI Description
 on:
   schedule:
     - cron: 0 6 * * *
+    - cron: 0 18 * * *
 
 env:
   S3D_OPENAPI_URL: https://s3d.adobe.io/openapi.yaml
