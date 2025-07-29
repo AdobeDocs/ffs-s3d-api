@@ -37,9 +37,17 @@ jobs:
           title: Update OpenAPI Description file
           body: |
             Updated OpenAPI Description file (Source: ${{ env.S3D_OPENAPI_URL }})
+
+          # Alexander A. <AEAbreu-hub>
+          # Stephane G. <Grumpfy>
+          # Benoit B. <groumfh-adobe>
+          # Jeremy M. <cador-adobe>
           reviewers: |
-            jmatichard
             AEAbreu-hub
+            Grumpfy
+            groumfh-adobe
+            cador-adobe
+
           # committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           # author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>
           # draft: false
