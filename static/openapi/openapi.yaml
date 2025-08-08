@@ -2166,10 +2166,22 @@ components:
           format: double
         nodesHierarchy:
           $ref: '#/components/schemas/types.SceneStatsNode'
+        numEquivalentTriangles:
+          type: integer
+          format: int64
+        numExtraPolygons:
+          type: integer
+          format: int64
         numFaces:
           type: integer
           format: int64
+        numLines:
+          type: integer
+          format: int64
         numMeshes:
+          type: integer
+          format: int64
+        numPoints:
           type: integer
           format: int64
         numQuads:
@@ -2191,8 +2203,12 @@ components:
         - metersPerSceneUnit
         - sceneUpAxis
         - numVertices
+        - numEquivalentTriangles
+        - numPoints
+        - numLines
         - numTriangles
         - numQuads
+        - numExtraPolygons
         - numFaces
         - numMeshes
         - numSubMeshes
