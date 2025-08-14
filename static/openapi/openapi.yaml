@@ -1940,6 +1940,9 @@ components:
       required:
         - width
         - height
+    types.RenderExtraOutputs:
+      type: object
+      additionalProperties: false
     types.Rotation:
       type: object
       properties:
