@@ -999,19 +999,25 @@ components:
     restv1beta.ComposeOutput:
       type: object
       properties:
+        backgroundImage:
+          $ref: '#/components/schemas/restv1beta.ComposeOutputImage'
         image:
           $ref: '#/components/schemas/restv1beta.ComposeOutputImage'
         lightingSeed:
           type: integer
           format: int64
+        maskImage:
+          $ref: '#/components/schemas/restv1beta.ComposeOutputImage'
         seed:
           type: integer
           format: int64
       additionalProperties: false
       required:
         - seed
-        - image
         - lightingSeed
+        - image
+        - backgroundImage
+        - maskImage
     restv1beta.ComposeOutputImage:
       type: object
       properties:
@@ -1421,6 +1427,9 @@ components:
         cameraName:
           description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
           type: string
+        extraOutputs:
+          description: request additional outputs from the renderer
+          $ref: '#/components/schemas/types.RenderExtraOutputs'
         groundPlane:
           description: Options related to the ground plane.
           $ref: '#/components/schemas/types.GroundPlaneOptions'
@@ -1525,6 +1534,9 @@ components:
         cameraName:
           description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
           type: string
+        extraOutputs:
+          description: request additional outputs from the renderer
+          $ref: '#/components/schemas/types.RenderExtraOutputs'
         groundPlane:
           description: Options related to the ground plane.
           $ref: '#/components/schemas/types.GroundPlaneOptions'
@@ -1754,6 +1766,17 @@ components:
       additionalProperties: false
       required:
         - camera
+    types.ExportMasksOptions:
+      type: object
+      properties:
+        selection:
+          description: 'The list of masks to be exported, accepts glob expressions. If empty, all masks will be exported'
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+      additionalProperties: false
     types.FormatOptions:
       type: object
       properties:
@@ -1807,10 +1830,6 @@ components:
     types.MaterialOverride:
       type: object
       properties:
-        TranslucencyTexture:
-          type:
-            - string
-            - 'null'
         absorptionColorFactor:
           description: 'RGB floating point color such as white is [1.0,1.0,1.0]'
           type: array
@@ -1911,6 +1930,8 @@ components:
           format: double
           maximum: 1
           minimum: 0
+        translucencyTexture:
+          type: string
         volumeThicknessFactor:
           type: number
           format: double
@@ -1920,7 +1941,6 @@ components:
       additionalProperties: false
       required:
         - materialName
-        - TranslucencyTexture
     types.OutputSize:
       type: object
       properties:
@@ -1942,6 +1962,21 @@ components:
         - height
     types.RenderExtraOutputs:
       type: object
+      properties:
+        exportMaterialIds:
+          description: export an image with one color per material
+          type: boolean
+          default: false
+        exportMaterialMasks:
+          description: export one mask per material
+          $ref: '#/components/schemas/types.ExportMasksOptions'
+        exportObjectIds:
+          description: export an image with one color per object
+          type: boolean
+          default: false
+        exportObjectMasks:
+          description: export one mask per object
+          $ref: '#/components/schemas/types.ExportMasksOptions'
       additionalProperties: false
     types.Rotation:
       type: object
