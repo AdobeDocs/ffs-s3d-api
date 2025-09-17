@@ -803,10 +803,14 @@ components:
         frame.io:
           description: Fetch content from a Frame.io folder. ⚠️ All sources are exclusive.
           $ref: '#/components/schemas/rest_base.SourceFrameIO'
+          deprecated: true
         mountPoint:
           description: Where to mount the content of the source in the virtual job working directory.
           type: string
           default: /
+        next.frame.io:
+          description: fetch content from a next.frame.io folder. ⚠️ All sources are exclusive.
+          $ref: '#/components/schemas/rest_base.SourceFrameIOV4'
         space:
           description: 'Read content from an existing space (can be another job''s output, or uploaded manually with the space API). ⚠️ All sources are exclusive.'''
           $ref: '#/components/schemas/rest_base.SourceSpace'
@@ -825,6 +829,20 @@ components:
       required:
         - folderId
         - accessToken
+    rest_base.SourceFrameIOV4:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        accountId:
+          type: string
+        folderId:
+          type: string
+      additionalProperties: false
+      required:
+        - folderId
+        - accountId
+        - accessToken
     rest_base.SourceSpace:
       type: object
       properties:
@@ -837,6 +855,9 @@ components:
     rest_base.SourceURL:
       type: object
       properties:
+        filename:
+          description: 'filename override, if unset, will try to detect filename from content disposition header, then url itself'
+          type: string
         url:
           type: string
           examples:
@@ -1500,6 +1521,18 @@ components:
     restv1beta.RenderSceneJobResult:
       type: object
       properties:
+        materialIds:
+          $ref: '#/components/schemas/types.IdsMapData'
+        materialMasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/types.MaskNameToFileBinding'
+        objectIds:
+          $ref: '#/components/schemas/types.IdsMapData'
+        objectMasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/types.MaskNameToFileBinding'
         outputSpace:
           $ref: '#/components/schemas/rest_base.Space'
         renderUrl:
@@ -1757,6 +1790,23 @@ components:
           type: boolean
           default: false
       additionalProperties: false
+    types.ComposeSceneCustomModel:
+      type: object
+      properties:
+        customModelId:
+          description: ID of the custom model to be used for the generation.
+          type:
+            - string
+            - 'null'
+        customModelToken:
+          description: Token to be used to access the custom model.
+          type:
+            - string
+            - 'null'
+      additionalProperties: false
+      required:
+        - customModelId
+        - customModelToken
     types.ComposeSceneSceneDetails:
       type: object
       properties:
@@ -1827,6 +1877,70 @@ components:
           maximum: 1
           minimum: 0
       additionalProperties: false
+    types.IdsMapData:
+      type: object
+      properties:
+        fileName:
+          description: ids map file name
+          type: string
+        ids:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/types.NameToColorBinding'
+      additionalProperties: false
+      required:
+        - fileName
+        - ids
+    types.MaskNameToFileBinding:
+      type: object
+      properties:
+        fileName:
+          description: corresponding file name
+          type: string
+        name:
+          description: name in 3D scene
+          type: string
+      additionalProperties: false
+      required:
+        - name
+        - fileName
+    types.Material:
+      type: object
+      properties:
+        sbs:
+          $ref: '#/components/schemas/types.SbsMaterial'
+        shadowCatching:
+          $ref: '#/components/schemas/types.ShadowCatchingMaterial'
+        solidColor:
+          $ref: '#/components/schemas/types.SolidColorMaterial'
+      additionalProperties: false
+    types.MaterialAssign:
+      type: object
+      properties:
+        assignByDefault:
+          description: set to true to assign this material by default to all geometric primitives
+          type: boolean
+        excludeFromDefault:
+          description: 'If AssignByDefault is set to false, this is the list of nodes under which geometric primitives will have this material assigned. Otherwise, if AssignByDefault is set to true, this is a node exclude list. Each entry can be a full node name or a glob expression.'
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        material:
+          description: the material definition
+          $ref: '#/components/schemas/types.Material'
+        materialName:
+          description: 'desired material name, it will be sanitized to make a valid USD prim name'
+          type: string
+      additionalProperties: false
+      required:
+        - materialName
+        - material
+        - assignByDefault
+        - excludeFromDefault
     types.MaterialOverride:
       type: object
       properties:
@@ -1941,6 +2055,24 @@ components:
       additionalProperties: false
       required:
         - materialName
+    types.NameToColorBinding:
+      type: object
+      properties:
+        color:
+          description: corresponding color in the ID map
+          type: string
+          default:
+            - 0
+            - 0
+            - 0
+          contentEncoding: base64
+        name:
+          description: name in 3D scene
+          type: string
+      additionalProperties: false
+      required:
+        - name
+        - color
     types.OutputSize:
       type: object
       properties:
@@ -2228,6 +2360,9 @@ components:
         numSubMeshes:
           type: integer
           format: int64
+        numTextures:
+          type: integer
+          format: int64
         numTriangles:
           type: integer
           format: int64
@@ -2250,6 +2385,7 @@ components:
         - numFaces
         - numMeshes
         - numSubMeshes
+        - numTextures
         - cameraNames
         - materialNames
         - nodesHierarchy
@@ -2298,6 +2434,26 @@ components:
         - name
         - values
         - currentValue
+    types.ShadowCatchingMaterial:
+      type: object
+      properties:
+        reflectionOpacity:
+          type: number
+          format: double
+          default: 0
+        roughness:
+          type: number
+          format: double
+          default: 0
+        shadowOpacity:
+          type: number
+          format: double
+          default: 0
+      additionalProperties: false
+      required:
+        - reflectionOpacity
+        - roughness
+        - shadowOpacity
     types.SimpleSceneDescription:
       type: object
       properties:
@@ -2348,6 +2504,26 @@ components:
       required:
         - width
         - height
+    types.SolidColorMaterial:
+      type: object
+      properties:
+        color:
+          description: 'RGB color of the solid material, each component has to be in the [0,1] range'
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
+          default:
+            - 0
+            - 0
+            - 0
+          maxItems: 3
+          minItems: 3
+      additionalProperties: false
+      required:
+        - color
     types.TRS:
       type: object
       properties:
