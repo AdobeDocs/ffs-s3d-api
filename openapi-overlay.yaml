@@ -36,7 +36,7 @@ actions:
       info:
         title: Adobe Substance 3D API - Firefly Services
         version: 1.0.0
-        description: REST API for Adobe Substance 3D - Firefly Services
+        description: REST API for Adobe Substance 3D - Firefly Services.
 
       # PATHS
       paths:
@@ -185,10 +185,12 @@ actions:
                 description: A space ID.
 
           # Nested SourceURL component (referenced by MountedSource.url)
-          # rest_base.SourceURL:
-          #   properties:
-          #     url:
-          #       type: string
+          rest_base.SourceURL:
+            properties:
+              filename:
+                description: Filename override. If unset, the service will try to detect the filename from the content disposition header, then the URL itself.
+              url:
+                description: URL to fetch content from.
 
           # ========================================
           # COMPOSE SCENE ENDPOINTS - Response Objects
@@ -362,6 +364,8 @@ actions:
                 description: Background related options.
               cameraName:
                 description: If set, this camera is used to perform the render. The camera has to be defined in the scene.
+              extraOutputs:
+                description: Request additional outputs from the renderer.
               groundPlane:
                 description: Options related to the ground plane.
               scene:
@@ -385,6 +389,8 @@ actions:
                 description: Options related to the background.
               cameraName:
                 description: If set, this camera is used to perform the render. The camera has to be defined in the scene.
+              extraOutputs:
+                description: Request additional outputs from the renderer.
               groundPlane:
                 description: Options related to the ground plane.
               scene:
@@ -693,6 +699,72 @@ actions:
           #     name:
           #       type: string
 
-          # SceneStatsBoundingBox properties
-          # types.SceneStatsBoundingBox:
-          #   properties:
+          # ========================================
+          # ADDITIONAL NESTED COMPONENTS
+          # ========================================
+          
+          # AzimuthAltitude properties
+          types.AzimuthAltitude:
+            properties:
+              altitude:
+                description: Altitude, in degrees, from -90 to 90 degrees.
+              azimuth:
+                description: Rotation around the vertical axis, in degrees.
+              lookAt:
+                description: Look at point coordinates.
+              radius:
+                description: Distance to the `lookAt` point.
+
+          # ExportMasksOptions properties
+          types.ExportMasksOptions:
+            properties:
+              selection:
+                description: The list of masks to be exported, accepts glob expressions. If empty, all masks will be exported.
+
+          # IdsMapData properties
+          types.IdsMapData:
+            properties:
+              fileName:
+                description: The Ids map file name.
+              ids:
+                description: List of name to color bindings.
+
+          # MaskNameToFileBinding properties
+          types.MaskNameToFileBinding:
+            properties:
+              fileName:
+                description: The file name.
+              name:
+                description: Then name in the 3D scene.
+
+          # MaterialAssign properties
+          types.MaterialAssign:
+            properties:
+              assignByDefault:
+                description: Set to true to assign this material by default to all geometric primitives.
+              excludeFromDefault:
+                description: List of nodes to exclude from default assignment.
+              material:
+                description: The material definition.
+              materialName:
+                description: Desired material name, it will be sanitized to make a valid USD prim name.
+
+          # NameToColorBinding properties
+          types.NameToColorBinding:
+            properties:
+              color:
+                description: Corresponding color in the ID map.
+              name:
+                description: Name in 3D scene.
+
+          # RenderExtraOutputs properties
+          types.RenderExtraOutputs:
+            properties:
+              exportMaterialIds:
+                description: Export an image with one color per material.
+              exportMaterialMasks:
+                description: Export one mask per material.
+              exportObjectIds:
+                description: Export an image with one color per object.
+              exportObjectMasks:
+                description: Export one mask per object.
