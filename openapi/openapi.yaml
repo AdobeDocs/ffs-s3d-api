@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  description: REST API for Adobe Substance 3D - Firefly Services
+  description: REST API for Adobe Substance 3D - Firefly Services.
   title: Adobe Substance 3D API - Firefly Services
   version: 1.0.0
 servers:
@@ -856,9 +856,10 @@ components:
       type: object
       properties:
         filename:
-          description: 'filename override, if unset, will try to detect filename from content disposition header, then url itself'
+          description: 'Filename override. If unset, the service will try to detect the filename from the content disposition header, then the URL itself.'
           type: string
         url:
+          description: URL to fetch content from.
           type: string
           examples:
             - 'https://cdn.substance3d.com/v2/files/public/stepladder.usdz'
@@ -1449,7 +1450,7 @@ components:
           description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
           type: string
         extraOutputs:
-          description: request additional outputs from the renderer
+          description: Request additional outputs from the renderer.
           $ref: '#/components/schemas/types.RenderExtraOutputs'
         groundPlane:
           description: Options related to the ground plane.
@@ -1568,7 +1569,7 @@ components:
           description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
           type: string
         extraOutputs:
-          description: request additional outputs from the renderer
+          description: Request additional outputs from the renderer.
           $ref: '#/components/schemas/types.RenderExtraOutputs'
         groundPlane:
           description: Options related to the ground plane.
@@ -1730,16 +1731,17 @@ components:
       type: object
       properties:
         altitude:
-          description: 'altitude, in degrees, from -90 to 90 degrees'
+          description: 'Altitude, in degrees, from -90 to 90 degrees.'
           type: number
           format: double
           maximum: 90
           minimum: -90
         azimuth:
-          description: 'rotation around the vertical axis, in degrees'
+          description: 'Rotation around the vertical axis, in degrees.'
           type: number
           format: double
         lookAt:
+          description: Look at point coordinates.
           type:
             - array
             - 'null'
@@ -1749,7 +1751,7 @@ components:
           maxItems: 3
           minItems: 3
         radius:
-          description: distance to the lookAt point
+          description: Distance to the `lookAt` point.
           type: number
           format: double
           minimum: 0
@@ -1820,7 +1822,7 @@ components:
       type: object
       properties:
         selection:
-          description: 'The list of masks to be exported, accepts glob expressions. If empty, all masks will be exported'
+          description: 'The list of masks to be exported, accepts glob expressions. If empty, all masks will be exported.'
           type:
             - array
             - 'null'
@@ -1881,9 +1883,10 @@ components:
       type: object
       properties:
         fileName:
-          description: ids map file name
+          description: The Ids map file name.
           type: string
         ids:
+          description: List of name to color bindings.
           type:
             - array
             - 'null'
@@ -1897,10 +1900,10 @@ components:
       type: object
       properties:
         fileName:
-          description: corresponding file name
+          description: The file name.
           type: string
         name:
-          description: name in 3D scene
+          description: Then name in the 3D scene.
           type: string
       additionalProperties: false
       required:
@@ -1920,20 +1923,20 @@ components:
       type: object
       properties:
         assignByDefault:
-          description: set to true to assign this material by default to all geometric primitives
+          description: Set to true to assign this material by default to all geometric primitives.
           type: boolean
         excludeFromDefault:
-          description: 'If AssignByDefault is set to false, this is the list of nodes under which geometric primitives will have this material assigned. Otherwise, if AssignByDefault is set to true, this is a node exclude list. Each entry can be a full node name or a glob expression.'
+          description: List of nodes to exclude from default assignment.
           type:
             - array
             - 'null'
           items:
             type: string
         material:
-          description: the material definition
+          description: The material definition.
           $ref: '#/components/schemas/types.Material'
         materialName:
-          description: 'desired material name, it will be sanitized to make a valid USD prim name'
+          description: 'Desired material name, it will be sanitized to make a valid USD prim name.'
           type: string
       additionalProperties: false
       required:
@@ -2059,7 +2062,7 @@ components:
       type: object
       properties:
         color:
-          description: corresponding color in the ID map
+          description: Corresponding color in the ID map.
           type: string
           default:
             - 0
@@ -2067,7 +2070,7 @@ components:
             - 0
           contentEncoding: base64
         name:
-          description: name in 3D scene
+          description: Name in 3D scene.
           type: string
       additionalProperties: false
       required:
@@ -2096,18 +2099,18 @@ components:
       type: object
       properties:
         exportMaterialIds:
-          description: export an image with one color per material
+          description: Export an image with one color per material.
           type: boolean
           default: false
         exportMaterialMasks:
-          description: export one mask per material
+          description: Export one mask per material.
           $ref: '#/components/schemas/types.ExportMasksOptions'
         exportObjectIds:
-          description: export an image with one color per object
+          description: Export an image with one color per object.
           type: boolean
           default: false
         exportObjectMasks:
-          description: export one mask per object
+          description: Export one mask per object.
           $ref: '#/components/schemas/types.ExportMasksOptions'
       additionalProperties: false
     types.Rotation:
