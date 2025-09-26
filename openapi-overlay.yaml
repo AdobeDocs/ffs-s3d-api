@@ -188,7 +188,7 @@ actions:
           rest_base.SourceURL:
             properties:
               filename:
-                description: Filename override, if unset, will try to detect filename from content disposition header, then url itself.
+                description: Filename override. If unset, the service will try to detect the filename from the content disposition header, then the URL itself.
               url:
                 description: URL to fetch content from.
 
@@ -713,7 +713,7 @@ actions:
               lookAt:
                 description: Look at point coordinates.
               radius:
-                description: Distance to the lookAt point.
+                description: Distance to the `lookAt` point.
 
           # ExportMasksOptions properties
           types.ExportMasksOptions:
@@ -725,7 +725,7 @@ actions:
           types.IdsMapData:
             properties:
               fileName:
-                description: Ids map file name.
+                description: The Ids map file name.
               ids:
                 description: List of name to color bindings.
 
@@ -733,9 +733,9 @@ actions:
           types.MaskNameToFileBinding:
             properties:
               fileName:
-                description: Corresponding file name.
+                description: The file name.
               name:
-                description: Name in 3D scene.
+                description: Then name in the 3D scene.
 
           # MaterialAssign properties
           types.MaterialAssign:
