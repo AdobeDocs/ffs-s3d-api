@@ -11,15 +11,13 @@
  */
 
 const Defaults = {
-  pathPrefix: "/firefly-services/docs/s3dapi/",
-  gatsbyTplIdDev: "67f54433dcac5930e7026eb8",
-  gatsbyTplIdProd: "67f544a30f73feac905f415c",
+  pathPrefix: "/firefly-services/docs/s3dapi/"
 };
 
 module.exports = {
   pathPrefix: process.env.PATH_PREFIX || Defaults.pathPrefix,
   siteMetadata: {
-    template_id: process.env.GATSBY_TEMPLATE_ID || Defaults.gatsbyTplIdDev,
+    template_id: process.env.GATSBY_TEMPLATE_ID,
     pages: [
       {
         title: "All Firefly Services",
