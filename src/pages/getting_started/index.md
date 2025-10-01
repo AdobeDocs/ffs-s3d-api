@@ -1,6 +1,6 @@
 ---
-title: Authentication
-description: A guide to authentication for Adobe Substance 3D APIs
+title: Authentication for Firefly's Substance 3D
+description: A guide to authentication for Adobe Substance 3D API.
 hideBreadcrumbNav: true
 contributors:
   - https://github.com/AEAbreu-hub
