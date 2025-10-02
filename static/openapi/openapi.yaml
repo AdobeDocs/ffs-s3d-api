@@ -940,9 +940,19 @@ components:
           description: 'Enable the auto-generated ground plane under the hero asset. This is useful if the 3D scene contains only a hero asset, without additional elements.'
           type: boolean
           default: false
+        environment:
+          description: 'Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If is set, the lightingSeeds parameter will be ignored.'
+          $ref: '#/components/schemas/types.ComposeEnvironment'
+        environmentExposure:
+          description: 'exposure, in EV (0=neutral)'
+          type: number
+          format: double
+          maximum: 10
+          minimum: -10
         heroAsset:
           description: Name of an existing 'hero asset' in the source 3D scene. The asset has to be defined in the scene.
           type: string
+          minLength: 1
         lightingSeeds:
           description: 'Optional seeds to be used to generate the lighting for the scene. The first seed will be used with the first seed of the background, the second one with the second seed of the background and so on. Background seeds must be defined and the number of lighting seeds should equal the number of background seeds. If not set, random seeds will be used. You will be able to retrieve the seeds used for the generation in the output details of the job.'
           type: array
@@ -966,6 +976,7 @@ components:
         prompt:
           description: Prompt to be used to generate the background image with Adobe Firefly.
           type: string
+          minLength: 1
         scene:
           $ref: '#/components/schemas/types.ComposeSceneSceneDetails'
         sceneFile:
@@ -1101,9 +1112,19 @@ components:
           description: 'Allow to enable the auto generated groundplane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default. '
           type: boolean
           default: false
+        environment:
+          description: 'Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If is set, the lightingSeeds parameter will be ignored.'
+          $ref: '#/components/schemas/types.ComposeEnvironment'
+        environmentExposure:
+          description: 'exposure, in EV (0=neutral)'
+          type: number
+          format: double
+          maximum: 10
+          minimum: -10
         heroAsset:
           description: Name of an existing 'hero asset' in the source 3D scene (the asset has to be defined in the scene)
           type: string
+          minLength: 1
         lightingSeeds:
           description: 'Optional seeds to be used to generate the lighting for the scene. The first seed will be used with the first seed of the background, the second one with the second seed of the background and so on. Background seeds must be defined and the number of lighting seeds should equal the number of background seeds. If not set, random seeds will be used. You will be able to retrieve the seeds used for the generation in the output details of the job.'
           type: array
@@ -1127,6 +1148,7 @@ components:
         prompt:
           description: Prompt to be used to generate the background image with Adobe Firefly
           type: string
+          minLength: 1
         scene:
           $ref: '#/components/schemas/types.ComposeSceneSceneDetails'
         sceneFile:
@@ -1233,9 +1255,18 @@ components:
         encoding:
           description: Encoding output format.
           type: string
+          enum:
+            - glb
+            - gltf
+            - fbx
+            - usdz
+            - usda
+            - usdc
+            - obj
         fileBaseName:
           description: Output filename.
           type: string
+          minLength: 1
         scene:
           $ref: '#/components/schemas/types.SceneDescription'
         sources:
@@ -1792,6 +1823,18 @@ components:
           type: boolean
           default: false
       additionalProperties: false
+    types.ComposeEnvironment:
+      type: object
+      properties:
+        file:
+          description: 'path of environment file in sources. If value is null, the environment file will be generated.'
+          type: string
+        rotation:
+          description: controls the orientation of the environment map
+          $ref: '#/components/schemas/types.Rotation'
+      additionalProperties: false
+      required:
+        - file
     types.ComposeSceneCustomModel:
       type: object
       properties:
@@ -2250,6 +2293,8 @@ components:
           type: number
           format: double
           default: 0
+          maximum: 10
+          minimum: -10
         file:
           description: 'Path to the environment file in `sources`. If the value is `null`, the first found environment file will be used.'
           type: string
