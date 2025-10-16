@@ -112,8 +112,6 @@ paths:
         - Composites
       x-s3d-public: true
   '/v1/jobs/{id}': {}
-  '/v1/presigned-spaces/{id}/files/{+name}': {}
-  '/v1/presigned-spaces/{id}/zip': {}
   /v1/scenes/assemble:
     post:
       operationId: v1/scenes/assemble
@@ -736,8 +734,6 @@ paths:
         - Spaces
       x-s3d-public: true
   '/v1/spaces/{id}': {}
-  '/v1/spaces/{id}/files/{+name}': {}
-  '/v1/spaces/{id}/zip': {}
   /v1beta/3dmodels/convert: {}
   /v1beta/3dmodels/render: {}
   /v1beta/3dscenes/compose: {}
@@ -745,12 +741,8 @@ paths:
   /v1beta/3dscenes/get-description: {}
   /v1beta/3dscenes/render: {}
   '/v1beta/jobs/{id}': {}
-  '/v1beta/presigned-spaces/{id}/files/{+name}': {}
-  '/v1beta/presigned-spaces/{id}/zip': {}
   /v1beta/spaces: {}
   '/v1beta/spaces/{id}': {}
-  '/v1beta/spaces/{id}/files/{+name}': {}
-  '/v1beta/spaces/{id}/zip': {}
 components:
   schemas:
     ffapierrors.FFAPIError:
@@ -876,9 +868,6 @@ components:
           examples:
             - 'https://s3d.adobe.io/schemas/rest_base.Space.json'
           readOnly: true
-        archiveUrl:
-          description: URL to fetch the whole space as an archive (usually a ZIP file).
-          type: string
         files:
           description: 'List of all files contained in Space, ordered by name.'
           type:
@@ -892,11 +881,12 @@ components:
         url:
           description: URL to the full description of this Space.
           type: string
+        archiveUrl:
+          description: URL to fetch the whole space as an archive (usually a ZIP file).
       additionalProperties: false
       required:
         - url
         - id
-        - archiveUrl
         - files
     rest_base.SpaceFile:
       type: object
@@ -1956,37 +1946,37 @@ components:
       type: object
       properties:
         sbs:
+          description: the pbr material definition
           $ref: '#/components/schemas/types.SbsMaterial'
-        shadowCatching:
-          $ref: '#/components/schemas/types.ShadowCatchingMaterial'
         solidColor:
+          description: the solid color material definition
           $ref: '#/components/schemas/types.SolidColorMaterial'
       additionalProperties: false
     types.MaterialAssign:
       type: object
       properties:
-        assignByDefault:
-          description: Set to true to assign this material by default to all geometric primitives.
-          type: boolean
-        excludeFromDefault:
-          description: List of nodes to exclude from default assignment.
-          type:
-            - array
-            - 'null'
-          items:
-            type: string
         material:
           description: The material definition.
           $ref: '#/components/schemas/types.Material'
         materialName:
           description: 'Desired material name, it will be sanitized to make a valid USD prim name.'
           type: string
+        nodeList:
+          description: list of nodes under which geometric primitives will have this material assigned. Each entry can be a full node name or a glob expression.
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        assignByDefault:
+          description: Set to true to assign this material by default to all geometric primitives.
+        excludeFromDefault:
+          description: List of nodes to exclude from default assignment.
       additionalProperties: false
       required:
         - materialName
         - material
-        - assignByDefault
-        - excludeFromDefault
+        - nodeList
     types.MaterialOverride:
       type: object
       properties:
@@ -2276,6 +2266,13 @@ components:
         environment:
           description: Define the environment for the scene. Override the previous existing environment.
           $ref: '#/components/schemas/types.SceneEnvironment'
+        materials:
+          description: assign new materials to geometric primitives
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/types.MaterialAssign'
         metersPerUnit:
           description: 'Length of a scene unit, in meters. Defaults to `baseFile` meters per unit if any, or 0.01 (centimeters) otherwise.'
           type: number
@@ -2521,6 +2518,13 @@ components:
             - 'null'
           items:
             $ref: '#/components/schemas/types.MaterialOverride'
+        materials:
+          description: assign new materials to geometric primitives
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/types.MaterialAssign'
         metersPerUnit:
           description: 'Length of a scene unit, in meters. Defaults to 0.01 (centimeters).'
           type: number
@@ -2569,6 +2573,18 @@ components:
             - 0
           maxItems: 3
           minItems: 3
+        metallicFactor:
+          description: 'metallic factor of the solid material, has to be in the [0,1] range'
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
+        roughnessFactor:
+          description: 'roughness factor of the solid material, has to be in the [0,1] range'
+          type: number
+          format: double
+          maximum: 1
+          minimum: 0
       additionalProperties: false
       required:
         - color
