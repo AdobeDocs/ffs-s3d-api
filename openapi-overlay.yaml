@@ -881,8 +881,4 @@ actions:
               variants:
                 description: List of USD variants definition applied on USD primitives.
 
-      # COMPONENTS - Security Schemes
-      components:
-        securitySchemes:
-          bearerAuth:
-            description: Adobe auth bearer token.
+
