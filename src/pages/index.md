@@ -4,7 +4,9 @@ description: This is the overview page of the Substance 3D API
 hideBreadcrumbNav: true
 ---
 
-<Hero slots="heading, text" background="#1e3101"/>
+<Hero slots="image, heading, text" background="rgb(126, 183, 196)" theme="dark"/>
+
+![Substance 3D Hero Image](./sub3d-hero.png)
 
 # Adobe Substance 3D API - Firefly Services
 
