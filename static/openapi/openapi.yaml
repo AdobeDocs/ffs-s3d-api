@@ -9,7 +9,7 @@ paths:
   /v1/composites/compose:
     post:
       operationId: v1/composites/compose
-      summary: Generate 3D Object Composite
+      summary: Generate 3D object composite
       description: Generate a 3D Object Composite with the Substance 3D API.
       requestBody:
         content:
@@ -115,8 +115,8 @@ paths:
   /v1/scenes/assemble:
     post:
       operationId: v1/scenes/assemble
-      summary: Create 3D Scene
-      description: Assemble a 3D Scene with the Substance 3D API.
+      summary: Create 3D scene
+      description: Assemble a 3D scene with the Substance 3D API.
       requestBody:
         content:
           application/json:
@@ -220,7 +220,7 @@ paths:
   /v1/scenes/convert:
     post:
       operationId: v1/scenes/convert
-      summary: Convert 3D Files
+      summary: Convert 3D files
       description: Convert a 3D file into another 3D format with the Substance 3D API.
       requestBody:
         content:
@@ -325,7 +325,7 @@ paths:
   /v1/scenes/describe:
     post:
       operationId: v1/scenes/describe
-      summary: Describe 3D Scene
+      summary: Describe 3D scene
       description: Describe a 3D scene.
       requestBody:
         content:
@@ -430,8 +430,8 @@ paths:
   /v1/scenes/render:
     post:
       operationId: v1/scenes/render
-      summary: Render 3D Object
-      description: Render a 3D Object with the Substance 3D API.
+      summary: Render 3D object
+      description: Render a 3D object with the Substance 3D API.
       requestBody:
         content:
           application/json:
@@ -535,8 +535,8 @@ paths:
   /v1/scenes/render-basic:
     post:
       operationId: v1/scenes/render-basic
-      summary: Render 3D Object (basic version)
-      description: Render a 3D Object (basic version) with the Substance 3D API.
+      summary: Render 3D object (basic version)
+      description: Render a 3D object (basic version) with the Substance 3D API.
       requestBody:
         content:
           application/json:
@@ -750,22 +750,22 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/ffapierrors.FFAPIError.json'
           readOnly: true
         error_code:
-          description: Associated error code.
+          description: Associated error code
           type: string
         error_details:
-          description: Optional list of individual error details.
+          description: Optional list of individual error details
           type: array
           items:
             type: object
         message:
-          description: Error message.
+          description: Error message
           type: string
       additionalProperties: false
       required:
@@ -774,15 +774,15 @@ components:
       type: object
       properties:
         error_code:
-          description: Error code.
+          description: Error code
           type: string
         error_context:
-          description: Additional context for the error.
+          description: Additional context for the error
         loc:
-          description: 'Where the error occurred, indicated in dot notation (e.g., body.items[3].tags or path.thing-id).'
+          description: 'Where the error occurred, e.g. ''body.items[3].tags'' or ''path.thing-id'''
           type: string
         msg:
-          description: Error message text.
+          description: Error message text
           type: string
       additionalProperties: false
       required:
@@ -793,21 +793,21 @@ components:
       type: object
       properties:
         frame.io:
-          description: Fetch content from a Frame.io folder. ⚠️ All sources are exclusive.
+          description: fetch content from a legacy frame.io folder. ⚠️ All sources are exclusive.
           $ref: '#/components/schemas/rest_base.SourceFrameIO'
           deprecated: true
         mountPoint:
-          description: Where to mount the content of the source in the virtual job working directory.
+          description: where to mount the content of the source in the virtual job working dir
           type: string
           default: /
         next.frame.io:
           description: fetch content from a next.frame.io folder. ⚠️ All sources are exclusive.
           $ref: '#/components/schemas/rest_base.SourceFrameIOV4'
         space:
-          description: 'Read content from an existing space (can be another job''s output, or uploaded manually with the space API). ⚠️ All sources are exclusive.'''
+          description: 'read content from an existing space (can be another job''s output, or uploaded manually with the space API). ⚠️ All sources are exclusive.'
           $ref: '#/components/schemas/rest_base.SourceSpace'
         url:
-          description: Fetch content from a URL. ⚠️ All sources are exclusive.
+          description: fetch content from an URL. ⚠️ All sources are exclusive.
           $ref: '#/components/schemas/rest_base.SourceURL'
       additionalProperties: false
     rest_base.SourceFrameIO:
@@ -839,7 +839,7 @@ components:
       type: object
       properties:
         id:
-          description: A space ID.
+          description: space id
           type: string
       additionalProperties: false
       required:
@@ -848,10 +848,9 @@ components:
       type: object
       properties:
         filename:
-          description: 'Filename override. If unset, the service will try to detect the filename from the content disposition header, then the URL itself.'
+          description: 'filename override, if unset, will try to detect filename from content disposition header, then url itself'
           type: string
         url:
-          description: URL to fetch content from.
           type: string
           examples:
             - 'https://cdn.substance3d.com/v2/files/public/stepladder.usdz'
@@ -862,27 +861,25 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/rest_base.Space.json'
           readOnly: true
         files:
-          description: 'List of all files contained in Space, ordered by name.'
+          description: 'list of all files contained in space, ordered by name'
           type:
             - array
             - 'null'
           items:
             $ref: '#/components/schemas/rest_base.SpaceFile'
         id:
-          description: Unique identifier of this Space.
+          description: unique identifier of this space
           type: string
         url:
-          description: URL to the full description of this Space.
+          description: url to the full description of this space
           type: string
-        archiveUrl:
-          description: URL to fetch the whole space as an archive (usually a ZIP file).
       additionalProperties: false
       required:
         - url
@@ -908,26 +905,26 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1.ComposeSceneRequest.json'
           readOnly: true
         cameraName:
-          description: Name of an existing camera in the source 3D scene. The camera has to be defined in the scene.
+          description: Name of an existing camera in the source 3D scene (the camera has to be defined in the scene). This is exclusive with 'scene.camera'.
           type:
             - string
             - 'null'
         contentClass:
-          description: Class of content to generate.
+          description: 'Class of content to generate (''photo'' or ''art''). If omitted, defaults to ''photo''.'
           type: string
           default: photo
           enum:
             - art
             - photo
         enableGroundPlane:
-          description: 'Enable the auto-generated ground plane under the hero asset. This is useful if the 3D scene contains only a hero asset, without additional elements.'
+          description: 'Allow to enable the auto generated groundplane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default. '
           type: boolean
           default: false
         environment:
@@ -940,7 +937,7 @@ components:
           maximum: 10
           minimum: -10
         heroAsset:
-          description: Name of an existing 'hero asset' in the source 3D scene. The asset has to be defined in the scene.
+          description: Name of an existing 'hero asset' in the source 3D scene (the asset has to be defined in the scene)
           type: string
           minLength: 1
         lightingSeeds:
@@ -950,7 +947,7 @@ components:
             format: int64
             type: integer
         modelVersion:
-          description: Model version to be used to generate the background image with Adobe Firefly.
+          description: 'Model version to be used to generate the background image with Adobe Firefly. If omitted, defaults to ''image4_ultra''.'
           type: string
           default: image4_ultra
           enum:
@@ -958,42 +955,38 @@ components:
             - image4_standard
             - image4_ultra
         numVariations:
-          description: 'The number of variations to generate. `numVariations` will default to the number of seeds, or to 1 if `seeds` is not specified.'
+          description: 'The number of variations to generate. numVariations will default to the number of seeds, or to 1 if seeds is not specified'
           type: integer
           format: int64
           maximum: 4
           minimum: 1
         prompt:
-          description: Prompt to be used to generate the background image with Adobe Firefly.
+          description: Prompt to be used to generate the background image with Adobe Firefly
           type: string
           minLength: 1
         scene:
           $ref: '#/components/schemas/types.ComposeSceneSceneDetails'
         sceneFile:
-          description: 'The path of the scene file in `sources`. If value is null, the first found scene file will be used.'
+          description: 'Path of scene file in sources. If value is null, the first found scene file will be used.'
           type: string
         seeds:
-          description: 'Optional seed value to be used to generate the background image with Adobe Firefly. A seed ensures consistent background image generation. If `seed` is not set, a random seed will be used. Retrieve the seed used for the generation in the output details of the job. If specified with `numVariations`, the number of seeds must be the equal to `numVariations`.'
+          description: 'Optional seed to be used to generate the background image with Adobe Firefly. Seed ensures consistent background image generation. If seed is not set, a random seed will be used. You will be able to retrieve the seed used for the generation in the output details of the job. If specified alongside with numVariations, the number of seeds must be the equal to numVariations.'
           type: array
           items:
             format: int64
             type: integer
         size:
           description: |-
-            The size of the image generations. The supported dimensions for image generations are: 
+            The size of the requested generations. The supported dimensions for image generations are: 
               | Dimensions | Description | 
               | -----------| ----- |
               | { "width": 2048, "height": 2048} | Square (1:1) |
               | { "width": 2304, "height": 1792 } | Landscape (4:3) |
               | { "width": 1792, "height": 2304 } | Portrait (3:4) | 
-              | { "width": 2688, "height": 1536 } | Widescreen (16:9) |  
-              | { "width": 1344, "height": 768 } |(7:4) |  
-              |{ "width": 1152, "height": 896 } |(9:7) |  
-              |{ "width": 896, "height": 1152 } |(7:9) |  
-              | { "width": 1024, "height": 1024} | Square (1:1) |
+              | { "width": 2688, "height": 1536 } | Widescreen (16:9) |
           $ref: '#/components/schemas/types.OutputSize'
         sources:
-          description: List of sources to aggregate and run the job against.
+          description: list of sources to aggregate and run the job against
           type:
             - array
             - 'null'
@@ -1002,7 +995,7 @@ components:
           maxItems: 16
           minItems: 1
         styleImage:
-          description: Optional 'style image' to be used to generate the background. The style image has to be present in `sources`.
+          description: Optional 'style image' to be used to generate the background (the style image has to be present in sources)
           type: string
       additionalProperties: false
       dependentRequired:
@@ -1191,29 +1184,29 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.ComposeSceneResponse.json'
           readOnly: true
         bugReportUrl:
-          description: URL to report a bug about this job.
+          description: url to report a bug about this job
           type: string
         error:
-          description: Potential error that happened during the job processing.
+          description: potential error that happened during the job processing
           type: string
         id:
-          description: Unique identifier of the job.
+          description: unique identifier of the job
           type: string
         result:
-          description: Result when the job is successfully finished.
+          description: result when the job is successfully finished
           $ref: '#/components/schemas/restv1beta.ComposeSceneJobResult'
         status:
-          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
+          description: 'status of the job: not_started|running|succeeded|failed'
           type: string
         url:
-          description: URL to fetch/poll for job result in case the job is not finished yet.
+          description: url to fetch/poll for job result in case the job is not finished yet
           type: string
       additionalProperties: false
       required:
@@ -1227,7 +1220,7 @@ components:
         outputSpace:
           $ref: '#/components/schemas/rest_base.Space'
         sceneUrl:
-          description: URL for the created scene.
+          description: URL to the created scene
           type: string
       additionalProperties: false
       required:
@@ -1236,14 +1229,14 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.CreateSceneRequest.json'
           readOnly: true
         encoding:
-          description: Encoding output format.
+          description: encoding output format
           type: string
           enum:
             - glb
@@ -1254,13 +1247,13 @@ components:
             - usdc
             - obj
         fileBaseName:
-          description: Output filename.
+          description: output filename
           type: string
           minLength: 1
         scene:
           $ref: '#/components/schemas/types.SceneDescription'
         sources:
-          description: List of sources to aggregate and run the job against.
+          description: list of sources to aggregate and run the job against
           type:
             - array
             - 'null'
@@ -1329,29 +1322,29 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.CreateSceneResponse.json'
           readOnly: true
         bugReportUrl:
-          description: URL to report a bug about this job.
+          description: url to report a bug about this job
           type: string
         error:
-          description: Potential error that happened during the job processing.
+          description: potential error that happened during the job processing
           type: string
         id:
-          description: Unique identifier of the job.
+          description: unique identifier of the job
           type: string
         result:
-          description: Result when the job is successfully finished.
+          description: result when the job is successfully finished
           $ref: '#/components/schemas/restv1beta.CreateSceneJobResult'
         status:
-          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
+          description: 'status of the job: not_started|running|succeeded|failed'
           type: string
         url:
-          description: 'URL to fetch/poll for the job result, in case the job is not finished yet.'
+          description: url to fetch/poll for job result in case the job is not finished yet
           type: string
       additionalProperties: false
       required:
@@ -1369,14 +1362,14 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.ModelConvertRequest.json'
           readOnly: true
         format:
-          description: Output format.
+          description: output format
           type: string
           enum:
             - glb
@@ -1389,10 +1382,10 @@ components:
           examples:
             - glb
         modelEntrypoint:
-          description: Conversion usually takes the first file that's considered a valid 3D model. Define this entry point to disambiguate when there are multiple options.
+          description: 'conversion will usually take the first file that is considered a valid 3D model - in case there are multiple options, this is used to disambiguate.'
           type: string
         sources:
-          description: List of sources to aggregate and run the job against.
+          description: list of sources to aggregate and run the job against
           type:
             - array
             - 'null'
@@ -1421,29 +1414,29 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.ModelConvertResponse.json'
           readOnly: true
         bugReportUrl:
-          description: URL to report a bug about this job.
+          description: url to report a bug about this job
           type: string
         error:
-          description: Potential error that happened during the job processing.
+          description: potential error that happened during the job processing
           type: string
         id:
-          description: Unique identifier of the job.
+          description: unique identifier of the job
           type: string
         result:
-          description: Result when the job is successfully finished.
+          description: result when the job is successfully finished
           $ref: '#/components/schemas/restv1beta.ModelConvertJobResult'
         status:
-          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
+          description: 'status of the job: not_started|running|succeeded|failed'
           type: string
         url:
-          description: 'URL to fetch/poll for the job result, in case the job is not finished yet.'
+          description: url to fetch/poll for job result in case the job is not finished yet
           type: string
       additionalProperties: false
       required:
@@ -1455,35 +1448,35 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.RenderModelRequest.json'
           readOnly: true
         autoFraming:
-          description: Options related to auto-framing.
+          description: auto-framing related options
           $ref: '#/components/schemas/types.AutoFramingOptions'
         background:
-          description: Options related to the background.
+          description: background related options
           $ref: '#/components/schemas/types.BackgroundOptions'
         cameraName:
-          description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
+          description: 'if set, will use this camera to perform the render (the camera has to be defined in the scene)'
           type: string
         extraOutputs:
-          description: Request additional outputs from the renderer.
+          description: request additional outputs from the renderer
           $ref: '#/components/schemas/types.RenderExtraOutputs'
         groundPlane:
-          description: Options related to the ground plane.
+          description: ground plane related options
           $ref: '#/components/schemas/types.GroundPlaneOptions'
         scene:
-          description: Define rendering scene primitives.
+          description: define rendering scene primitives
           $ref: '#/components/schemas/types.SimpleSceneDescription'
         size:
-          description: Options related to the render size.
+          description: render size related options
           $ref: '#/components/schemas/types.SizeOptions'
         sources:
-          description: List of sources to aggregate and run the job against.
+          description: list of sources to aggregate and run the job against
           type:
             - array
             - 'null'
@@ -1510,29 +1503,29 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.RenderModelResponse.json'
           readOnly: true
         bugReportUrl:
-          description: URL to report a bug about this job.
+          description: url to report a bug about this job
           type: string
         error:
-          description: Potential error that happened during the job processing.
+          description: potential error that happened during the job processing
           type: string
         id:
-          description: Unique identifier of the job.
+          description: unique identifier of the job
           type: string
         result:
-          description: Result when the job is successfully finished.
+          description: result when the job is successfully finished
           $ref: '#/components/schemas/restv1beta.RenderSceneJobResult'
         status:
-          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
+          description: 'status of the job: not_started|running|succeeded|failed'
           type: string
         url:
-          description: 'URL to fetch/poll for the job result, in case the job is not finished yet.'
+          description: url to fetch/poll for job result in case the job is not finished yet
           type: string
       additionalProperties: false
       required:
@@ -1558,7 +1551,7 @@ components:
         outputSpace:
           $ref: '#/components/schemas/rest_base.Space'
         renderUrl:
-          description: URL to the rendered scene.
+          description: URL to the rendered scene
           type: string
         warnings:
           type:
@@ -1574,35 +1567,35 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.RenderSceneRequest.json'
           readOnly: true
         autoFraming:
-          description: Auto-framing related options.
+          description: auto-framing related options
           $ref: '#/components/schemas/types.AutoFramingOptions'
         background:
-          description: Background related options.
+          description: background related options
           $ref: '#/components/schemas/types.BackgroundOptions'
         cameraName:
-          description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
+          description: 'if set, will use this camera to perform the render (the camera has to be defined in the scene)'
           type: string
         extraOutputs:
-          description: Request additional outputs from the renderer.
+          description: request additional outputs from the renderer
           $ref: '#/components/schemas/types.RenderExtraOutputs'
         groundPlane:
-          description: Options related to the ground plane.
+          description: ground plane related options
           $ref: '#/components/schemas/types.GroundPlaneOptions'
         scene:
-          description: Define rendering scene primitives.
+          description: define rendering scene primitives
           $ref: '#/components/schemas/types.SceneDescription'
         size:
-          description: Render size related options.
+          description: render size related options
           $ref: '#/components/schemas/types.SizeOptions'
         sources:
-          description: List of sources to aggregate and run the job against.
+          description: list of sources to aggregate and run the job against
           type:
             - array
             - 'null'
@@ -1633,29 +1626,29 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.RenderSceneResponse.json'
           readOnly: true
         bugReportUrl:
-          description: URL to report a bug about this job.
+          description: url to report a bug about this job
           type: string
         error:
-          description: Potential error that happened during the job processing.
+          description: potential error that happened during the job processing
           type: string
         id:
-          description: Unique identifier of the job.
+          description: unique identifier of the job
           type: string
         result:
-          description: Result when the job is successfully finished.
+          description: result when the job is successfully finished
           $ref: '#/components/schemas/restv1beta.RenderSceneJobResult'
         status:
-          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
+          description: 'status of the job: not_started|running|succeeded|failed'
           type: string
         url:
-          description: 'URL to fetch/poll for the job result, in case the job is not finished yet.'
+          description: url to fetch/poll for job result in case the job is not finished yet
           type: string
       additionalProperties: false
       required:
@@ -1675,17 +1668,17 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.SceneDescRequest.json'
           readOnly: true
         sceneFile:
-          description: 'Path to the scene file in `sources`. If the value is `null`, the first found scene file will be used.'
+          description: 'path of scene file in sources. If value is null, the first found scene file will be used.'
           type: string
         sources:
-          description: List of sources to aggregate and run the job against.
+          description: list of sources to aggregate and run the job against
           type:
             - array
             - 'null'
@@ -1707,29 +1700,29 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON schema for this object.
+          description: A URL to the JSON Schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.SceneDescResponse.json'
           readOnly: true
         bugReportUrl:
-          description: URL to report a bug about this job.
+          description: url to report a bug about this job
           type: string
         error:
-          description: Potential error that happened during the job processing.
+          description: potential error that happened during the job processing
           type: string
         id:
-          description: Unique identifier of the job.
+          description: unique identifier of the job
           type: string
         result:
-          description: Result when the job is successfully finished.
+          description: result when the job is successfully finished
           $ref: '#/components/schemas/restv1beta.SceneDescJobResult'
         status:
-          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
+          description: 'status of the job: not_started|running|succeeded|failed'
           type: string
         url:
-          description: 'URL to fetch/poll for the job result, in case the job is not finished yet.'
+          description: url to fetch/poll for job result in case the job is not finished yet
           type: string
       additionalProperties: false
       required:
@@ -1741,7 +1734,7 @@ components:
       type: object
       properties:
         zoomFactor:
-          description: A value of 1 indicates tight framing. Less than 1 is a zoom-out. Greater than 1 is a zoom-in.
+          description: '1 means tight framing, <1 zoom-out & >1 is zoom-in'
           type: number
           format: double
           default: 0.8
@@ -1752,17 +1745,16 @@ components:
       type: object
       properties:
         altitude:
-          description: 'Altitude, in degrees, from -90 to 90 degrees.'
+          description: 'altitude, in degrees, from -90 to 90 degrees'
           type: number
           format: double
           maximum: 90
           minimum: -90
         azimuth:
-          description: 'Rotation around the vertical axis, in degrees.'
+          description: 'rotation around the vertical axis, in degrees'
           type: number
           format: double
         lookAt:
-          description: Look at point coordinates.
           type:
             - array
             - 'null'
@@ -1772,7 +1764,7 @@ components:
           maxItems: 3
           minItems: 3
         radius:
-          description: Distance to the `lookAt` point.
+          description: distance to the lookAt point
           type: number
           format: double
           minimum: 0
@@ -1786,7 +1778,7 @@ components:
       type: object
       properties:
         backgroundColor:
-          description: 'RGBA background color. Has an effect only if `showEnvironment` is `false`. Each component has to be in the [0,1] range.'
+          description: 'RGBA background color, has an effect only if showEnvironment is false. Each component has to be in the [0,1] range'
           type:
             - array
             - 'null'
@@ -1806,10 +1798,10 @@ components:
           maxItems: 4
           minItems: 4
         backgroundImage:
-          description: 'Path to a background image. If set, will be used as the background.'
+          description: 'path to a background image; if set, will be used as the background'
           type: string
         showEnvironment:
-          description: Show the environment map as the background.
+          description: show the environment map as the background
           type: boolean
           default: false
       additionalProperties: false
@@ -1855,7 +1847,7 @@ components:
       type: object
       properties:
         selection:
-          description: 'The list of masks to be exported, accepts glob expressions. If empty, all masks will be exported.'
+          description: 'The list of masks to be exported, accepts glob expressions. If empty, all masks will be exported'
           type:
             - array
             - 'null'
@@ -1875,37 +1867,37 @@ components:
       type: object
       properties:
         autoGroundScene:
-          description: Automatically position the scene on the ground plane. Moves the scene along the vertical axis.
+          description: automatically position the scene onto the ground plane (moves the scene along the vertical axis)
           type: boolean
           default: true
         enable:
-          description: Enable/disable the ground plane.
+          description: enable/disable the ground plane
           type: boolean
           default: true
         reflections:
-          description: Enable/disable reflections onto the ground plane.
+          description: enable/disable reflections onto the ground plane
           type: boolean
           default: false
         reflectionsOpacity:
-          description: Controls the opacity of the reflections. Useful for compositing purposes.
+          description: controls the opacity of the reflections (useful for compositing purpose)
           type: number
           format: double
           default: 1
           maximum: 1
           minimum: 0
         reflectionsRoughness:
-          description: Controls the roughness of the reflections. Useful for compositing purposes.
+          description: controls the roughness of the reflections (useful for compositing purpose)
           type: number
           format: double
           default: 0
           maximum: 1
           minimum: 0
         shadows:
-          description: Controls whether the ground plane catches shadows or not.
+          description: controls whether the ground plane catches shadows or not
           type: boolean
           default: true
         shadowsOpacity:
-          description: Controls the opacity of catched shadows. Only has effect if shadows are enabled.
+          description: controls the opacity of catched shadows (only has effect if shadows are enabled)
           type: number
           format: double
           default: 1
@@ -1916,10 +1908,9 @@ components:
       type: object
       properties:
         fileName:
-          description: The Ids map file name.
+          description: ids map file name
           type: string
         ids:
-          description: List of name to color bindings.
           type:
             - array
             - 'null'
@@ -1933,10 +1924,10 @@ components:
       type: object
       properties:
         fileName:
-          description: The file name.
+          description: corresponding file name
           type: string
         name:
-          description: Then name in the 3D scene.
+          description: name in 3D scene
           type: string
       additionalProperties: false
       required:
@@ -1956,10 +1947,10 @@ components:
       type: object
       properties:
         material:
-          description: The material definition.
+          description: the material definition
           $ref: '#/components/schemas/types.Material'
         materialName:
-          description: 'Desired material name, it will be sanitized to make a valid USD prim name.'
+          description: 'desired material name, it will be sanitized to make a valid USD prim name'
           type: string
         nodeList:
           description: list of nodes under which geometric primitives will have this material assigned. Each entry can be a full node name or a glob expression.
@@ -1968,10 +1959,6 @@ components:
             - 'null'
           items:
             type: string
-        assignByDefault:
-          description: Set to true to assign this material by default to all geometric primitives.
-        excludeFromDefault:
-          description: List of nodes to exclude from default assignment.
       additionalProperties: false
       required:
         - materialName
@@ -2095,7 +2082,7 @@ components:
       type: object
       properties:
         color:
-          description: Corresponding color in the ID map.
+          description: corresponding color in the ID map
           type: string
           default:
             - 0
@@ -2103,7 +2090,7 @@ components:
             - 0
           contentEncoding: base64
         name:
-          description: Name in 3D scene.
+          description: name in 3D scene
           type: string
       additionalProperties: false
       required:
@@ -2132,18 +2119,18 @@ components:
       type: object
       properties:
         exportMaterialIds:
-          description: Export an image with one color per material.
+          description: export an image with one color per material
           type: boolean
           default: false
         exportMaterialMasks:
-          description: Export one mask per material.
+          description: export one mask per material
           $ref: '#/components/schemas/types.ExportMasksOptions'
         exportObjectIds:
-          description: Export an image with one color per object.
+          description: export an image with one color per object
           type: boolean
           default: false
         exportObjectMasks:
-          description: Export one mask per object.
+          description: export one mask per object
           $ref: '#/components/schemas/types.ExportMasksOptions'
       additionalProperties: false
     types.Rotation:
@@ -2225,10 +2212,10 @@ components:
       type: object
       properties:
         file:
-          description: Path to the scene file in `sources`.
+          description: path of scene file in sources.
           type: string
         modelsRootNodeName:
-          description: 'Define root node for models in scene graph. If not found, the node which are parent of all models in the scene will be used. If this node doesn''t exists, a new node will be created under global root.'
+          description: 'define root node for models in scene graph. If not found, the node which are parent of all models in the scene will be used. If this node doesn''t exists, a new node will be created under global root'
           type: string
       additionalProperties: false
       required:
@@ -2237,34 +2224,34 @@ components:
       type: object
       properties:
         focal:
-          description: 'Camera focal length, in mm.'
+          description: 'camera focal length, in mm'
           type: number
           format: double
           default: 50
           maximum: 1000
           minimum: 10
         sensorWidth:
-          description: 'Camera sensor width, in mm.'
+          description: 'camera sensor width, in mm'
           type: number
           format: double
           default: 36
           maximum: 100
           minimum: 1
         transform:
-          description: Controls the position and angle of the camera.
+          description: controls the position and angle of the camera
           $ref: '#/components/schemas/types.Transform'
       additionalProperties: false
     types.SceneDescription:
       type: object
       properties:
         baseFile:
-          description: 'Define a scene from a file. If value is `null`, an empty scene will be created.'
+          description: 'define a scene from a file. If value is null, an empty scene will be created.'
           $ref: '#/components/schemas/types.SceneBaseFile'
         camera:
-          description: Define a new camera for the scene.
+          description: define a new camera for the scene.
           $ref: '#/components/schemas/types.SceneCamera'
         environment:
-          description: Define the environment for the scene. Override the previous existing environment.
+          description: define environment for the scene. Override previous existing environment
           $ref: '#/components/schemas/types.SceneEnvironment'
         materials:
           description: assign new materials to geometric primitives
@@ -2274,70 +2261,70 @@ components:
           items:
             $ref: '#/components/schemas/types.MaterialAssign'
         metersPerUnit:
-          description: 'Length of a scene unit, in meters. Defaults to `baseFile` meters per unit if any, or 0.01 (centimeters) otherwise.'
+          description: 'Length of a scene unit in meters, default to baseFile meters per unit if any or 0.01 (centimeters) otherwise.'
           type: number
           format: double
           exclusiveMinimum: 0
         models:
-          description: Define additional models for the scene.
+          description: define additionals models for the scene.
           $ref: '#/components/schemas/types.SceneModels'
       additionalProperties: false
     types.SceneEnvironment:
       type: object
       properties:
         exposure:
-          description: 'Exposure, in EV (0=neutral).'
+          description: 'exposure, in EV (0=neutral)'
           type: number
           format: double
           default: 0
           maximum: 10
           minimum: -10
         file:
-          description: 'Path to the environment file in `sources`. If the value is `null`, the first found environment file will be used.'
+          description: 'path of environment file in sources. If value is null, the first found environment file will be used.'
           type: string
         preserveLights:
-          description: 'A scene may contain 3D lights, like area lights or spot lights. By default, all those lights are removed when a new environment is set. Set this option to `true` to preserve the scene 3D lights.'
+          description: 'The scene may contains 3D lights like area lights or spot lights. By default all those lights are removed when a new environment is set, set this option to ''true'' to preserve the scene 3D lights.'
           type: boolean
           default: false
         rotation:
-          description: Controls the orientation of the environment map.
+          description: controls the orientation of the environment map
           $ref: '#/components/schemas/types.Rotation'
       additionalProperties: false
     types.SceneModel:
       type: object
       properties:
         anchorName:
-          description: 'Node name in scene graph which used as parent for the model. If anchor is not found, a node with the anchor name will be generated under models root node. And If value is `null`, a node will be generated under models root node.'
+          description: 'node name in scene graph which used as parent for the model. If anchor is not found, a node with the anchor name will be generated under models root node. And If value is null, a node will be generated under models root node.'
           type: string
         file:
-          description: 'Path to the model file in `sources`. If the value is `null`, the first found model file will be used.'
+          description: 'path of model file in sources. If value is null, the first found model file will be used.'
           type: string
         formatOptions:
-          description: Define options specific for the model file format.
+          description: define options specific for model file format
           $ref: '#/components/schemas/types.FormatOptions'
         materialOverrides:
-          description: Define material overrides.
+          description: define material overrides
           type:
             - array
             - 'null'
           items:
             $ref: '#/components/schemas/types.MaterialOverride'
         transform:
-          description: 'Transform applied on the anchor node. Overrides the previous value, if it exists.'
+          description: Transform applied on anchor node. Override the previous value if it exists.
           $ref: '#/components/schemas/types.Transform'
       additionalProperties: false
     types.SceneModels:
       type: object
       properties:
         imports:
-          description: List of model import definitions.
+          description: List of model imports definition
           type:
             - array
             - 'null'
           items:
             $ref: '#/components/schemas/types.SceneModel'
         modelsRootNodeTransform:
-          description: 'Global transformation applied on the models root node defined in the scene. Overrides the previous value, if it exists.'
+          description: Global transformation applied on models root node defined in scene. Override the previous value if it exists.
           $ref: '#/components/schemas/types.Transform'
       additionalProperties: false
     types.SceneStatsBoundingBox:
@@ -2503,16 +2490,16 @@ components:
       type: object
       properties:
         camera:
-          description: Define a new camera for the scene.
+          description: define a new camera for the scene.
           $ref: '#/components/schemas/types.SceneCamera'
         environment:
-          description: Define the environment for the scene. Override the previous existing environment.
+          description: define environment for the scene. Override previous existing environment
           $ref: '#/components/schemas/types.SceneEnvironment'
         formatOptions:
-          description: Define options specific for the model file format.
+          description: define options specific for model file format
           $ref: '#/components/schemas/types.FormatOptions'
         materialOverrides:
-          description: Define material overrides.
+          description: define material overrides
           type:
             - array
             - 'null'
@@ -2526,28 +2513,28 @@ components:
           items:
             $ref: '#/components/schemas/types.MaterialAssign'
         metersPerUnit:
-          description: 'Length of a scene unit, in meters. Defaults to 0.01 (centimeters).'
+          description: 'Length of a scene unit in meters, default to 0.01 (centimeters).'
           type: number
           format: double
           exclusiveMinimum: 0
         modelFile:
-          description: 'Path to the model file in `sources`. If the value is `null`, the first found model file will be used.'
+          description: 'path of model file in sources. If value is null, the first found model file will be used.'
           type: string
         modelTransform:
-          description: Transform applied on the model.
+          description: Transform applied on model
           $ref: '#/components/schemas/types.Transform'
       additionalProperties: false
     types.SizeOptions:
       type: object
       properties:
         height:
-          description: Render height.
+          description: render height
           type: integer
           format: int64
           maximum: 2304
           minimum: 16
         width:
-          description: Render width.
+          description: render width
           type: integer
           format: int64
           maximum: 3840
@@ -2679,7 +2666,7 @@ components:
   securitySchemes:
     bearerAuth:
       bearerFormat: JWT
-      description: Adobe auth bearer token
+      description: Adobe auth bearer token.
       scheme: bearer
       type: http
 security:
