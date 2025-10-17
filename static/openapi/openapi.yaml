@@ -9,7 +9,7 @@ paths:
   /v1/composites/compose:
     post:
       operationId: v1/composites/compose
-      summary: Generate 3D Object Composite
+      summary: Generate 3D object composite
       description: Generate a 3D Object Composite with the Substance 3D API.
       requestBody:
         content:
@@ -115,8 +115,8 @@ paths:
   /v1/scenes/assemble:
     post:
       operationId: v1/scenes/assemble
-      summary: Create 3D Scene
-      description: Assemble a 3D Scene with the Substance 3D API.
+      summary: Create 3D scene
+      description: Assemble a 3D scene with the Substance 3D API.
       requestBody:
         content:
           application/json:
@@ -220,7 +220,7 @@ paths:
   /v1/scenes/convert:
     post:
       operationId: v1/scenes/convert
-      summary: Convert 3D Files
+      summary: Convert 3D files
       description: Convert a 3D file into another 3D format with the Substance 3D API.
       requestBody:
         content:
@@ -325,7 +325,7 @@ paths:
   /v1/scenes/describe:
     post:
       operationId: v1/scenes/describe
-      summary: Describe 3D Scene
+      summary: Describe 3D scene
       description: Describe a 3D scene.
       requestBody:
         content:
@@ -430,8 +430,8 @@ paths:
   /v1/scenes/render:
     post:
       operationId: v1/scenes/render
-      summary: Render 3D Object
-      description: Render a 3D Object with the Substance 3D API.
+      summary: Render 3D object
+      description: Render a 3D object with the Substance 3D API.
       requestBody:
         content:
           application/json:
@@ -535,8 +535,8 @@ paths:
   /v1/scenes/render-basic:
     post:
       operationId: v1/scenes/render-basic
-      summary: Render 3D Object (basic version)
-      description: Render a 3D Object (basic version) with the Substance 3D API.
+      summary: Render 3D object (basic version)
+      description: Render a 3D object (basic version) with the Substance 3D API.
       requestBody:
         content:
           application/json:
@@ -801,7 +801,7 @@ components:
           type: string
           default: /
         next.frame.io:
-          description: fetch content from a next.frame.io folder. ⚠️ All sources are exclusive.
+          description: Fetch content from a next.frame.io folder. ⚠️ All sources are exclusive.
           $ref: '#/components/schemas/rest_base.SourceFrameIOV4'
         space:
           description: 'Read content from an existing space (can be another job''s output, or uploaded manually with the space API). ⚠️ All sources are exclusive.'''
@@ -931,10 +931,10 @@ components:
           type: boolean
           default: false
         environment:
-          description: 'Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If is set, the lightingSeeds parameter will be ignored.'
+          description: 'Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If set, the `lightingSeeds` parameter will be ignored.'
           $ref: '#/components/schemas/types.ComposeEnvironment'
         environmentExposure:
-          description: 'exposure, in EV (0=neutral)'
+          description: 'Exposure, in EV (0=neutral).'
           type: number
           format: double
           maximum: 10
@@ -1099,20 +1099,20 @@ components:
             - art
             - photo
         enableGroundPlane:
-          description: 'Allow to enable the auto generated groundplane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default. '
+          description: Allow to enable the auto-generated ground plane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default.
           type: boolean
           default: false
         environment:
-          description: 'Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If is set, the lightingSeeds parameter will be ignored.'
+          description: 'Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If set, the `lightingSeeds` parameter will be ignored.'
           $ref: '#/components/schemas/types.ComposeEnvironment'
         environmentExposure:
-          description: 'exposure, in EV (0=neutral)'
+          description: 'Exposure, in EV (0=neutral).'
           type: number
           format: double
           maximum: 10
           minimum: -10
         heroAsset:
-          description: Name of an existing 'hero asset' in the source 3D scene (the asset has to be defined in the scene)
+          description: Name of an existing 'hero asset' in the source 3D scene (the asset has to be defined in the scene).
           type: string
           minLength: 1
         lightingSeeds:
@@ -1130,22 +1130,22 @@ components:
             - image4_standard
             - image4_ultra
         numVariations:
-          description: 'The number of variations to generate. numVariations will default to the number of seeds, or to 1 if seeds is not specified'
+          description: 'The number of variations to generate. `numVariations` will default to the number of seeds, or to 1 if `seeds` is not specified.'
           type: integer
           format: int64
           maximum: 4
           minimum: 1
         prompt:
-          description: Prompt to be used to generate the background image with Adobe Firefly
+          description: Prompt to be used to generate the background image with Adobe Firefly.
           type: string
           minLength: 1
         scene:
           $ref: '#/components/schemas/types.ComposeSceneSceneDetails'
         sceneFile:
-          description: 'Path of scene file in sources. If value is null, the first found scene file will be used.'
+          description: 'The path of the scene file in `sources`. If value is null, the first found scene file will be used.'
           type: string
         seeds:
-          description: 'Optional seed to be used to generate the background image with Adobe Firefly. Seed ensures consistent background image generation. If seed is not set, a random seed will be used. You will be able to retrieve the seed used for the generation in the output details of the job. If specified alongside with numVariations, the number of seeds must be the equal to numVariations.'
+          description: 'Optional seed to be used to generate the background image with Adobe Firefly. Seed ensures consistent background image generation. If `seed` is not set, a random seed will be used. You will be able to retrieve the seed used for the generation in the output details of the job. If specified alongside `numVariations`, the number of seeds must be equal to `numVariations`.'
           type: array
           items:
             format: int64
@@ -1161,7 +1161,7 @@ components:
               | { "width": 2688, "height": 1536 } | Widescreen (16:9) |
           $ref: '#/components/schemas/types.OutputSize'
         sources:
-          description: list of sources to aggregate and run the job against
+          description: List of sources to aggregate and run the job against.
           type:
             - array
             - 'null'
@@ -1817,10 +1817,10 @@ components:
       type: object
       properties:
         file:
-          description: 'path of environment file in sources. If value is null, the environment file will be generated.'
+          description: 'Path of environment file in `sources`. If value is null, the environment file will be generated.'
           type: string
         rotation:
-          description: controls the orientation of the environment map
+          description: Controls the orientation of the environment map.
           $ref: '#/components/schemas/types.Rotation'
       additionalProperties: false
       required:
@@ -1905,7 +1905,7 @@ components:
           type: boolean
           default: true
         shadowsOpacity:
-          description: Controls the opacity of catched shadows. Only has effect if shadows are enabled.
+          description: Controls the opacity of cast shadows. Only has effect if shadows are enabled.
           type: number
           format: double
           default: 1
@@ -1936,7 +1936,7 @@ components:
           description: The file name.
           type: string
         name:
-          description: Then name in the 3D scene.
+          description: The name in the 3D scene.
           type: string
       additionalProperties: false
       required:
@@ -1946,10 +1946,10 @@ components:
       type: object
       properties:
         sbs:
-          description: the pbr material definition
+          description: The PBR material definition.
           $ref: '#/components/schemas/types.SbsMaterial'
         solidColor:
-          description: the solid color material definition
+          description: The solid color material definition.
           $ref: '#/components/schemas/types.SolidColorMaterial'
       additionalProperties: false
     types.MaterialAssign:
@@ -1962,7 +1962,7 @@ components:
           description: 'Desired material name, it will be sanitized to make a valid USD prim name.'
           type: string
         nodeList:
-          description: list of nodes under which geometric primitives will have this material assigned. Each entry can be a full node name or a glob expression.
+          description: List of nodes under which geometric primitives will have this material assigned. Each entry can be a full node name or a glob expression.
           type:
             - array
             - 'null'
@@ -1981,7 +1981,7 @@ components:
       type: object
       properties:
         absorptionColorFactor:
-          description: 'RGB floating point color such as white is [1.0,1.0,1.0]'
+          description: 'RGB float color value, for example white is [1.0,1.0,1.0].'
           type: array
           items:
             format: double
@@ -2001,7 +2001,7 @@ components:
         absorptionDistanceTexture:
           type: string
         baseColorFactor:
-          description: 'RGB floating point color such as white is [1.0,1.0,1.0]'
+          description: 'RGB float color value, for example white is [1.0,1.0,1.0].'
           type: array
           items:
             format: double
@@ -2015,7 +2015,7 @@ components:
         baseColorTexture:
           type: string
         coatColorFactor:
-          description: 'RGB floating point color such as white is [1.0,1.0,1.0]'
+          description: 'RGB float color value, for example white is [1.0,1.0,1.0].'
           type: array
           items:
             format: double
@@ -2150,7 +2150,7 @@ components:
       type: object
       properties:
         euler:
-          description: euler angles in degrees
+          description: Euler angles in degrees.
           type: array
           items:
             format: double
@@ -2162,7 +2162,7 @@ components:
           maxItems: 3
           minItems: 3
         quaternion:
-          description: 'in W,X,Y,Z order'
+          description: 'In W,X,Y,Z order.'
           type: array
           items:
             format: double
@@ -2179,10 +2179,10 @@ components:
       type: object
       properties:
         preset:
-          description: select a preset to be used for the substance material rendering
+          description: Select a preset to be used for the substance material rendering.
           type: string
         resolution:
-          description: 'substance material render resolution, should be a power of two'
+          description: Substance material render resolution. This should be a power of two.
           type: integer
           format: int64
           enum:
@@ -2198,14 +2198,14 @@ components:
           maximum: 4096
           minimum: 16
         rotation:
-          description: texture space rotation
+          description: Texture space rotation.
           type: number
           format: double
         sbsar:
-          description: 'path to a substance material; if not set, the first substance 3D material found in sources will be used'
+          description: 'Path to a substance material; if not set, the first substance 3D material found in sources will be used.'
           type: string
         scale:
-          description: texture space scale
+          description: Texture space scale.
           type: array
           items:
             format: double
@@ -2213,7 +2213,7 @@ components:
           maxItems: 2
           minItems: 2
         translation:
-          description: texture space translation
+          description: Texture space translation.
           type: array
           items:
             format: double
@@ -2228,7 +2228,7 @@ components:
           description: Path to the scene file in `sources`.
           type: string
         modelsRootNodeName:
-          description: 'Define root node for models in scene graph. If not found, the node which are parent of all models in the scene will be used. If this node doesn''t exists, a new node will be created under global root.'
+          description: 'Define root node for models in scene graph. If not found, the node which is parent of all models in the scene will be used. If this node doesn''t exist, a new node will be created under global root.'
           type: string
       additionalProperties: false
       required:
@@ -2267,7 +2267,7 @@ components:
           description: Define the environment for the scene. Override the previous existing environment.
           $ref: '#/components/schemas/types.SceneEnvironment'
         materials:
-          description: assign new materials to geometric primitives
+          description: Assign new materials to geometric primitives.
           type:
             - array
             - 'null'
@@ -2519,7 +2519,7 @@ components:
           items:
             $ref: '#/components/schemas/types.MaterialOverride'
         materials:
-          description: assign new materials to geometric primitives
+          description: Assign new materials to geometric primitives.
           type:
             - array
             - 'null'
@@ -2560,7 +2560,7 @@ components:
       type: object
       properties:
         color:
-          description: 'RGB color of the solid material, each component has to be in the [0,1] range'
+          description: 'RGB color of the solid material, each component has to be in the [0,1] range.'
           type:
             - array
             - 'null'
@@ -2574,13 +2574,13 @@ components:
           maxItems: 3
           minItems: 3
         metallicFactor:
-          description: 'metallic factor of the solid material, has to be in the [0,1] range'
+          description: 'Metallic factor of the solid material, has to be in the [0,1] range.'
           type: number
           format: double
           maximum: 1
           minimum: 0
         roughnessFactor:
-          description: 'roughness factor of the solid material, has to be in the [0,1] range'
+          description: 'Roughness factor of the solid material, has to be in the [0,1] range.'
           type: number
           format: double
           maximum: 1
@@ -2624,10 +2624,10 @@ components:
       type: object
       properties:
         azimuthAltitude:
-          description: 'transform is defined by azimuth, altitude and radius terms (if set, do not set matrix nor trs)'
+          description: 'Transform is defined by azimuth, altitude and radius terms. If set, do not set `matrix` or `trs`.'
           $ref: '#/components/schemas/types.AzimuthAltitude'
         matrix:
-          description: 'transform is defined as a matrix (if set, do not set trs nor azimuthAltitude)'
+          description: 'Transform is defined as a matrix. If set, do not set `trs` or `azimuthAltitude`.'
           type: array
           items:
             format: double
@@ -2635,14 +2635,14 @@ components:
           maxItems: 16
           minItems: 16
         trs:
-          description: 'transform is defined by translation, rotation and scale terms (if set, do not set matrix nor azimuthAltitude)'
+          description: 'Transform is defined by translation, rotation and scale terms. If set, do not set `matrix` or `azimuthAltitude`.'
           $ref: '#/components/schemas/types.TRS'
       additionalProperties: false
     types.UsdOptions:
       type: object
       properties:
         variants:
-          description: List of USD variants definition applied on usd primitives.
+          description: List of USD variants definition applied on USD primitives.
           type:
             - array
             - 'null'

@@ -42,42 +42,42 @@ actions:
       paths:
         /v1/composites/compose:
           post:
-            summary: Generate 3D Object Composite
+            summary: Generate 3D object composite
             description: Generate a 3D Object Composite with the Substance 3D API.
             tags:
               - Composites
 
         /v1/scenes/convert:
           post:
-            summary: Convert 3D Files
+            summary: Convert 3D files
             description: Convert a 3D file into another 3D format with the Substance 3D API.
             tags:
               - Scenes
 
         /v1/scenes/render:
           post:
-            summary: Render 3D Object
-            description: Render a 3D Object with the Substance 3D API.
+            summary: Render 3D object
+            description: Render a 3D object with the Substance 3D API.
             tags:
               - Scenes
 
         /v1/scenes/render-basic:
           post:
-            summary: Render 3D Object (basic version)
-            description: Render a 3D Object (basic version) with the Substance 3D API.
+            summary: Render 3D object (basic version)
+            description: Render a 3D object (basic version) with the Substance 3D API.
             tags:
               - Scenes
 
         /v1/scenes/assemble:
           post:
-            summary: Create 3D Scene
-            description: Assemble a 3D Scene with the Substance 3D API.
+            summary: Create 3D scene
+            description: Assemble a 3D scene with the Substance 3D API.
             tags:
               - Scenes
 
         /v1/scenes/describe:
           post:
-            summary: Describe 3D Scene
+            summary: Describe 3D scene
             description: Describe a 3D scene.
             tags:
               - Scenes
@@ -112,6 +112,10 @@ actions:
                 description: Class of content to generate.
               enableGroundPlane:
                 description: Enable the auto-generated ground plane under the hero asset. This is useful if the 3D scene contains only a hero asset, without additional elements.
+              environment:
+                description: Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If set, the `lightingSeeds` parameter will be ignored.
+              environmentExposure:
+                description: Exposure, in EV (0=neutral).
               heroAsset:
                 description: Name of an existing 'hero asset' in the source 3D scene. The asset has to be defined in the scene.
               lightingSeeds:
@@ -158,6 +162,30 @@ actions:
           #       maximum: 2688
           #       minimum: 1
 
+          # ========================================
+          # restv1beta.ComposeSceneRequest (beta version)
+          # ========================================
+          restv1beta.ComposeSceneRequest:
+            properties:
+              enableGroundPlane:
+                description: Allow to enable the auto-generated ground plane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default.
+              environment:
+                description: Optional environment settings used for all variations. If omitted, an environment will be generated based on the background. If set, the `lightingSeeds` parameter will be ignored.
+              environmentExposure:
+                description: Exposure, in EV (0=neutral).
+              heroAsset:
+                description: Name of an existing 'hero asset' in the source 3D scene (the asset has to be defined in the scene).
+              numVariations:
+                description: The number of variations to generate. `numVariations` will default to the number of seeds, or to 1 if `seeds` is not specified.
+              prompt:
+                description: Prompt to be used to generate the background image with Adobe Firefly.
+              sceneFile:
+                description: The path of the scene file in `sources`. If value is null, the first found scene file will be used.
+              seeds:
+                description: Optional seed to be used to generate the background image with Adobe Firefly. Seed ensures consistent background image generation. If `seed` is not set, a random seed will be used. You will be able to retrieve the seed used for the generation in the output details of the job. If specified alongside `numVariations`, the number of seeds must be equal to `numVariations`.
+              sources:
+                description: List of sources to aggregate and run the job against.
+
           # Nested MountedSource component (referenced by 'sources' parameter)
           rest_base.MountedSource:
             properties:
@@ -165,6 +193,8 @@ actions:
                 description: Fetch content from a Frame.io folder. ⚠️ All sources are exclusive.
               mountPoint:
                 description: Where to mount the content of the source in the virtual job working directory.
+              next.frame.io:
+                description: Fetch content from a next.frame.io folder. ⚠️ All sources are exclusive.
               space:
                 description: Read content from an existing space (can be another job's output, or uploaded manually with the space API). ⚠️ All sources are exclusive.'
               url:
@@ -554,6 +584,8 @@ actions:
                 description: Define a new camera for the scene.
               environment:
                 description: Define the environment for the scene. Override the previous existing environment.
+              materials:
+                description: Assign new materials to geometric primitives.
               metersPerUnit:
                 description: Length of a scene unit, in meters. Defaults to `baseFile` meters per unit if any, or 0.01 (centimeters) otherwise.
               models:
@@ -570,6 +602,8 @@ actions:
                 description: Define options specific for the model file format.
               materialOverrides:
                 description: Define material overrides.
+              materials:
+                description: Assign new materials to geometric primitives.
               metersPerUnit:
                 description: Length of a scene unit, in meters. Defaults to 0.01 (centimeters).
               modelFile:
@@ -627,7 +661,7 @@ actions:
               file:
                 description: Path to the scene file in `sources`.
               modelsRootNodeName:
-                description: Define root node for models in scene graph. If not found, the node which are parent of all models in the scene will be used. If this node doesn't exists, a new node will be created under global root.
+                description: Define root node for models in scene graph. If not found, the node which is parent of all models in the scene will be used. If this node doesn't exist, a new node will be created under global root.
 
           # AutoFramingOptions properties
           types.AutoFramingOptions:
@@ -661,7 +695,7 @@ actions:
               shadows:
                 description: Controls whether the ground plane catches shadows or not.
               shadowsOpacity:
-                description: Controls the opacity of catched shadows. Only has effect if shadows are enabled.
+                description: Controls the opacity of cast shadows. Only has effect if shadows are enabled.
 
           # SizeOptions properties
           types.SizeOptions:
@@ -703,6 +737,14 @@ actions:
           # ADDITIONAL NESTED COMPONENTS
           # ========================================
           
+          # ComposeEnvironment properties
+          types.ComposeEnvironment:
+            properties:
+              file:
+                description: Path of environment file in `sources`. If value is null, the environment file will be generated.
+              rotation:
+                description: Controls the orientation of the environment map.
+          
           # AzimuthAltitude properties
           types.AzimuthAltitude:
             properties:
@@ -735,7 +777,15 @@ actions:
               fileName:
                 description: The file name.
               name:
-                description: Then name in the 3D scene.
+                description: The name in the 3D scene.
+
+          # Material properties
+          types.Material:
+            properties:
+              sbs:
+                description: The PBR material definition.
+              solidColor:
+                description: The solid color material definition.
 
           # MaterialAssign properties
           types.MaterialAssign:
@@ -748,6 +798,18 @@ actions:
                 description: The material definition.
               materialName:
                 description: Desired material name, it will be sanitized to make a valid USD prim name.
+              nodeList:
+                description: List of nodes under which geometric primitives will have this material assigned. Each entry can be a full node name or a glob expression.
+
+          # MaterialOverride properties
+          types.MaterialOverride:
+            properties:
+              absorptionColorFactor:
+                description: RGB float color value, for example white is [1.0,1.0,1.0].
+              baseColorFactor:
+                description: RGB float color value, for example white is [1.0,1.0,1.0].
+              coatColorFactor:
+                description: RGB float color value, for example white is [1.0,1.0,1.0].
 
           # NameToColorBinding properties
           types.NameToColorBinding:
@@ -768,3 +830,55 @@ actions:
                 description: Export an image with one color per object.
               exportObjectMasks:
                 description: Export one mask per object.
+
+          # Rotation properties
+          types.Rotation:
+            properties:
+              euler:
+                description: Euler angles in degrees.
+              quaternion:
+                description: In W,X,Y,Z order.
+
+          # SbsMaterial properties
+          types.SbsMaterial:
+            properties:
+              preset:
+                description: Select a preset to be used for the substance material rendering.
+              resolution:
+                description: Substance material render resolution. This should be a power of two.
+              rotation:
+                description: Texture space rotation.
+              sbsar:
+                description: Path to a substance material; if not set, the first substance 3D material found in sources will be used.
+              scale:
+                description: Texture space scale.
+              translation:
+                description: Texture space translation.
+
+          # SolidColorMaterial properties
+          types.SolidColorMaterial:
+            properties:
+              color:
+                description: RGB color of the solid material, each component has to be in the [0,1] range.
+              metallicFactor:
+                description: Metallic factor of the solid material, has to be in the [0,1] range.
+              roughnessFactor:
+                description: Roughness factor of the solid material, has to be in the [0,1] range.
+
+          # Transform properties
+          types.Transform:
+            properties:
+              azimuthAltitude:
+                description: Transform is defined by azimuth, altitude and radius terms. If set, do not set `matrix` or `trs`.
+              matrix:
+                description: Transform is defined as a matrix. If set, do not set `trs` or `azimuthAltitude`.
+              trs:
+                description: Transform is defined by translation, rotation and scale terms. If set, do not set `matrix` or `azimuthAltitude`.
+
+          # UsdOptions properties
+          types.UsdOptions:
+            properties:
+              variants:
+                description: List of USD variants definition applied on USD primitives.
+
+
