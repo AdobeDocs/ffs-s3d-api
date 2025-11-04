@@ -15,4 +15,5 @@
           clean: true
           excludeSubfolder: ""
           index-mode: "index"
+          TEMPLATE_ID_PROD: "67f544a30f73feac905f415c"
           NODE_OPTIONS: "--max-old-space-size=8192"
