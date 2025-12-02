@@ -11,6 +11,15 @@ paths:
       operationId: v1/composites/compose
       summary: Generate 3D object composite
       description: Generate a 3D Object Composite with the Substance 3D API.
+      parameters:
+        - name: wait
+          in: query
+          description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+          schema:
+            description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+            type: boolean
+            default: false
+          explode: false
       requestBody:
         content:
           application/json:
@@ -117,6 +126,15 @@ paths:
       operationId: v1/scenes/assemble
       summary: Create 3D scene
       description: Assemble a 3D scene with the Substance 3D API.
+      parameters:
+        - name: wait
+          in: query
+          description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+          schema:
+            description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+            type: boolean
+            default: false
+          explode: false
       requestBody:
         content:
           application/json:
@@ -222,6 +240,15 @@ paths:
       operationId: v1/scenes/convert
       summary: Convert 3D files
       description: Convert a 3D file into another 3D format with the Substance 3D API.
+      parameters:
+        - name: wait
+          in: query
+          description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+          schema:
+            description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+            type: boolean
+            default: false
+          explode: false
       requestBody:
         content:
           application/json:
@@ -327,6 +354,15 @@ paths:
       operationId: v1/scenes/describe
       summary: Describe 3D scene
       description: Describe a 3D scene.
+      parameters:
+        - name: wait
+          in: query
+          description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+          schema:
+            description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+            type: boolean
+            default: false
+          explode: false
       requestBody:
         content:
           application/json:
@@ -432,6 +468,15 @@ paths:
       operationId: v1/scenes/render
       summary: Render 3D object
       description: Render a 3D object with the Substance 3D API.
+      parameters:
+        - name: wait
+          in: query
+          description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+          schema:
+            description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+            type: boolean
+            default: false
+          explode: false
       requestBody:
         content:
           application/json:
@@ -537,6 +582,15 @@ paths:
       operationId: v1/scenes/render-basic
       summary: Render 3D object (basic version)
       description: Render a 3D object (basic version) with the Substance 3D API.
+      parameters:
+        - name: wait
+          in: query
+          description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+          schema:
+            description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+            type: boolean
+            default: false
+          explode: false
       requestBody:
         content:
           application/json:
@@ -868,6 +922,10 @@ components:
           examples:
             - 'https://s3d.adobe.io/schemas/rest_base.Space.json'
           readOnly: true
+        expiry:
+          description: time at which the space will be deleted
+          type: string
+          format: date-time
         files:
           description: 'List of all files contained in Space, ordered by name.'
           type:
@@ -887,6 +945,7 @@ components:
       required:
         - url
         - id
+        - expiry
         - files
     rest_base.SpaceFile:
       type: object
@@ -1543,6 +1602,13 @@ components:
     restv1beta.RenderSceneJobResult:
       type: object
       properties:
+        framesUrls:
+          description: List of URLs to the rendered frames. The rendered frames are ordered by frame number.
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
         materialIds:
           $ref: '#/components/schemas/types.IdsMapData'
         materialMasks:
@@ -1740,6 +1806,13 @@ components:
     types.AutoFramingOptions:
       type: object
       properties:
+        algorithm:
+          type: string
+          default: auto
+          enum:
+            - auto
+            - bounding_cylinder
+            - frustum_fit
         zoomFactor:
           description: A value of 1 indicates tight framing. Less than 1 is a zoom-out. Greater than 1 is a zoom-in.
           type: number
