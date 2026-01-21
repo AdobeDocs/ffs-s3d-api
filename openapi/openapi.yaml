@@ -790,6 +790,7 @@ paths:
   '/v1/spaces/{id}': {}
   /v1beta/3dmodels/convert: {}
   /v1beta/3dmodels/render: {}
+  /v1beta/3dmodels/render-turntable: {}
   /v1beta/3dscenes/compose: {}
   /v1beta/3dscenes/create: {}
   /v1beta/3dscenes/get-description: {}
@@ -1599,6 +1600,115 @@ components:
         - id
         - status
         - bugReportUrl
+    restv1beta.RenderModelTurntableRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/restv1beta.RenderModelTurntableRequest.json'
+          readOnly: true
+        autoFraming:
+          description: Auto-framing related options.
+          $ref: '#/components/schemas/types.AutoFramingOptions'
+        background:
+          description: Background related options.
+          $ref: '#/components/schemas/types.BackgroundOptions'
+        cameraName:
+          description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
+          type: string
+        exportFrames:
+          description: Whether to export individual frames along with the turntable product.
+          type: boolean
+          default: false
+        framerate:
+          type: integer
+          format: int64
+          default: 25
+          maximum: 30
+          minimum: 5
+        groundPlane:
+          description: Ground plane related options.
+          $ref: '#/components/schemas/types.GroundPlaneOptions'
+        mode:
+          description: 'Set the rotation mode. Options are `rotate_camera` (camera rotates around model), `rotate_model` (model rotates), or `rotate_environment` (environment rotates).'
+          type: string
+          default: rotate_camera
+          enum:
+            - rotate_camera
+            - rotate_model
+            - rotate_environment
+        scene:
+          description: Define rendering scene primitives.
+          $ref: '#/components/schemas/types.SimpleSceneDescription'
+        seconds:
+          type: integer
+          format: int64
+          default: 2
+          maximum: 5
+          minimum: 1
+        size:
+          description: Render size related options.
+          $ref: '#/components/schemas/types.SizeOptions'
+        sources:
+          description: List of sources to aggregate and run the job against.
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/rest_base.MountedSource'
+          maxItems: 16
+          minItems: 1
+        useRasterizer:
+          description: Set to true to use a very fast rendering technique but with less accurate lighting.
+          type: boolean
+          default: false
+      additionalProperties: false
+      examples:
+        - scene:
+            modelFile: WaterBottle.glb
+          sources:
+            - url:
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb'
+      required:
+        - scene
+        - sources
+    restv1beta.RenderModelTurntableResponse:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/restv1beta.RenderModelTurntableResponse.json'
+          readOnly: true
+        bugReportUrl:
+          description: URL to report a bug about this job.
+          type: string
+        error:
+          description: Potential error that happened during the job processing.
+          type: string
+        id:
+          description: Unique identifier of the job.
+          type: string
+        result:
+          description: Result when the job is successfully finished.
+          $ref: '#/components/schemas/restv1beta.RenderSceneTurntableJobResult'
+        status:
+          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
+          type: string
+        url:
+          description: 'URL to fetch/poll for the job result, in case the job is not finished yet.'
+          type: string
+      additionalProperties: false
+      required:
+        - url
+        - id
+        - status
+        - bugReportUrl
     restv1beta.RenderSceneJobResult:
       type: object
       properties:
@@ -1729,6 +1839,31 @@ components:
         - id
         - status
         - bugReportUrl
+    restv1beta.RenderSceneTurntableJobResult:
+      type: object
+      properties:
+        framesUrls:
+          description: List of URLs to the rendered frames. The rendered frames are ordered by frame number.
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+        outputSpace:
+          $ref: '#/components/schemas/rest_base.Space'
+        renderUrl:
+          description: URL to the rendered scene.
+          type: string
+        warnings:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/types.Warning'
+      additionalProperties: false
+      required:
+        - renderUrl
+        - warnings
     restv1beta.SceneDescJobResult:
       type: object
       properties:
@@ -1886,6 +2021,49 @@ components:
           type: boolean
           default: false
       additionalProperties: false
+    types.CameraStats:
+      type: object
+      properties:
+        aspectRatio:
+          type: number
+          format: double
+        fStop:
+          type: number
+          format: double
+        focalLength:
+          type: number
+          format: double
+        focusDistance:
+          type: number
+          format: double
+        horizontalAperture:
+          type: number
+          format: double
+        horizontalApertureOffset:
+          type: number
+          format: double
+        name:
+          type: string
+        projection:
+          type: string
+        verticalAperture:
+          type: number
+          format: double
+        verticalApertureOffset:
+          type: number
+          format: double
+      additionalProperties: false
+      required:
+        - name
+        - focalLength
+        - horizontalAperture
+        - verticalAperture
+        - aspectRatio
+        - horizontalApertureOffset
+        - verticalApertureOffset
+        - fStop
+        - focusDistance
+        - projection
     types.ComposeEnvironment:
       type: object
       properties:
@@ -1922,8 +2100,6 @@ components:
           description: 'Custom camera, exclusive with ''cameraName''.'
           $ref: '#/components/schemas/types.SceneCamera'
       additionalProperties: false
-      required:
-        - camera
     types.ExportMasksOptions:
       type: object
       properties:
@@ -2512,6 +2688,8 @@ components:
       properties:
         assignedMaterialName:
           type: string
+        cameraStats:
+          $ref: '#/components/schemas/types.CameraStats'
         children:
           type:
             - array
