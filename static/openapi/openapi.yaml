@@ -1604,23 +1604,23 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON Schema for this object.
+          description: A URL to the JSON schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.RenderModelTurntableRequest.json'
           readOnly: true
         autoFraming:
-          description: auto-framing related options
+          description: Auto-framing related options.
           $ref: '#/components/schemas/types.AutoFramingOptions'
         background:
-          description: background related options
+          description: Background related options.
           $ref: '#/components/schemas/types.BackgroundOptions'
         cameraName:
-          description: 'if set, will use this camera to perform the render (the camera has to be defined in the scene)'
+          description: 'If set, this camera is used to perform the render. The camera has to be defined in the scene.'
           type: string
         exportFrames:
-          description: Whether to export individual frames along with the turntable product
+          description: Whether to export individual frames along with the turntable product.
           type: boolean
           default: false
         framerate:
@@ -1630,10 +1630,10 @@ components:
           maximum: 30
           minimum: 5
         groundPlane:
-          description: ground plane related options
+          description: Ground plane related options.
           $ref: '#/components/schemas/types.GroundPlaneOptions'
         mode:
-          description: Set the rotation mode between rotation around the model with the camera or model rotation.
+          description: 'Set the rotation mode. Options are `rotate_camera` (camera rotates around model), `rotate_model` (model rotates), or `rotate_environment` (environment rotates).'
           type: string
           default: rotate_camera
           enum:
@@ -1641,7 +1641,7 @@ components:
             - rotate_model
             - rotate_environment
         scene:
-          description: define rendering scene primitives
+          description: Define rendering scene primitives.
           $ref: '#/components/schemas/types.SimpleSceneDescription'
         seconds:
           type: integer
@@ -1650,10 +1650,10 @@ components:
           maximum: 5
           minimum: 1
         size:
-          description: render size related options
+          description: Render size related options.
           $ref: '#/components/schemas/types.SizeOptions'
         sources:
-          description: list of sources to aggregate and run the job against
+          description: List of sources to aggregate and run the job against.
           type:
             - array
             - 'null'
@@ -1662,7 +1662,7 @@ components:
           maxItems: 16
           minItems: 1
         useRasterizer:
-          description: set to true to use a very fast rendering technique but with less accurate lighting
+          description: Set to true to use a very fast rendering technique but with less accurate lighting.
           type: boolean
           default: false
       additionalProperties: false
@@ -1679,29 +1679,29 @@ components:
       type: object
       properties:
         $schema:
-          description: A URL to the JSON Schema for this object.
+          description: A URL to the JSON schema for this object.
           type: string
           format: uri
           examples:
             - 'https://s3d.adobe.io/schemas/restv1beta.RenderModelTurntableResponse.json'
           readOnly: true
         bugReportUrl:
-          description: url to report a bug about this job
+          description: URL to report a bug about this job.
           type: string
         error:
-          description: potential error that happened during the job processing
+          description: Potential error that happened during the job processing.
           type: string
         id:
-          description: unique identifier of the job
+          description: Unique identifier of the job.
           type: string
         result:
-          description: result when the job is successfully finished
+          description: Result when the job is successfully finished.
           $ref: '#/components/schemas/restv1beta.RenderSceneTurntableJobResult'
         status:
-          description: 'status of the job: not_started|running|succeeded|failed'
+          description: 'Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.'
           type: string
         url:
-          description: url to fetch/poll for job result in case the job is not finished yet
+          description: 'URL to fetch/poll for the job result, in case the job is not finished yet.'
           type: string
       additionalProperties: false
       required:
@@ -1852,7 +1852,7 @@ components:
         outputSpace:
           $ref: '#/components/schemas/rest_base.Space'
         renderUrl:
-          description: URL to the rendered scene
+          description: URL to the rendered scene.
           type: string
         warnings:
           type:
