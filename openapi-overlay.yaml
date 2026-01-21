@@ -431,6 +431,35 @@ actions:
                 description: List of sources to aggregate and run the job against.
 
           # ========================================
+          # v1beta/3dmodels/render-turntable - Render 3D Model Turntable
+          # ========================================
+          # RenderModelTurntableRequest properties
+          restv1beta.RenderModelTurntableRequest:
+            properties:
+              $schema:
+                description: A URL to the JSON schema for this object.
+              autoFraming:
+                description: Auto-framing related options.
+              background:
+                description: Background related options.
+              cameraName:
+                description: If set, this camera is used to perform the render. The camera has to be defined in the scene.
+              exportFrames:
+                description: Whether to export individual frames along with the turntable product.
+              groundPlane:
+                description: Ground plane related options.
+              mode:
+                description: Set the rotation mode. Options are `rotate_camera` (camera rotates around model), `rotate_model` (model rotates), or `rotate_environment` (environment rotates).
+              scene:
+                description: Define rendering scene primitives.
+              size:
+                description: Render size related options.
+              sources:
+                description: List of sources to aggregate and run the job against.
+              useRasterizer:
+                description: Set to true to use a very fast rendering technique but with less accurate lighting.
+
+          # ========================================
           # SCENES ENDPOINTS - Response Objects
           # ========================================
 
@@ -571,6 +600,33 @@ actions:
                 description: Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.
               url:
                 description: URL to fetch/poll for the job result, in case the job is not finished yet.
+
+          # ========================================
+          # v1beta/3dmodels/render-turntable - Render 3D Model Turntable Response
+          # ========================================
+          # RenderModelTurntableResponse properties
+          restv1beta.RenderModelTurntableResponse:
+            properties:
+              $schema:
+                description: A URL to the JSON schema for this object.
+              bugReportUrl:
+                description: URL to report a bug about this job.
+              error:
+                description: Potential error that happened during the job processing.
+              id:
+                description: Unique identifier of the job.
+              result:
+                description: Result when the job is successfully finished.
+              status:
+                description: Status of the job. Can be `not_started`, `running`, `succeeded`, or `failed`.
+              url:
+                description: URL to fetch/poll for the job result, in case the job is not finished yet.
+
+          # RenderSceneTurntableJobResult properties
+          restv1beta.RenderSceneTurntableJobResult:
+            properties:
+              renderUrl:
+                description: URL to the rendered scene.
 
           # ========================================
           # SCENES ENDPOINTS - Nested Components

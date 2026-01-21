@@ -51,6 +51,18 @@ For more in-depth [instructions](https://github.com/adobe/aio-theme#getting-star
   yarn start
   ```
 
+## How to update the OpenAPI description
+
+This repo uses an overlay file (openapi-overlay.yaml) to update the OpenAPI description. Changes should not be made directly in the static/openapi/openapi.yaml file.
+
+To update the JSON spec using the overlay:
+
+1. The spec is automatically synced every day, see https://github.com/AdobeDocs/ffs-s3d-api/blob/main/.github/workflows/openapi-update.yml and https://github.com/AdobeDocs/ffs-s3d-api/actions/workflows/openapi-update.yml or,
+
+1. You can also launch it locally with the `yarn update-openapi-desc` command, defined here: https://github.com/AdobeDocs/ffs-s3d-api/blob/main/package.json (edited)
+2. This will update the static/openapi/openapi.yaml file with the changes from the overlay.
+3. You can then commit the changes and push to the main branch.
+
 ## How to deploy
 
 For any team that wishes to deploy to the developer.adobe.com and developer-stage.adobe.com websites, they must be in contact with the dev-site team. Teams will be given a path that will follow the pattern `developer.adobe.com/{product}/`. This will allow doc developers to setup their subpaths to look something like:
