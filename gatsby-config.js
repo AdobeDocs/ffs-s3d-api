@@ -17,6 +17,10 @@ const Defaults = {
 module.exports = {
   pathPrefix: process.env.PATH_PREFIX || Defaults.pathPrefix,
   siteMetadata: {
+    docs: {
+      title: 'Support',
+      path: 'https://airtable.com/appu5RTWgdM95jynx/pagyuT1qspNJcPU2E/form'
+    },
     template_id: process.env.GATSBY_TEMPLATE_ID,
     pages: [
       {
