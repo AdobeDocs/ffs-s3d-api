@@ -20,7 +20,7 @@ Combine 3D objects with AI-generated content using the [Generate 3D Object Compo
 
 Learn how to create compelling images by combining 3D models with AI-generated content using the [Generate 3D Object Composite API][1]. This guide walks you through the process of uploading assets, configuring compositing parameters, and generating final images.
 
-![Generate 3D Object Composite](./compositing.png)
+![Generate 3D Object Composite](./../generate-3-d-object-composite/compositing.png)
 
 ## Prerequisites
 

@@ -17,7 +17,7 @@ hideBreadcrumbNav: true
 
 This guide shows you how to use the Substance 3D API to render 3D objects. You'll learn how to upload assets, configure rendering parameters, and customize the output with different camera angles and materials.
 
-![DamagedHelmet.glb - Default Settings](./default.png)
+![DamagedHelmet.glb - Default Settings](./../render-3-d-object/default.png)
 
 ## Prerequisites
 
@@ -188,7 +188,7 @@ Response (*failed*)
 curl -O --url https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5dbc/files/render0000.png?x-s3d-presigned-token=<auto_generated_token>
 ```
 
-![DamagedHelmet.glb - Default Settings](./default.png)
+![DamagedHelmet.glb - Default Settings](./../render-3-d-object/default.png)
 
 ## Step 6 - Going further with optional settings
 
@@ -242,7 +242,7 @@ Modify the camera angle by setting the `scene.camera` field in the payload.
 
 **Sample result**
 
-![DamagedHelmet.glb - Azimuth 0](./azimuth.png)
+![DamagedHelmet.glb - Azimuth 0](./../render-3-d-object/azimuth.png)
 
 ### Override materials
 
@@ -286,7 +286,7 @@ Let's override the existing model's material with one from the sample assets: `c
 
 **Cross Brushed Copper**
 
-![DamagedHelmet.glb - Custom Material](./material_override.png)
+![DamagedHelmet.glb - Custom Material](./../render-3-d-object/material-override.png)
 
 #### Going further with substance materials
 
@@ -325,7 +325,7 @@ By slightly modifying the previous job definition, you can apply these presets o
 
 **Oxidized Copper Cross Brushed**
 
-![DamagedHelmet.glb - Custom Material Preset](./material_preset.png)
+![DamagedHelmet.glb - Custom Material Preset](./../render-3-d-object/material-preset.png)
 
 ## Deepen your understanding
 
