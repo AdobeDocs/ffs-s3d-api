@@ -20,4 +20,4 @@ Use these resources to track updates to the Substance 3D API and keep up to date
 **[Changelog][1]**: Detailed list of all API changes, new features, and bug fixes organized by release date.
 
 [//]: # (Links)
-[1]: /changelog/index.md
+[1]: ../changelog/index.md
