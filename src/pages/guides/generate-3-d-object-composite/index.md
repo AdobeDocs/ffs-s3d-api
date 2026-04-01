@@ -216,11 +216,11 @@ curl -O --url https://s3d.adobe.io/v1/spaces/s-b93fa62b-6ba8-4ca6-842d-898057bf5
 
 Now that you completed this tutorial, visit its [API Reference][5] to explore more advanced use cases of 2D/3D compositing.
 
-<!-- Links -->
+[//]: # (Links)
 [1]: /api/#tag/Composites/operation/v1/composites/compose
-[2]: /getting_started
+[2]: /getting-started/index.md
 [3]: https://curl.se/download.html
 [4]: https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb
 [5]: /api/#tag/Composites/operation/v1/composites/compose
-[6]: ../../getting_started/assets_upload/index.md#using-spaces
-[7]: ../../getting_started/asynchronous_jobs/
+[6]: ../../getting-started/assets-upload/index.md#using-spaces
+[7]: ../../getting-started/asynchronous-jobs/index.md

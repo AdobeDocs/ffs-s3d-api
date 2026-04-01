@@ -29,7 +29,7 @@ To upload your assets using the Adobe Substance 3D API, follow the [Assets Uploa
 
 To ensure you're using the Adobe Substance 3D API efficiently and effectively, review the [Best Practices Guide][3].
 
-<!-- Links -->
-[1]: /getting_started
-[2]: /getting_started/assets_upload
-[3]: /guides/best_practices
+[//]: # (Links)
+[1]: /getting-started/index.md
+[2]: /getting-started/assets-upload/index.md
+[3]: /guides/best-practices/index.md

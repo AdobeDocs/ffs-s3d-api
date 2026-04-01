@@ -1,6 +1,6 @@
 ---
 title: Render 3D Object
-description: Learn how to render 3D objects using the Substance 3D API, including camera controls and material customization, and integrate Firefly workflows into your applications.
+description: Learn how to render 3D objects using the Substance 3D API, including camera controls, material customization, and Firefly workflow integration.
 keywords:
   - render
   - 3D model
@@ -331,11 +331,11 @@ By slightly modifying the previous job definition, you can apply these presets o
 
 Now that you completed this tutorial, visit its [API Reference][5] to explore more advanced use cases of 3D object rendering.
 
-<!-- Links -->
-[1]: /getting_started
+[//]: # (Links)
+[1]: /getting-started/index.md
 [2]: https://curl.se/download.html
 [3]: https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/main/Models/DamagedHelmet/glTF-Binary/DamagedHelmet.glb
 [4]: https://cdn.substance3d.com/v2/files/public/4c26e92f-0801-437d-a900-8d3e67611549
 [5]: /api/#tag/Scenes/operation/v1/scenes/render-basic
-[6]: ../../getting_started/assets_upload/index.md#using-spaces
-[7]: ../../getting_started/asynchronous_jobs/
+[6]: ../../getting-started/assets-upload/index.md#using-spaces
+[7]: ../../getting-started/asynchronous-jobs/index.md

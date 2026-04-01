@@ -22,13 +22,13 @@ This documentation provides instructions for the Substance 3D API.
 
 ### Get Started
 
-[Quickstart Guide](/guides)
+[Quickstart Guide](/guides/index.md)
 
 A quickstart guide to making your first successful Substance 3D API call.
 
 <DiscoverBlock slots="link, text"/>
 
-[Tutorials](/guides/render_3d_object)
+[Tutorials](/guides/render-3-d-object/index.md)
 
 Explore our tutorials page for comprehensive guidance.
 
@@ -36,8 +36,8 @@ Explore our tutorials page for comprehensive guidance.
 
 ### API Reference
 
-[Try the API](/api)
+[Try the API](/api/index.md)
 
 Try the Substance 3D API. Explore, make calls, with full endpoint descriptions.
 
-<br/><br/><br/><br/>
+\<br/\>\<br/\>\<br/\>\<br/\>

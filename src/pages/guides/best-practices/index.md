@@ -38,6 +38,6 @@ This document outlines key recommendations to use the Substance 3D API efficient
 - Implement logging to track API usage, errors, and performance metrics.
 - Monitor API usage and performance to identify and address issues proactively.
 
-<!-- Links -->
-[1]: /api
+[//]: # (Links)
+[1]: /api/index.md
 [2]: https://en.wikipedia.org/wiki/Exponential_backoff
