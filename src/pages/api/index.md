@@ -10,6 +10,6 @@ keywords:
 layout: none
 ---
 
-<GetCredential jsonDefinition="../components/credential/getcredential.json" />
+<GetCredential jsonDefinition="../credential/getcredential.json" />
 
 <RedoclyAPIBlock src="/firefly-services/docs/s3dapi/openapi/openapi.yaml" width="600px" ctrlFHijack="false" disableSearch scrollYOffset={64} generateCodeSamples="languages: [{lang: 'curl'}]" />
