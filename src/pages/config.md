@@ -26,7 +26,7 @@
     - [Uploading Assets](/getting-started/assets-upload/index.md)
     - [Asynchronous Jobs](/getting-started/asynchronous-jobs/index.md)
     - Updates header
-    - [Changelog](/changelog/index.md)
+    - [Changelog](/getting-started/changelog/index.md)
     - Guides header
     - [Render 3D Object](/guides/render-3-d-object/index.md)
     - [Generate 3D Object Composite](/guides/generate-3-d-object-composite/index.md)
