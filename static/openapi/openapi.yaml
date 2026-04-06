@@ -798,6 +798,7 @@ paths:
   '/v1beta/jobs/{id}': {}
   /v1beta/spaces: {}
   '/v1beta/spaces/{id}': {}
+  '/v2/jobs/{id}': {}
 components:
   schemas:
     ffapierrors.FFAPIError:
@@ -869,8 +870,10 @@ components:
       type: object
       properties:
         accessToken:
+          description: 'Frame.io access token or Developer token. See https://developer.frame.io/docs/getting-started/authentication for obtaining a token.'
           type: string
         folderId:
+          description: 'Frame.io folder ID containing the assets. This should be the ID of the folder (not an asset ID). For best performance and to avoid [size limitations](/#what-is-the-maximum-size-of-assets-i-can-process), use the folder ID closest to your target assets. The system will retrieve all content from the specified folder, so choosing a parent folder with many subfolders may exceed the maximum retrieval size limit'
           type: string
       additionalProperties: false
       required:
@@ -880,10 +883,13 @@ components:
       type: object
       properties:
         accessToken:
+          description: 'Frame.io access token. See https://developer.adobe.com/frameio/guides/Authentication/ for obtaining a token.'
           type: string
         accountId:
+          description: 'Frame.io account ID. This is the account identifier for the next.frame.io account owner. To find your account ID, log in to next.frame.io, navigate to your inbox, and extract the UUID from the URL (e.g., in https://next.frame.io/inbox/abcdefgh-1234-1234-1234-abcdefghijk, the account ID is abcdefgh-1234-1234-1234-abcdefghijk)'
           type: string
         folderId:
+          description: 'Frame.io folder ID containing the assets. This should be the ID of the folder (not an asset ID). For best performance and to avoid [size limitations](/#what-is-the-maximum-size-of-assets-i-can-process), use the folder ID closest to your target assets. The system will retrieve all content from the specified folder, so choosing a parent folder with many subfolders may exceed the maximum retrieval size limit'
           type: string
       additionalProperties: false
       required:
@@ -1009,6 +1015,7 @@ components:
           items:
             format: int64
             type: integer
+          maxItems: 4
         modelVersion:
           description: Model version to be used to generate the background image with Adobe Firefly.
           type: string
@@ -1028,6 +1035,7 @@ components:
           type: string
           minLength: 1
         scene:
+          description: 'Optional scene-level details, such as a custom camera.'
           $ref: '#/components/schemas/types.ComposeSceneSceneDetails'
         sceneFile:
           description: 'The path of the scene file in `sources`. If value is null, the first found scene file will be used.'
@@ -1038,6 +1046,7 @@ components:
           items:
             format: int64
             type: integer
+          maxItems: 4
         size:
           description: |-
             The size of the image generations. The supported dimensions for image generations are: 
@@ -1065,13 +1074,10 @@ components:
           description: Optional 'style image' to be used to generate the background. The style image has to be present in `sources`.
           type: string
       additionalProperties: false
-      dependentRequired:
-        lightingSeeds:
-          - seeds
       examples:
         - cameraName: main_camera
           heroAsset: bottle
-          prompt: french style kitchen with empty wooden table window on the left focal length 50mm
+          prompt: french style kitchen with a glass bottle sitting on an empty wooden table window on the left focal length 50mm
           sources:
             - url:
                 url: 'https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb'
@@ -1147,12 +1153,12 @@ components:
             - 'https://s3d.adobe.io/schemas/restv1beta.ComposeSceneRequest.json'
           readOnly: true
         cameraName:
-          description: Name of an existing camera in the source 3D scene (the camera has to be defined in the scene). This is exclusive with 'scene.camera'.
+          description: Name of an existing camera in the 3D scene (must be defined in the scene). Mutually exclusive with 'scene.camera'.
           type:
             - string
             - 'null'
         contentClass:
-          description: 'Class of content to generate (''photo'' or ''art''). If omitted, defaults to ''photo''.'
+          description: 'Class of content to generate: ''photo'' for photorealistic images or ''art'' for artistic renditions. Defaults to ''photo''.'
           type: string
           default: photo
           enum:
@@ -1176,11 +1182,12 @@ components:
           type: string
           minLength: 1
         lightingSeeds:
-          description: 'Optional seeds to be used to generate the lighting for the scene. The first seed will be used with the first seed of the background, the second one with the second seed of the background and so on. Background seeds must be defined and the number of lighting seeds should equal the number of background seeds. If not set, random seeds will be used. You will be able to retrieve the seeds used for the generation in the output details of the job.'
+          description: 'LightingSeeds defines optional, fixed random seeds for reproducible Image-Based Lighting (IBL) when generating AI backgrounds. It is only used when ''environment'' is not provided. Each lighting seed maps to the corresponding background seed by index (first lighting seed with first background seed, etc.) when ''seeds'' is specified. If the number of lighting seeds does not match the number of background seeds, the slice is automatically truncated or padded with random values. When omitted or set to nil, random lighting seeds are generated. The actual seeds used are returned in the response payload.'
           type: array
           items:
             format: int64
             type: integer
+          maxItems: 4
         modelVersion:
           description: 'Model version to be used to generate the background image with Adobe Firefly. If omitted, defaults to ''image3_fast''.'
           type: string
@@ -1200,6 +1207,7 @@ components:
           type: string
           minLength: 1
         scene:
+          description: 'Optional scene-level details, such as a custom camera.'
           $ref: '#/components/schemas/types.ComposeSceneSceneDetails'
         sceneFile:
           description: 'The path of the scene file in `sources`. If value is null, the first found scene file will be used.'
@@ -1210,9 +1218,10 @@ components:
           items:
             format: int64
             type: integer
+          maxItems: 4
         size:
           description: |-
-            The size of the requested generations. The supported dimensions for image generations are: 
+            Output image dimensions. Supported resolutions: 
               | Dimensions | Description | 
               | -----------| ----- |
               | { "width": 2048, "height": 2048} | Square (1:1) |
@@ -1230,16 +1239,13 @@ components:
           maxItems: 16
           minItems: 1
         styleImage:
-          description: Optional 'style image' to be used to generate the background (the style image has to be present in sources)
+          description: Optional reference image to influence the visual style and aesthetics of the generated background. Must be provided in sources.
           type: string
       additionalProperties: false
-      dependentRequired:
-        lightingSeeds:
-          - seeds
       examples:
         - cameraName: main_camera
           heroAsset: bottle
-          prompt: french style kitchen with empty wooden table window on the left focal length 50mm
+          prompt: french style kitchen with a glass bottle sitting on an empty wooden table window on the left focal length 50mm
           sources:
             - url:
                 url: 'https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb'
@@ -2097,7 +2103,7 @@ components:
       type: object
       properties:
         camera:
-          description: 'Custom camera, exclusive with ''cameraName''.'
+          description: Custom camera definition for the scene render. Mutually exclusive with 'cameraName' at the top level. Use this to define camera parameters programmatically instead of referencing a named camera from the 3D scene.
           $ref: '#/components/schemas/types.SceneCamera'
       additionalProperties: false
     types.ExportMasksOptions:
@@ -2115,7 +2121,7 @@ components:
       type: object
       properties:
         usd:
-          description: USD format options.
+          description: options specific to USD file format
           $ref: '#/components/schemas/types.UsdOptions'
       additionalProperties: false
       required:
@@ -2395,6 +2401,18 @@ components:
           description: Export one mask per object.
           $ref: '#/components/schemas/types.ExportMasksOptions'
       additionalProperties: false
+    types.RendererConfig:
+      type: object
+      properties:
+        type:
+          description: Renderer to use. 'ssca' is the default path-tracing renderer; 'rtx' uses NVidia RTX renderer.
+          type: string
+          enum:
+            - ssca
+            - rtx
+      additionalProperties: false
+      required:
+        - type
     types.Rotation:
       type: object
       properties:
@@ -2515,6 +2533,9 @@ components:
         environment:
           description: Define the environment for the scene. Override the previous existing environment.
           $ref: '#/components/schemas/types.SceneEnvironment'
+        formatOptions:
+          description: define options specific for model file format
+          $ref: '#/components/schemas/types.FormatOptions'
         materials:
           description: Assign new materials to geometric primitives.
           type:
@@ -2906,10 +2927,13 @@ components:
       type: object
       properties:
         primName:
+          description: name of the USD prim on which the variant is defined
           type: string
         variant:
+          description: name of the variant option to apply from the variant set
           type: string
         variantSet:
+          description: name of the variant set to select from
           type: string
       additionalProperties: false
       required:
