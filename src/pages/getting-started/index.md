@@ -105,13 +105,13 @@ You're authenticated!
 
 The response is typical for an asynchronous job. You can [learn more about asynchronous jobs][9] or [explore the Render 3D Model API in the tutorial][7].
 
-<!-- Links -->
+[//]: # (Links)
 [1]: https://www.adobe.com/content/dam/cc/en/trust-center/ungated/whitepapers/corporate/adobe-identity-management-services-security-overview.pdf
 [2]: https://developer.adobe.com/
 [3]: https://developer.adobe.com/developer-console/docs/guides/projects/projects-empty/
 [4]: https://developer.adobe.com/developer-console/docs/guides/services/services-add-api-oauth-s2s/
 [5]: https://developer.adobe.com/developer-console/docs/guides/services/services-add-api-oauth-s2s/#api-overview
-[6]: /api
-[7]: /guides/render_3d_object
+[6]: /api/index.md
+[7]: /guides/render-3-d-object/index.md
 [8]: https://developer.adobe.com/developer-console/docs/guides/services/services-add-api-oauth-s2s#generate-token
-[9]: /getting_started/asynchronous_jobs/
+[9]: /getting-started/asynchronous-jobs/index.md

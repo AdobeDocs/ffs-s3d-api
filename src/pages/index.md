@@ -4,7 +4,7 @@ description: This is the overview page of the Substance 3D API
 hideBreadcrumbNav: true
 ---
 
-<Hero slots="image, heading, text" background="rgb(126, 183, 196)" theme="dark"/>
+<Superhero slots="image, heading, text" background="rgb(126, 183, 196)" theme="dark"/>
 
 ![Substance 3D Hero Image](./sub3d-hero.png)
 
@@ -22,13 +22,13 @@ This documentation provides instructions for the Substance 3D API.
 
 ### Get Started
 
-[Quickstart Guide](/guides)
+[Quickstart Guide](/guides/index.md)
 
 A quickstart guide to making your first successful Substance 3D API call.
 
 <DiscoverBlock slots="link, text"/>
 
-[Tutorials](/guides/render_3d_object)
+[Tutorials](/guides/render-3-d-object/index.md)
 
 Explore our tutorials page for comprehensive guidance.
 
@@ -36,8 +36,8 @@ Explore our tutorials page for comprehensive guidance.
 
 ### API Reference
 
-[Try the API](/api)
+[Try the API](/api/index.md)
 
 Try the Substance 3D API. Explore, make calls, with full endpoint descriptions.
 
-<br/><br/><br/><br/>
+\<br/\>\<br/\>\<br/\>\<br/\>

@@ -100,5 +100,5 @@ failed
 }
 ```
 
-<!-- Links -->
+[//]: # (Links)
 [1]: ../../api/index.md

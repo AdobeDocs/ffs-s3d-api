@@ -175,7 +175,7 @@ These assets will be merged to create a Space with the following structure:
 └── 3dmodel.glb
 ```
 
-<!-- Links -->
-[1]: ../../guides/create_a_space/index.md
+[//]: # (Links)
+[1]: ../../guides/create-a-space/index.md
 [2]: https://frame.io
-[3]: ../../guides/render_3d_object/index.md
+[3]: ../../guides/render-3-d-object/index.md

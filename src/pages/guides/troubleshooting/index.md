@@ -129,6 +129,6 @@ You may experience API response times that are longer than expected.
 
 </Accordion>
 
-<!-- Links -->
+[//]: # (Links)
 [1]: ../../api/index.md
 [2]: https://en.wikipedia.org/wiki/Exponential_backoff

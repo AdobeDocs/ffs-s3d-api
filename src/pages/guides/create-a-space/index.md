@@ -111,8 +111,8 @@ curl -X POST https://s3d.adobe.io/v1/scenes/render-basic \
 -d @payload.json
 ```
 
-<!-- Links -->
-[1]: /getting_started/assets_upload
-[2]: /getting_started
+[//]: # (Links)
+[1]: /getting-started/assets-upload/index.md
+[2]: /getting-started/index.md
 [3]: https://curl.se/download.html
 [4]: ../../api/index.md
