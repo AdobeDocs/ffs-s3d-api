@@ -212,15 +212,17 @@ const GetCredentialOAuthS2s = () => {
                   {Config.productName} below.
                   <ul>
                     <li>
-                      Client ID: Your public identifier for accessing the APIs.
-                      This acts as an API key when used with the{" "}
-                      {Config.productLabel}, and corresponds with the{" "}
-                      <code>x-api-key</code> header.
+                      Client ID: Send as <code>x-api-key: &lt;API_KEY&gt;</code>.
                     </li>
                     <li>
-                      Organization ID: The ID of the organization you're using
-                      with the {Config.productLabel}. This corresponds with the{" "}
-                      <code>x-gw-ims-org-id</code> header.
+                      Access token: Send as{" "}
+                      <code>Authorization: Bearer &lt;Token&gt;</code> (S2S; not
+                      a JWT).
+                    </li>
+                    <li>
+                      Organization ID: Identifies your Adobe Developer Console
+                      organization; it is not an API request header for this
+                      service.
                     </li>
                   </ul>
                 </small>
@@ -281,15 +283,17 @@ const GetCredentialOAuthS2s = () => {
                   {Config.productName} below.
                   <ul>
                     <li>
-                      Client ID: Your public identifier for accessing the APIs.
-                      This acts as an API key when used with the{" "}
-                      {Config.productLabel}, and corresponds with the{" "}
-                      <code>x-api-key</code> header.
+                      Client ID: Send as <code>x-api-key: &lt;API_KEY&gt;</code>.
                     </li>
                     <li>
-                      Organization ID: The ID of the organization you're using
-                      with the {Config.productLabel}. This corresponds with the{" "}
-                      <code>x-gw-ims-org-id</code> header.
+                      Access token: Send as{" "}
+                      <code>Authorization: Bearer &lt;Token&gt;</code> (S2S; not
+                      a JWT).
+                    </li>
+                    <li>
+                      Organization ID: Identifies your Adobe Developer Console
+                      organization; it is not an API request header for this
+                      service.
                     </li>
                   </ul>
                 </small>

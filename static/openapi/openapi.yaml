@@ -2953,9 +2953,14 @@ components:
         - message
   securitySchemes:
     bearerAuth:
-      bearerFormat: JWT
-      description: Adobe auth bearer token
+      description: 'Adobe service-to-service (S2S) access token. Pass `Authorization: Bearer <Token>`. The token is not a JWT.'
       scheme: bearer
       type: http
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+      description: 'Your client ID, which acts as the API key. Pass `x-api-key: <API_KEY>` using `<API_KEY>` as the placeholder in examples.'
 security:
   - bearerAuth: []
+    ApiKeyAuth: []

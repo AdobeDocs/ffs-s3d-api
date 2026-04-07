@@ -21,10 +21,19 @@ actions:
   - target: $.info.contact
     remove: true
 
-  # Remove 'API Key' security scheme
+  # Remove legacy Substance 3D API key (X-Substance3D-Api-Key); replaced by
+  # ApiKeyAuth (x-api-key) in the structured update for Firefly alignment.
   - target: $.security[?(@.apiKey)]
     remove: true
   - target: $.components.securitySchemes.apiKey
+    remove: true
+
+  # S2S bearer token is not a JWT — remove misleading format from upstream.
+  - target: $.components.securitySchemes.bearerAuth.bearerFormat
+    remove: true
+
+  # Replace global security wholesale (avoids merge duplicating bearer-only + both).
+  - target: $.security
     remove: true
 
   # -------------------------
@@ -37,6 +46,12 @@ actions:
         title: Adobe Substance 3D API - Firefly Services
         version: 1.0.0
         description: REST API for Adobe Substance 3D - Firefly Services.
+
+      # Global security: same two headers as other Firefly Services APIs
+      # (Authorization Bearer S2S token + x-api-key client ID). FFENT-10018.
+      security:
+        - bearerAuth: []
+          ApiKeyAuth: []
 
       # PATHS
       paths:
@@ -100,6 +115,19 @@ actions:
 
       # COMPONENTS
       components:
+        securitySchemes:
+          bearerAuth:
+            type: http
+            scheme: bearer
+            description: >-
+              Adobe service-to-service (S2S) access token. Pass `Authorization: Bearer <Token>`.
+              The token is not a JWT.
+          ApiKeyAuth:
+            type: apiKey
+            in: header
+            name: x-api-key
+            description: >-
+              Your client ID, which acts as the API key. Pass `x-api-key: <API_KEY>` using `<API_KEY>` as the placeholder in examples.
         schemas:
           # Main ComposeSceneRequest properties
           restv1.ComposeSceneRequest:
