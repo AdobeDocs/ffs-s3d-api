@@ -1646,6 +1646,13 @@ components:
             - rotate_camera
             - rotate_model
             - rotate_environment
+        rotationDirection:
+          description: Set the rotation direction of the turntable.
+          type: string
+          default: clockwise
+          enum:
+            - clockwise
+            - counter_clockwise
         scene:
           description: Define rendering scene primitives.
           $ref: '#/components/schemas/types.SimpleSceneDescription'
@@ -1718,19 +1725,18 @@ components:
     restv1beta.RenderSceneJobResult:
       type: object
       properties:
-        framesUrls:
-          description: List of URLs to the rendered frames. The rendered frames are ordered by frame number.
-          type:
-            - array
-            - 'null'
-          items:
-            type: string
+        distanceToCameraUrl:
+          description: 'URL to the distance-to-camera map in NumPy .npy format, present when exportDistanceToCamera was requested'
+          type: string
         materialIds:
           $ref: '#/components/schemas/types.IdsMapData'
         materialMasks:
           type: array
           items:
             $ref: '#/components/schemas/types.MaskNameToFileBinding'
+        matteUrl:
+          description: 'URL to the matte grayscale image, present when exportMatte was requested'
+          type: string
         objectIds:
           $ref: '#/components/schemas/types.IdsMapData'
         objectMasks:
@@ -2383,9 +2389,26 @@ components:
       required:
         - width
         - height
+    types.RenderExtraOutputExportMatte:
+      type: object
+      properties:
+        includeNodes:
+          description: 'Nodes to be included into the matte, the list can contain glob patterns. If empty, the matte will contain all scene objects.'
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
+      additionalProperties: false
+      required:
+        - includeNodes
     types.RenderExtraOutputs:
       type: object
       properties:
+        exportDistanceToCamera:
+          description: export a distance-to-camera map as a NumPy .npy file (float32 2D array)
+          type: boolean
+          default: false
         exportMaterialIds:
           description: Export an image with one color per material.
           type: boolean
@@ -2393,6 +2416,9 @@ components:
         exportMaterialMasks:
           description: Export one mask per material.
           $ref: '#/components/schemas/types.ExportMasksOptions'
+        exportMatte:
+          description: export compositing matte for a selection of objects
+          $ref: '#/components/schemas/types.RenderExtraOutputExportMatte'
         exportObjectIds:
           description: Export an image with one color per object.
           type: boolean
