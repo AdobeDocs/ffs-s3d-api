@@ -21,6 +21,7 @@ paths:
             default: false
           explode: false
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -136,6 +137,7 @@ paths:
             default: false
           explode: false
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -250,6 +252,7 @@ paths:
             default: false
           explode: false
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -364,6 +367,7 @@ paths:
             default: false
           explode: false
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -478,6 +482,7 @@ paths:
             default: false
           explode: false
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -592,6 +597,7 @@ paths:
             default: false
           explode: false
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -982,9 +988,7 @@ components:
           readOnly: true
         cameraName:
           description: Name of an existing camera in the source 3D scene. The camera has to be defined in the scene.
-          type:
-            - string
-            - 'null'
+          type: string
         contentClass:
           description: Class of content to generate.
           type: string
@@ -992,6 +996,9 @@ components:
           enum:
             - art
             - photo
+        customModel:
+          description: Optional custom model to be used for the generation.
+          $ref: '#/components/schemas/types.ComposeSceneCustomModel'
         enableGroundPlane:
           description: 'Enable the auto-generated ground plane under the hero asset. This is useful if the 3D scene contains only a hero asset, without additional elements.'
           type: boolean
@@ -1063,9 +1070,7 @@ components:
           $ref: '#/components/schemas/types.OutputSize'
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -1121,9 +1126,7 @@ components:
         outputSpace:
           $ref: '#/components/schemas/rest_base.Space'
         outputs:
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/restv1beta.ComposeOutput'
         promptHasBlockedArtists:
@@ -1131,13 +1134,12 @@ components:
         promptHasDeniedWords:
           type: boolean
         warnings:
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/types.Warning'
       additionalProperties: false
       required:
+        - outputSpace
         - outputs
         - promptHasDeniedWords
         - promptHasBlockedArtists
@@ -1154,9 +1156,7 @@ components:
           readOnly: true
         cameraName:
           description: Name of an existing camera in the 3D scene (must be defined in the scene). Mutually exclusive with 'scene.camera'.
-          type:
-            - string
-            - 'null'
+          type: string
         contentClass:
           description: 'Class of content to generate: ''photo'' for photorealistic images or ''art'' for artistic renditions. Defaults to ''photo''.'
           type: string
@@ -1164,6 +1164,9 @@ components:
           enum:
             - art
             - photo
+        customModel:
+          description: Optional custom model to be used for the generation.
+          $ref: '#/components/schemas/types.ComposeSceneCustomModel'
         enableGroundPlane:
           description: Allow to enable the auto-generated ground plane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default.
           type: boolean
@@ -1231,9 +1234,7 @@ components:
           $ref: '#/components/schemas/types.OutputSize'
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -1298,6 +1299,7 @@ components:
       additionalProperties: false
       required:
         - sceneUrl
+        - outputSpace
     restv1beta.CreateSceneRequest:
       type: object
       properties:
@@ -1327,9 +1329,7 @@ components:
           $ref: '#/components/schemas/types.SceneDescription'
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -1431,6 +1431,8 @@ components:
         outputSpace:
           $ref: '#/components/schemas/rest_base.Space'
       additionalProperties: false
+      required:
+        - outputSpace
     restv1beta.ModelConvertRequest:
       type: object
       properties:
@@ -1459,9 +1461,7 @@ components:
           type: string
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -1550,9 +1550,7 @@ components:
           $ref: '#/components/schemas/types.SizeOptions'
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -1667,9 +1665,7 @@ components:
           $ref: '#/components/schemas/types.SizeOptions'
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -1758,6 +1754,7 @@ components:
       required:
         - renderUrl
         - warnings
+        - outputSpace
     restv1beta.RenderSceneRequest:
       type: object
       properties:
@@ -1791,9 +1788,7 @@ components:
           $ref: '#/components/schemas/types.SizeOptions'
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -1856,9 +1851,7 @@ components:
       properties:
         framesUrls:
           description: List of URLs to the rendered frames. The rendered frames are ordered by frame number.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             type: string
         outputSpace:
@@ -1874,8 +1867,10 @@ components:
             $ref: '#/components/schemas/types.Warning'
       additionalProperties: false
       required:
+        - framesUrls
         - renderUrl
         - warnings
+        - outputSpace
     restv1beta.SceneDescJobResult:
       type: object
       properties:
@@ -1899,9 +1894,7 @@ components:
           type: string
         sources:
           description: List of sources to aggregate and run the job against.
-          type:
-            - array
-            - 'null'
+          type: array
           items:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
@@ -2093,14 +2086,10 @@ components:
       properties:
         customModelId:
           description: ID of the custom model to be used for the generation.
-          type:
-            - string
-            - 'null'
+          type: string
         customModelToken:
           description: Token to be used to access the custom model.
-          type:
-            - string
-            - 'null'
+          type: string
       additionalProperties: false
       required:
         - customModelId
