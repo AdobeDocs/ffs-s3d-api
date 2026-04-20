@@ -10,6 +10,8 @@
         - [Audio/Video API](https://developer.adobe.com/audio-video-firefly-services/?aio_internal) Docs and references for Audio/Video API.
         - [InDesign API](https://developer.adobe.com/firefly-services/docs/indesign-apis/?aio_internal) Docs and references for InDesign API.
         - [Substance 3D API](https://developer.adobe.com/firefly-services/docs/s3dapi/?aio_internal) Unlock generative AI for rendering and object composites.
+        - [Illustrator API](https://developer.adobe.com/firefly-services/docs/illustrator/?aio_internal) Docs and references for Illustrator API.
+        - [Creative Production API](https://developer.adobe.com/firefly-services/docs/workflow-builder-api/?aio_internal) Docs and references for Firefly Creative Production API.
         - [Content Tagging API](https://experienceleague.adobe.com/docs/experience-platform/intelligent-services/content-commerce-ai/overview.html) Docs and references for Content Tagging services.
     - [About Substance 3D API](/index.md)
     - [Getting Started](/getting-started/index.md)
