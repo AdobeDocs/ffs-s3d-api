@@ -724,6 +724,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/rest_base.Space'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
         '403':
           description: Forbidden
           content:
@@ -805,6 +816,539 @@ paths:
   /v1beta/spaces: {}
   '/v1beta/spaces/{id}': {}
   '/v2/jobs/{id}': {}
+  /v2/spaces:
+    post:
+      operationId: createSpace_v2
+      summary: Create Space API
+      description: |
+        ## Overview
+
+        The **Substance 3D API** provides a way to upload and temporarily store files.
+        Uploading files requires a **multipart/form-data** request to send data.
+
+        The request requires a **files** field containing a list of files. Each file's **filename** field can contain a filepath to specify where the file will be stored in the space.
+
+        Example for this files tree:
+
+        ```
+        ├── textures
+        │   ├── diffuse.png
+        │   └── normal.png
+        └── lighthouse.fbx
+        ```
+
+        HTTP data relative to the previous files tree:
+
+        ```HTTP
+        POST /spaces HTTP/1.1
+        Host: localhost:8080
+        Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+        ------WebKitFormBoundary7MA4YWxkTrZu0gW
+        Content-Disposition: form-data; name="files"; filename="lighthouse.fbx"
+        Content-Type: model/vnd.autodesk.fbx
+
+        (data)
+        ------WebKitFormBoundary7MA4YWxkTrZu0gW
+        Content-Disposition: form-data; name="files"; filename="textures/diffuse.png"
+        Content-Type: image/png
+
+        (data)
+
+        ------WebKitFormBoundary7MA4YWxkTrZu0gW
+        Content-Disposition: form-data; name="files"; filename="textures/normal.png"
+        Content-Type: image/png
+
+        (data)
+        ------WebKitFormBoundary7MA4YWxkTrZu0gW--
+        ```
+
+        Curl command to create this file tree:
+
+        ```
+        curl -X POST https://s3d.adobe.io/v2/spaces \
+          -F "files=@Local/Path/To/The/Local/File/lighthouse.fbx;filename=lighthouse.fbx" \
+          -F "files=@Local/Path/To/The/Local/File/diffuse.png;filename=textures/diffuse.png" \
+          -F "files=@Local/Path/To/The/Local/File/normal.png;filename=textures/normal.png"
+        ```
+
+        The result of the post is a **JSON** which contained the **id** of the space created.
+        Space **id** can be used into a space source to use space content as a source for API operations.
+
+        Example of a space source:
+
+        ```json
+        {
+          "space": {
+            "id": "<space_id>"
+          }
+        }
+        ```
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    contentMediaType: application/octet-stream
+                    format: binary
+                    type: string
+                  minItems: 1
+              required:
+                - files
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rest_base.Space'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_multipart:
+                  value:
+                    error_code: invalid_multipart
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '413':
+          description: Request Entity Too Large
+          content:
+            application/json:
+              examples:
+                entity_too_large:
+                  value:
+                    error_code: entity_too_large
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+      tags: []
+      x-s3d-public: true
+  '/v2/spaces/{id}': {}
+  /v2/spacesFrameIO:
+    post:
+      operationId: createSpaceFromFrameIO_v2
+      summary: Create Space From Frame IO API
+      description: |-
+        ## Overview
+
+        The **Substance 3D API** provides a way to upload and temporary store files.
+        You can upload folders from **frame.io** to create a space.
+        To upload a folder from frame.io, you must pass the following parameters:
+
+        - **access Token**
+        - **folder ID**
+
+        The result of the post is a **JSON** which contained the **id** of the space created.  
+        Space **id** can be used into a space source to use space content as a source for API operations.
+
+        Example of a space source:
+
+        ```json
+        {
+          "space": {
+            "id": "<space_id>"
+          }
+        }
+        ```
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rest_base.FileFrameIO'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rest_base.Space'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '413':
+          description: Request Entity Too Large
+          content:
+            application/json:
+              examples:
+                entity_too_large:
+                  value:
+                    error_code: entity_too_large
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+      tags: []
+      x-s3d-public: true
+  /v2/spacesNextFrameIO:
+    post:
+      operationId: createSpaceFromNextFrameIO_v2
+      summary: Create Space From Next Frame IO API
+      description: |+
+        ## Overview
+
+        The **Substance 3D API** provides a way to upload and temporary store files.
+        You can upload folders from **next.frame.io** to create a space.
+        To upload a folder from next.frame.io, you must pass the following parameters:
+
+        - **access Token**
+        - **account ID**
+        - **folder ID**
+
+        The result of the post is a **JSON** which contained the **id** of the space created.  
+        Space **id** can be used into a space source to use space content as a source for API operations.
+
+        Example of a space source:
+
+        ```json
+        {
+          "space": {
+            "id": "<space_id>"
+          }
+        }
+        ```
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/rest_base.FileNextFrameIO'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rest_base.Space'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '413':
+          description: Request Entity Too Large
+          content:
+            application/json:
+              examples:
+                entity_too_large:
+                  value:
+                    error_code: entity_too_large
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+      tags: []
+      x-s3d-public: true
+  /v2/spacesURL:
+    post:
+      operationId: createSpaceURL_v2
+      summary: Create Space from URL API
+      description: |
+        ## Overview
+
+        The **Substance 3D API** provides a way to upload and temporary store files.
+        You can upload one or more files from one or more URLs.
+        For each URL, there is an optional **filepath** parameter that allows you to specify the file name and its path.
+        By combining multiple URLs with different **filepath** paths, you can compose a complete file tree structure.
+
+        Example for this files tree:
+
+        ```
+        ├── textures
+        │   ├── diffuse.png
+        │   └── normal.png
+        └── lighthouse.fbx
+        ```
+
+        Curl request:
+
+        ```
+        curl --request POST \
+          --url https://s3d.adobe.io/v2/spacesURL \
+          --header 'Accept: application/json' \
+          --header 'Authorization: Bearer 123' \
+          --header 'Content-Type: application/json' \
+          --data '[
+          {
+            "filepath": "lighthouse.fbx",
+            "url": "https://url/to/lighthouse.fbx"
+          },
+          {
+            "filepath": "textures/diffuse.png",
+            "url": "https://url/to/diffuse.png"
+          },
+          {
+            "filepath": "textures/normal.png",
+            "url": "https://url/to/normal.png"
+          }
+        ]'
+        ```
+
+        The result of the post is a **JSON** which contained the **id** of the space created.
+        Space **id** can be used into a space source to use space content as a source for API operations.
+
+        Example of a space source:
+
+        ```json
+        {
+          "space": {
+            "id": "<space_id>"
+          }
+        }
+        ```
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type:
+                - array
+                - 'null'
+              items:
+                $ref: '#/components/schemas/rest_base.FileURL'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rest_base.Space'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '413':
+          description: Request Entity Too Large
+          content:
+            application/json:
+              examples:
+                entity_too_large:
+                  value:
+                    error_code: entity_too_large
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+      tags: []
+      x-s3d-public: true
 components:
   schemas:
     ffapierrors.FFAPIError:
@@ -851,6 +1395,73 @@ components:
         - loc
         - msg
         - error_code
+    rest_base.FileFrameIO:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/rest_base.FileFrameIO.json'
+          readOnly: true
+        accessToken:
+          description: 'Frame.io access token or Developer token. See https://developer.frame.io/docs/getting-started/authentication for obtaining a token.'
+          type: string
+          examples:
+            - base64.jwt.token
+        folderId:
+          description: 'Frame.io folder ID containing the assets. This should be the ID of the folder (not an asset ID). For best performance and to avoid [size limitations](/#what-is-the-maximum-size-of-assets-i-can-process), use the folder ID closest to your target assets. The system will retrieve all content from the specified folder, so choosing a parent folder with many subfolders may exceed the maximum retrieval size limit'
+          type: string
+          examples:
+            - 01234567-89ab-cdef-0123-456789abcdef
+      additionalProperties: false
+      required:
+        - folderId
+        - accessToken
+    rest_base.FileNextFrameIO:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/rest_base.FileNextFrameIO.json'
+          readOnly: true
+        accessToken:
+          description: 'Frame.io access token. See https://developer.adobe.com/frameio/guides/Authentication/ for obtaining a token.'
+          type: string
+          examples:
+            - fio-u-base64url
+        accountId:
+          description: 'Frame.io account ID. This is the account identifier for the next.frame.io account owner. To find your account ID, log in to next.frame.io, navigate to your inbox, and extract the UUID from the URL (e.g., in https://next.frame.io/inbox/abcdefgh-1234-1234-1234-abcdefghijk, the account ID is abcdefgh-1234-1234-1234-abcdefghijk)'
+          type: string
+          examples:
+            - 01234567-89ab-cdef-0123-456789abcdef
+        folderId:
+          description: 'Frame.io folder ID containing the assets. This should be the ID of the folder (not an asset ID). For best performance and to avoid [size limitations](/#what-is-the-maximum-size-of-assets-i-can-process), use the folder ID closest to your target assets. The system will retrieve all content from the specified folder, so choosing a parent folder with many subfolders may exceed the maximum retrieval size limit'
+          type: string
+          examples:
+            - 01234567-89ab-cdef-0123-456789abcdef
+      additionalProperties: false
+      required:
+        - folderId
+        - accountId
+        - accessToken
+    rest_base.FileURL:
+      type: object
+      properties:
+        filepath:
+          description: 'The filename in the filepath overrides filename. If filepath is unset, will try to detect filename from content disposition header, then url itself. If a path is specified before the filename in the filepath, the file will be mounted at that location in the space.'
+          type: string
+        url:
+          type: string
+          examples:
+            - 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb'
+      additionalProperties: false
+      required:
+        - url
     rest_base.MountedSource:
       type: object
       properties:
