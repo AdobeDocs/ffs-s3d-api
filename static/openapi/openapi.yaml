@@ -1745,7 +1745,9 @@ components:
         promptHasDeniedWords:
           type: boolean
         warnings:
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             $ref: '#/components/schemas/types.Warning'
       additionalProperties: false
@@ -1754,7 +1756,6 @@ components:
         - outputs
         - promptHasDeniedWords
         - promptHasBlockedArtists
-        - warnings
     restv1beta.ComposeSceneRequest:
       type: object
       properties:
@@ -2364,7 +2365,6 @@ components:
       additionalProperties: false
       required:
         - renderUrl
-        - warnings
         - outputSpace
     restv1beta.RenderSceneRequest:
       type: object
@@ -2480,7 +2480,6 @@ components:
       required:
         - framesUrls
         - renderUrl
-        - warnings
         - outputSpace
     restv1beta.SceneDescJobResult:
       type: object
