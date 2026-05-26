@@ -12,6 +12,11 @@ paths:
       summary: Generate 3D object composite
       description: Generate a 3D Object Composite with the Substance 3D API.
       parameters:
+        - name: X-User-Token
+          in: header
+          description: 'A user token referencing the user''s individual account, obtained using their credentials.'
+          schema:
+            type: string
         - name: wait
           in: query
           description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
@@ -1607,9 +1612,9 @@ components:
           enum:
             - art
             - photo
-        customModel:
-          description: Optional custom model to be used for the generation.
-          $ref: '#/components/schemas/types.ComposeSceneCustomModel'
+        customModelId:
+          description: 'ID of the custom model to be used for the generation. You can retrieve your custom model ID (assetId) with the Firefly retrieve custom model endpoint (https://developer.adobe.com/firefly-services/docs/firefly-api/api/#operation/getCustomModels).'
+          type: string
         enableGroundPlane:
           description: 'Enable the auto-generated ground plane under the hero asset. This is useful if the 3D scene contains only a hero asset, without additional elements.'
           type: boolean
@@ -1776,9 +1781,9 @@ components:
           enum:
             - art
             - photo
-        customModel:
-          description: Optional custom model to be used for the generation.
-          $ref: '#/components/schemas/types.ComposeSceneCustomModel'
+        customModelId:
+          description: 'ID of the custom model to be used for the generation. You can retrieve your custom model ID (assetId) with the Firefly retrieve custom model endpoint (https://developer.adobe.com/firefly-services/docs/firefly-api/api/#operation/getCustomModels).'
+          type: string
         enableGroundPlane:
           description: Allow to enable the auto-generated ground plane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default.
           type: boolean
@@ -2691,19 +2696,6 @@ components:
       additionalProperties: false
       required:
         - file
-    types.ComposeSceneCustomModel:
-      type: object
-      properties:
-        customModelId:
-          description: ID of the custom model to be used for the generation.
-          type: string
-        customModelToken:
-          description: Token to be used to access the custom model.
-          type: string
-      additionalProperties: false
-      required:
-        - customModelId
-        - customModelToken
     types.ComposeSceneSceneDetails:
       type: object
       properties:
