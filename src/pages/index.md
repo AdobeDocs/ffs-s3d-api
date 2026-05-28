@@ -28,7 +28,7 @@ Upload assets from your server, a public URL, or Frame.io, submit jobs asynchron
 
 |  | |
 |:----------:|:---------:|
-| ![A spaceage helmet seen from the front](/src/pages/guides/render-3-d-object/azimuth.png) | ![A spaceage helmet seen from the side](/src/pages/guides/render-3-d-object/default.png) |
+| ![A spaceage helmet seen from the front](guides/render-3-d-object/azimuth.png) | ![A spaceage helmet seen from the side](guides/render-3-d-object/default.png) |
 
 ## Discover
 
