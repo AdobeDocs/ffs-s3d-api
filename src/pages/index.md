@@ -26,6 +26,10 @@ The Adobe Substance 3D API brings professional 3D rendering and AI-powered compo
 
 Upload assets from your server, a public URL, or Frame.io, submit jobs asynchronously, and retrieve high-quality images at scale. Whether you are building product configurators, marketing pipelines, or creative automation tools, the Substance 3D API integrates 3D and generative AI in a single platform.
 
+|  | |
+|:----------:|:---------:|
+| ![A spaceage helmet seen from the front](/src/pages/guides/render-3-d-object/azimuth.png) | ![A spaceage helmet seen from the side](/src/pages/guides/render-3-d-object/default.png) |
+
 ## Discover
 
 <DiscoverBlock slots="heading, link, text"/>
