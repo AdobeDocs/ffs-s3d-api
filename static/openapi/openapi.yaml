@@ -820,6 +820,186 @@ paths:
   '/v1beta/jobs/{id}': {}
   /v1beta/spaces: {}
   '/v1beta/spaces/{id}': {}
+  /v2/composites/compose-3p:
+    post:
+      operationId: v2/composites/compose-3p
+      summary: Generate 3D Object Composite API with 3p model (beta)
+      description: |
+        <!-- theme: warning -->
+
+        > Prerelease Developer Tools (as defined into the [Adobe Developer Terms of Use](https://wwwimages2.adobe.com/content/dam/cc/en/legal/servicetou/Developer-Terms-en_US-20240618.pdf))
+
+        ## Overview
+
+        The **Substance 3D API** provides a way to present an hero asset in a generated AI content helped by a 3d scene information.
+
+        To render images with the 2D/3D Compositing feature, the following inputs are required:
+
+        - a 3D scene file that contains the main 3D model (_a.k.a._ "hero asset") to be rendered, along with additional elements that will be used as a structure reference to influence the composition of the AI generated images. This 3D scene file may also contains 3D lights like area lights or spot lights to provide additional lighting of the hero asset that will be preserved in the final compositing.
+        - a [text prompt](https://helpx.adobe.com/firefly/using/tips-and-tricks.html), to describe the content of the AI generated images
+        - an optional [style image](https://helpx.adobe.com/firefly/using/style-match.html) to influence the look and feel of the AI generated images
+
+        The 3D scene can be assembled in a 3D Rendering software like [Substance 3D Stager](https://www.adobe.com/products/substance3d/apps/stager.html), and must contain:
+
+        - **a 3D model (_hero asset_)**: this is the main asset to be showcased in the final composition
+        - **at least one camera**: used when rendering images of the 3D scene
+        - **optional 3D model(s)**: used as structure reference for AI generated images
+
+        <!-- theme: info -->
+
+        > #### Supported scene formats
+        >
+        > The 3D Scene file format must be one of **GLB/GLTF**, **FBX** or **USDZ**.
+
+        <!-- theme: info -->
+
+        > #### Naming in 3D scene
+        >
+        > The **camera** and **hero asset** in the 3D scene must be correctly named. These names will be required in the API request payload.
+
+        <img src="https://cdn.substance3d.com/v2/files/public/9a91b041-18ef-4727-9f67-ae1b6080a9f6" alt="Sample scene in Substance 3D Stager" title="Sample scene in Substance 3D Stager" width="800" />
+
+        ### Example
+
+        In this example, inputs provided are:
+
+        - a scene [table_with_bottle.glb](https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb) :
+          - a camera named `main_camera`
+          - a hero asset named `bottle`
+        - a prompt to describe the scene: _french style kitchen with a glass bottle sitting on an empty wooden table window on the left focal length 50mm_
+
+        <!-- title: "POST /v1beta/3dscenes/compose" -->
+
+        ```json
+        {
+          "cameraName": "main_camera",
+          "heroAsset": "bottle",
+          "prompt": "french style kitchen with a glass bottle sitting on an empty wooden table window on the left focal length 50mm",
+          "sources": [
+            {
+              "url": {
+                "url": "https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb"
+              }
+            }
+          ]
+        }
+        ```
+
+        <img src="https://cdn.substance3d.com/v2/files/public/e217aedc-3e49-432e-acdd-5d7b21f6bf61" alt="2D/3D Compositing" title="2D/3D Compositing" width="800" />
+      parameters:
+        - name: X-User-Token
+          in: header
+          description: 'A user token referencing the user''s individual account, obtained using their credentials.'
+          schema:
+            type: string
+        - name: wait
+          in: query
+          description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+          schema:
+            description: 'Blocking mode (acts like a synchronous API call). Wait for the result before returning. ⚠️ Some operations are long, please be sure to configure your client timeout settings accordingly.'
+            type: boolean
+            default: false
+          explode: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/restv2.ComposeScene3pRequest'
+      responses:
+        '202':
+          description: Accepted
+          headers:
+            Retry-After:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/restv1beta.ComposeSceneResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                empty_input_body:
+                  value:
+                    error_code: empty_input_body
+                    message: ''
+                invalid_json:
+                  value:
+                    error_code: invalid_json
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              examples:
+                access_error:
+                  value:
+                    error_code: access_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '408':
+          description: Request Timeout
+          content:
+            application/json:
+              examples:
+                timeout_error:
+                  value:
+                    error_code: timeout_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              examples:
+                invalid_content_type:
+                  value:
+                    error_code: invalid_content_type
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                validation_error:
+                  value:
+                    error_code: validation_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              examples:
+                rate_limited:
+                  value:
+                    error_code: rate_limited
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              examples:
+                runtime_error:
+                  value:
+                    error_code: runtime_error
+                    message: ''
+              schema:
+                $ref: '#/components/schemas/ffapierrors.FFAPIError'
+      tags: []
+      x-s3d-public: true
   '/v2/jobs/{id}': {}
   /v2/spaces:
     post:
@@ -2172,6 +2352,14 @@ components:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
           minItems: 1
+        timeCode:
+          description: 'render timecode, useful if the scene file contains animations'
+          type: number
+          format: double
+        useRasterizer:
+          description: set to true to use a very fast rendering technique but with less accurate lighting
+          type: boolean
+          default: false
       additionalProperties: false
       examples:
         - scene:
@@ -2275,7 +2463,7 @@ components:
           type: integer
           format: int64
           default: 2
-          maximum: 5
+          maximum: 10
           minimum: 1
         size:
           description: Render size related options.
@@ -2409,6 +2597,14 @@ components:
             $ref: '#/components/schemas/rest_base.MountedSource'
           maxItems: 16
           minItems: 1
+        timeCode:
+          description: 'render timecode, useful if the scene file contains animations'
+          type: number
+          format: double
+        useRasterizer:
+          description: set to true to use a very fast rendering technique but with less accurate lighting
+          type: boolean
+          default: false
       additionalProperties: false
       examples:
         - scene:
@@ -2467,7 +2663,9 @@ components:
       properties:
         framesUrls:
           description: List of URLs to the rendered frames. The rendered frames are ordered by frame number.
-          type: array
+          type:
+            - array
+            - 'null'
           items:
             type: string
         outputSpace:
@@ -2483,7 +2681,6 @@ components:
             $ref: '#/components/schemas/types.Warning'
       additionalProperties: false
       required:
-        - framesUrls
         - renderUrl
         - outputSpace
     restv1beta.SceneDescJobResult:
@@ -2558,6 +2755,142 @@ components:
         - id
         - status
         - bugReportUrl
+    restv2.ComposeScene3pRequest:
+      type: object
+      properties:
+        $schema:
+          description: A URL to the JSON Schema for this object.
+          type: string
+          format: uri
+          examples:
+            - 'https://s3d.adobe.io/schemas/restv2.ComposeScene3pRequest.json'
+          readOnly: true
+        advancedOptions:
+          description: 'Advanced composition settings for fine-tuning the rendering pipeline, including ground plane, custom environments, and lighting seeds.'
+          $ref: '#/components/schemas/types.AdvancedOptions'
+        aspectRatio:
+          description: 'Aspect ratio of the output image. Supported values: ''1:1'' (square), ''2:3'', ''3:2'', ''3:4'', ''4:3'', ''4:5'', ''5:4'', ''9:16'', ''16:9'', ''21:9''.'
+          type: string
+          default: '16:9'
+          enum:
+            - '1:1'
+            - '2:3'
+            - '3:2'
+            - '3:4'
+            - '4:3'
+            - '4:5'
+            - '5:4'
+            - '9:16'
+            - '16:9'
+            - '21:9'
+        cameraName:
+          description: Name of an existing camera in the 3D scene (must be defined in the scene). Mutually exclusive with 'scene.camera'.
+          type: string
+        heroAsset:
+          description: Name of the 'hero asset' (main 3D model) in the scene that will be showcased in the final composition. This object must exist in the 3D scene.
+          type: string
+          minLength: 1
+        modelVersion:
+          description: Adobe 3p model version for background generation. Defaults to 'gpt-2'.
+          type: string
+          default: gpt-2
+          enum:
+            - gpt-2
+            - nano_banana
+        numVariations:
+          description: 'Number of different variations to generate. Takes priority over the seeds array length. If seeds array is longer, only the first N seeds (matching numVariations) are used. If seeds array is shorter or not provided, additional random seeds are generated. Defaults to 1 if neither numVariations nor seeds are specified.'
+          type: integer
+          format: int64
+          maximum: 4
+          minimum: 1
+        prompt:
+          description: Text prompt used to generate the AI background image with Adobe Firefly. Describes the desired scene composition and style.
+          type: string
+          minLength: 1
+        resolution:
+          description: 'Output resolution tier. ''1k'' produces images in the ~768–1584 px range, ''2k'' doubles those dimensions, ''4k'' quadruples them.'
+          type: string
+          default: 2k
+          enum:
+            - 1k
+            - 2k
+            - 4k
+        scene:
+          description: '3D scene configuration allowing dynamic assembly from multiple sources. You can specify a base scene file, import additional 3D models with transformations, override materials, define a custom camera, and optionally provide an IBL (Image-Based Lighting) for preview and structure reference generation. This IBL is independent from both the auto-generated IBL and the final composition lighting controlled by ''advancedOptions.environment''.'
+          $ref: '#/components/schemas/types.SceneDescription'
+        seeds:
+          description: 'Optional fixed seeds for reproducible background generation. Each seed produces a consistent result. When numVariations is specified, it takes priority: if this array is longer, only the first N seeds are used; if shorter, additional random seeds are generated to match numVariations. If numVariations is not specified, the number of seeds determines the number of variations. The actual seeds used are returned in the job output.'
+          type: array
+          items:
+            format: int64
+            type: integer
+          maxItems: 4
+        sources:
+          description: list of sources to aggregate and run the job against
+          type: array
+          items:
+            $ref: '#/components/schemas/rest_base.MountedSource'
+          maxItems: 16
+          minItems: 1
+      additionalProperties: false
+      examples:
+        - cameraName: main_camera
+          heroAsset: bottle
+          prompt: french style kitchen with a glass bottle sitting on an empty wooden table window on the left focal length 50mm and a metal flask placed next to the bottle
+          scene:
+            baseFile:
+              file: compositing_table_bottle.glb
+            models:
+              imports:
+                - file: WaterBottle.glb
+                  transform:
+                    trs:
+                      rotation:
+                        euler:
+                          - 0
+                          - 30
+                          - 0
+                      scale:
+                        - 1
+                        - 1
+                        - 1
+                      translation:
+                        - -0.12
+                        - 0.7
+                        - 0.03
+          sources:
+            - url:
+                url: 'https://cdn.substance3d.com/v2/files/public/compositing_table_bottle.glb'
+            - url:
+                url: 'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/WaterBottle/glTF-Binary/WaterBottle.glb'
+      required:
+        - sources
+        - prompt
+        - heroAsset
+    types.AdvancedOptions:
+      type: object
+      properties:
+        enableGroundPlane:
+          description: 'Allow to enable the auto generated groundplane under the hero asset. Useful if the 3D scene contains only a hero asset without additional elements. Disabled by default. '
+          type: boolean
+          default: false
+        environment:
+          description: 'Custom environment (HDR) to use for lighting the final composition. When provided, this replaces the automatically generated IBL (Image-Based Lighting) that would normally be created from the AI background. When set, ''lightingSeeds'' are ignored since no IBL generation occurs.'
+          $ref: '#/components/schemas/types.ComposeEnvironment'
+        environmentExposure:
+          description: 'Exposure adjustment for the environment lighting in EV stops (0 = neutral, negative = darker, positive = brighter). This setting applies to ANY environment: whether it''s the provided custom environment or the auto-generated IBL. Overrides the default exposure calculation.'
+          type: number
+          format: double
+          maximum: 10
+          minimum: -10
+        lightingSeeds:
+          description: 'LightingSeeds defines optional, fixed random seeds for reproducible Image-Based Lighting (IBL) when generating AI backgrounds. It is only used when ''environment'' is not provided. Each lighting seed maps to the corresponding background seed by index (first lighting seed with first background seed, etc.) when ''seeds'' is specified. If the number of lighting seeds does not match the number of background seeds, the slice is automatically truncated or padded with random values. When omitted or set to nil, random lighting seeds are generated. The actual seeds used are returned in the response payload.'
+          type: array
+          items:
+            format: int64
+            type: integer
+          maxItems: 4
+      additionalProperties: false
     types.AutoFramingOptions:
       type: object
       properties:
@@ -2672,6 +3005,13 @@ components:
         verticalApertureOffset:
           type: number
           format: double
+        worldMatrix:
+          type:
+            - array
+            - 'null'
+          items:
+            format: double
+            type: number
       additionalProperties: false
       required:
         - name
@@ -2684,6 +3024,7 @@ components:
         - fStop
         - focusDistance
         - projection
+        - worldMatrix
     types.ComposeEnvironment:
       type: object
       properties:
@@ -2968,13 +3309,13 @@ components:
           type: integer
           format: int64
           default: 1536
-          maximum: 2688
+          maximum: 3072
           minimum: 1
         width:
           type: integer
           format: int64
           default: 2688
-          maximum: 2688
+          maximum: 3072
           minimum: 1
       additionalProperties: false
       required:
@@ -3022,11 +3363,15 @@ components:
       type: object
       properties:
         type:
-          description: Renderer to use. 'ssca' is the default path-tracing renderer; 'rtx' uses NVidia RTX renderer.
+          description: Renderer to use. 'ssca' is the default path-tracing renderer; 'rtx' uses NVidia RTX renderer; 'vray' uses Chaos V-Ray renderer.
           type: string
           enum:
             - ssca
             - rtx
+            - vray
+        vrayHoldoutCatchShadows:
+          type: boolean
+          default: true
       additionalProperties: false
       required:
         - type
@@ -3303,6 +3648,8 @@ components:
           format: int64
         sceneUpAxis:
           type: string
+        timeCode:
+          $ref: '#/components/schemas/types.SceneStatsTimeCode'
       additionalProperties: false
       required:
         - metersPerSceneUnit
@@ -3326,6 +3673,12 @@ components:
       properties:
         assignedMaterialName:
           type: string
+        assignedMaterialTypes:
+          type:
+            - array
+            - 'null'
+          items:
+            type: string
         cameraStats:
           $ref: '#/components/schemas/types.CameraStats'
         children:
@@ -3368,6 +3721,23 @@ components:
         - name
         - values
         - currentValue
+    types.SceneStatsTimeCode:
+      type: object
+      properties:
+        endTimeCode:
+          type: number
+          format: double
+        startTimeCode:
+          type: number
+          format: double
+        timeCodesPerSecond:
+          type: number
+          format: double
+      additionalProperties: false
+      required:
+        - startTimeCode
+        - endTimeCode
+        - timeCodesPerSecond
     types.ShadowCatchingMaterial:
       type: object
       properties:
@@ -3433,13 +3803,13 @@ components:
           description: Render height.
           type: integer
           format: int64
-          maximum: 2304
+          maximum: 5504
           minimum: 16
         width:
           description: Render width.
           type: integer
           format: int64
-          maximum: 3840
+          maximum: 6336
           minimum: 16
       additionalProperties: false
       required:
